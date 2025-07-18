@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <title>Reportes Financieros - 2A Constructora</title>
+    <link rel="icon" href="img/2A_constructora_logo.png">
+
+    
+    <link href="menu/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/reportes-financieros.css">
+
+    
+    
+    <link rel="stylesheet" href="bt-icons/bootstrap-icons.min.css">
+    
+    <link rel="stylesheet" href="dt/datatables.min.css">
+    <link rel="stylesheet" href="dt/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="dt/buttons.dataTables.min.css">
+    
+    <link rel="stylesheet" href="alert/alertify.min.css">
+    <link rel="stylesheet" href="alert/themes/default.min.css">
+    <script src="alert/alertify.min.js"></script>
+    <script src="./js/bd.js"></script>
+</head>
+
+<body class="sb-nav-fixed">
+    
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <a class="navbar-brand ps-3" href="menu.html">
+            <img src="img/2A_constructora_logo.png" alt="Logo" height="30" class="me-2">
+            2A Constructora
+        </a>
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#"><i
+                class="bi bi-list"></i></button>
+
+        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <div class="input-group">
+                <input class="form-control" type="text" placeholder="Buscar..." aria-label="Buscar..."
+                    aria-describedby="btnNavbarSearch" />
+                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="bi bi-search"></i></button>
+            </div>
+        </form>
+
+        <div class="me-3">
+            <button id="darkModeToggle" class="btn btn-link text-light"><i class="bi bi-moon-stars"></i></button>
+        </div>
+
+        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false"><i class="bi bi-person-fill"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="configuracion.html">Configuración</a></li>
+                    <li><a class="dropdown-item" href="#">Actividad</a></li>
+                    <li>
+                        <hr class="dropdown-divider" />
+                    </li>
+                    <li><a class="dropdown-item" href="#" onclick="cerrarSesion()">Cerrar sesión</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div id="principal" class="sb-sidenav-menu-heading">Principal</div>
+                        <a id="dashboard" class="nav-link" href="dashboard.html">
+                            <div class="sb-nav-link-icon"><i class="bi bi-speedometer"></i></div>
+                            Dashboard
+                        </a>
+
+                        <div id="modulos" class="sb-sidenav-menu-heading">Módulos</div>
+
+                        
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseFinanzas">
+                            <div class="sb-nav-link-icon"><i class="bi bi-currency-dollar"></i></div>
+                            Finanzas
+                            <div class="sb-sidenav-collapse-arrow"><i class="bi bi-chevron-down"></i></div>
+                        </a>
+                        <div class="collapse show" id="collapseFinanzas" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a id="facturas-proveedores" class="nav-link collapsed" href="#"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseProveedores">
+                                    Facturas de Proveedores
+                                    <div class="sb-sidenav-collapse-arrow"><i class="bi bi-chevron-down"></i></div>
+                                </a>
+                                <div class="collapse" id="collapseProveedores" data-bs-parent="#collapseFinanzas">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        <a href="facturas-proveedores.html" class="nav-link">
+                                            <i class="bi bi-file-earmark-text me-2"></i>Registrar Compras
+                                        </a>
+                                        <a href="mantenimiento-facturas.html" class="nav-link">
+                                            <i class="bi bi-tools me-2"></i>Mantenimiento de Facturas
+                                        </a>
+                                    </nav>
+                                </div>
+
+                                <a id="facturas-clientes" class="nav-link" href="facturas-clientes.html">Facturas de
+                                    Clientes</a>
+                                <a id="mantenimiento-facturas-clientes" class="nav-link"
+                                    href="mantenimiento-facturas-clientes.html">Mantenimiento Facturas Clientes</a>
+                                <a id="pagos-proveedores" class="nav-link" href="pagos-proveedores.html">Pagos a
+                                    Proveedores</a>
+                                <a id="cobros-clientes" class="nav-link" href="cobros-clientes.html">Cobros de
+                                    Clientes</a>
+                                <a id="adelantos-anticipos" class="nav-link" href="adelantos-anticipos.html">Adelantos y
+                                    Anticipos</a>
+                                <a id="costos-obra" class="nav-link" href="costos-obra.html">Costos por Obra</a>
+                                <a id="reportes-financieros" class="nav-link active"
+                                    href="reportes-financieros.html">Reportes Financieros</a>
+                            </nav>
+                        </div>
+
+                        
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseObras">
+                            <div class="sb-nav-link-icon"><i class="bi bi-building"></i></div>
+                            Obras
+                            <div class="sb-sidenav-collapse-arrow"><i class="bi bi-chevron-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseObras" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a id="mantenimiento-obras" class="nav-link"
+                                    href="mantenimiento-obras.html">Mantenimiento de Obras</a>
+                                <a id="asignar-materiales" class="nav-link" href="asignar-materiales.html">Asignar
+                                    Materiales</a>
+                                <a id="control-existencias" class="nav-link" href="control-existencias.html">Control de
+                                    Existencias</a>
+                                <a id="movimientos-materiales" class="nav-link"
+                                    href="movimientos-materiales.html">Movimientos de Materiales</a>
+                                <a id="traslados-materiales" class="nav-link" href="traslado-materiales.html">Traslados
+                                    de Materiales</a>
+                                <a id="registro-perdidas" class="nav-link" href="registro-perdidas.html">Registro de
+                                    Pérdidas</a>
+                                <a id="historial-movimientos" class="nav-link"
+                                    href="historial-movimientos.html">Historial de Movimientos</a>
+                            </nav>
+                        </div>
+
+                        <div id="administracion" class="sb-sidenav-menu-heading">Administración</div>
+
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseMantenimiento">
+                            <div class="sb-nav-link-icon"><i class="bi bi-gear"></i></div>
+                            Mantenimiento
+                            <div class="sb-sidenav-collapse-arrow"><i class="bi bi-chevron-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseMantenimiento" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a id="usuarios" class="nav-link" href="usuarios.html">Usuarios</a>
+                                <a id="clientes" class="nav-link" href="clientes.html">Clientes</a>
+                                <a id="proveedores" class="nav-link" href="proveedores.html">Proveedores</a>
+                                <a id="materiales" class="nav-link" href="materiales.html">Materiales</a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Iniciado por:</div>
+                    <div id="nomUsuario"></div>
+                    <div class="small">Rol:</div>
+                    <div id="rol"></div>
+                </div>
+            </nav>
+        </div>
+
+        <div id="layoutSidenav_content">
+            <main>
+
+                
+                <header class="gradient-bg text-white">
+                    <div class="container-fluid px-4 py-4">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-center">
+                                <div class="icon-metric me-3"
+                                    style="background: rgba(255, 255, 255, 0.2); color: white;">
+                                    <i class="bi bi-graph-up"></i>
+                                </div>
+                                <div>
+                                    <h1 class="h2 mb-1">Reportes Financieros</h1>
+                                    <p class="mb-0 opacity-75">2A Constructora - Sistema de Gestión</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center no-print">
+                                <button id="btnActualizar" class="btn-custom">
+                                    <i class="bi bi-arrow-clockwise me-2"></i>Actualizar
+                                </button>
+                                <button id="btnExportar" class="btn-custom">
+                                    <i class="bi bi-download me-2"></i>Exportar
+                                </button>
+                                <button id="btnImprimir" class="btn-custom">
+                                    <i class="bi bi-printer me-2"></i>Imprimir
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+
+                
+                <div class="container-fluid px-4 py-4">
+                    
+                    <div class="filters-container no-print">
+                        <h2 class="section-title">
+                            <i class="bi bi-funnel me-2"></i>Filtros de Reporte
+                        </h2>
+                        <div class="row g-3">
+                            <div class="col-md-3">
+                                <label class="form-label">Fecha Inicio</label>
+                                <input type="date" id="fechaInicio" class="form-control">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Fecha Fin</label>
+                                <input type="date" id="fechaFin" class="form-control">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Período</label>
+                                <select id="periodo" class="form-select">
+                                    <option value="mensual">Este Mes</option>
+                                    <option value="trimestral">Este Trimestre</option>
+                                    <option value="anual">Este Año</option>
+                                    <option value="personalizado">Personalizado</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 d-flex align-items-end">
+                                <button id="btnGenerarReporte" class="btn btn-primary w-100">
+                                    <i class="bi bi-play-fill me-2"></i>Generar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="metric-card">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <div class="metric-title">Ingresos Totales</div>
+                                        <div id="totalIngresos" class="metric-value text-success">₲ 0</div>
+                                    </div>
+                                    <div class="icon-metric icon-success">
+                                        <i class="bi bi-arrow-up"></i>
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <small id="ingresosCambio" class="text-muted">+0% vs período anterior</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="metric-card">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <div class="metric-title">Egresos Totales</div>
+                                        <div id="totalEgresos" class="metric-value text-danger">₲ 0</div>
+                                    </div>
+                                    <div class="icon-metric icon-danger">
+                                        <i class="bi bi-arrow-down"></i>
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <small id="egresosCambio" class="text-muted">+0% vs período anterior</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="metric-card">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <div class="metric-title">Utilidad Neta</div>
+                                        <div id="utilidadNeta" class="metric-value text-primary">₲ 0</div>
+                                    </div>
+                                    <div class="icon-metric icon-primary">
+                                        <i class="bi bi-graph-up"></i>
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <small id="utilidadCambio" class="text-muted">+0% vs período anterior</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="metric-card">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <div class="metric-title">Obras Activas</div>
+                                        <div id="obrasActivas" class="metric-value text-warning">0</div>
+                                    </div>
+                                    <div class="icon-metric icon-warning">
+                                        <i class="bi bi-building"></i>
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <small id="obrasProgreso" class="text-muted">0 en progreso</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="row mb-4">
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h3 class="card-title">
+                                        <i class="bi bi-graph-down me-2"></i>Flujo de Caja
+                                    </h3>
+                                    <div class="chart-container">
+                                        <canvas id="chartFlujoCaja"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h3 class="card-title">
+                                        <i class="bi bi-pie-chart me-2"></i>Distribución de Gastos
+                                    </h3>
+                                    <div class="chart-container">
+                                        <canvas id="chartGastos"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="row mb-4">
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h3 class="card-title">
+                                        <i class="bi bi-cash-coin me-2"></i>Cuentas por Cobrar
+                                    </h3>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Cliente</th>
+                                                    <th class="text-end">Monto</th>
+                                                    <th class="text-end">Vencimiento</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tablaCuentasCobrar">
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h3 class="card-title">
+                                        <i class="bi bi-cash-stack me-2"></i>Cuentas por Pagar
+                                    </h3>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Proveedor</th>
+                                                    <th class="text-end">Monto</th>
+                                                    <th class="text-end">Vencimiento</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tablaCuentasPagar">
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h3 class="card-title">
+                                        <i class="bi bi-building-check me-2"></i>Rentabilidad por Obra
+                                    </h3>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Obra</th>
+                                                    <th>Cliente</th>
+                                                    <th class="text-end">Ingresos</th>
+                                                    <th class="text-end">Costos</th>
+                                                    <th class="text-end">Utilidad</th>
+                                                    <th class="text-end">Margen %</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tablaRentabilidad">
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+
+            
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; 2A Constructora 2025</div>
+                        <div>
+                            <a href="#">Política de Privacidad</a>
+                            &middot;
+                            <a href="#">Términos &amp; Condiciones</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    
+    <div id="alertContainer" class="alert-container no-print"></div>
+
+    <script>
+        // === SISTEMA DE REPORTES FINANCIEROS MEJORADO ===
+
+        class ReporteFinancieroMejorado {
+            constructor() {
+                this.datos = {};
+                this.chartFlujoCaja = null;
+                this.chartGastos = null;
+                this.isLoading = false;
+                this.init();
+            }
+
+            init() {
+                this.setupEventListeners();
+                this.configurarFechas();
+                this.cargarDatosDesdeStorage();
+                this.generarReporte();
+            }
+
+            setupEventListeners() {
+                document.getElementById('btnGenerarReporte').addEventListener('click', () => this.generarReporte());
+                document.getElementById('btnActualizar').addEventListener('click', () => this.actualizarDatos());
+                document.getElementById('btnExportar').addEventListener('click', () => this.exportarReporte());
+                document.getElementById('btnImprimir').addEventListener('click', () => this.imprimirReporte());
+                document.getElementById('periodo').addEventListener('change', (e) => this.cambiarPeriodo(e.target.value));
+            }
+
+            configurarFechas() {
+                const hoy = new Date();
+                const inicioMes = new Date(hoy.getFullYear(), hoy.getMonth(), 1);
+
+                document.getElementById('fechaInicio').value = inicioMes.toISOString().split('T')[0];
+                document.getElementById('fechaFin').value = hoy.toISOString().split('T')[0];
+            }
+
+            cambiarPeriodo(periodo) {
+                const hoy = new Date();
+                let fechaInicio, fechaFin;
+
+                switch (periodo) {
+                    case 'mensual':
+                        fechaInicio = new Date(hoy.getFullYear(), hoy.getMonth(), 1);
+                        fechaFin = hoy;
+                        break;
+                    case 'trimestral':
+                        const trimestre = Math.floor(hoy.getMonth() / 3);
+                        fechaInicio = new Date(hoy.getFullYear(), trimestre * 3, 1);
+                        fechaFin = hoy;
+                        break;
+                    case 'anual':
+                        fechaInicio = new Date(hoy.getFullYear(), 0, 1);
+                        fechaFin = hoy;
+                        break;
+                    default:
+                        return;
+                }
+
+                document.getElementById('fechaInicio').value = fechaInicio.toISOString().split('T')[0];
+                document.getElementById('fechaFin').value = fechaFin.toISOString().split('T')[0];
+            }
+
+            cargarDatosDesdeStorage() {
+                try {
+                    this.datos = {
+                        facturasClientes: JSON.parse(localStorage.getItem('facturasclientes')) || [],
+                        detalleFacturasClientes: JSON.parse(localStorage.getItem('detallefacturacliente')) || [],
+                        facturasProveedores: JSON.parse(localStorage.getItem('comprascabecera')) || [],
+                        detalleFacturasProveedores: JSON.parse(localStorage.getItem('comprasdetalle')) || [],
+                        pagosProveedores: JSON.parse(localStorage.getItem('pagosProveedores')) || [],
+                        cobrosClientes: JSON.parse(localStorage.getItem('cobrosClientes')) || [],
+                        adelantos: JSON.parse(localStorage.getItem('adelantosProveedores')) || [],
+                        anticipos: JSON.parse(localStorage.getItem('anticipos')) || [],
+                        obras: JSON.parse(localStorage.getItem('obras')) || [],
+                        clientes: JSON.parse(localStorage.getItem('clientes')) || [],
+                        proveedores: JSON.parse(localStorage.getItem('proveedores')) || [],
+                        materiales: JSON.parse(localStorage.getItem('materiales')) || []
+                    };
+
+                    console.log('Datos cargados:', this.datos);
+                } catch (error) {
+                    console.error('Error al cargar datos:', error);
+                    this.mostrarAlerta('Error al cargar los datos del sistema', 'error');
+                }
+            }
+
+            filtrarPorFecha(array, campoFecha) {
+                if (!array || !Array.isArray(array)) return [];
+
+                const fechaInicio = new Date(document.getElementById('fechaInicio').value);
+                const fechaFin = new Date(document.getElementById('fechaFin').value);
+                fechaFin.setHours(23, 59, 59, 999);
+
+                return array.filter(item => {
+                    if (!item[campoFecha]) return false;
+                    const fecha = new Date(item[campoFecha]);
+                    return fecha >= fechaInicio && fecha <= fechaFin && !isNaN(fecha.getTime());
+                });
+            }
+
+            calcularIngresos() {
+                const facturas = this.filtrarPorFecha(this.datos.facturasClientes, 'fecventa');
+                const cobros = this.filtrarPorFecha(this.datos.cobrosClientes, 'fechaCobro');
+                const anticipos = this.filtrarPorFecha(this.datos.anticipos, 'fechaAnticipo');
+
+                // Filtrar solo facturas no anuladas
+                const facturasValidas = facturas.filter(f => f.anulado !== "SI");
+
+                const ingresosFacturas = facturasValidas.reduce((sum, f) => {
+                    const monto = parseFloat(f.totventa) || 0;
+                    return sum + monto;
+                }, 0);
+
+                const ingresosCobros = cobros.reduce((sum, c) => {
+                    const monto = parseFloat(c.montoCobro) || 0;
+                    return sum + monto;
+                }, 0);
+
+                const ingresosAnticipos = anticipos.reduce((sum, a) => {
+                    const monto = parseFloat(a.montoAnticipo) || 0;
+                    return sum + monto;
+                }, 0);
+
+                return {
+                    total: ingresosFacturas + ingresosCobros + ingresosAnticipos,
+                    facturas: ingresosFacturas,
+                    cobros: ingresosCobros,
+                    anticipos: ingresosAnticipos,
+                    detalle: { facturas: facturasValidas, cobros, anticipos }
+                };
+            }
+
+            calcularEgresos() {
+                const facturas = this.filtrarPorFecha(this.datos.facturasProveedores, 'feccompra');
+                const pagos = this.filtrarPorFecha(this.datos.pagosProveedores, 'fechaPago');
+                const adelantos = this.filtrarPorFecha(this.datos.adelantos, 'fechaAdelanto');
+
+                // Filtrar solo facturas no anuladas
+                const facturasValidas = facturas.filter(f => f.anulado !== "SI");
+
+                const egresosFacturas = facturasValidas.reduce((sum, f) => {
+                    const monto = parseFloat(f.totcompra) || 0;
+                    return sum + monto;
+                }, 0);
+
+                const egresosPagos = pagos.reduce((sum, p) => {
+                    const monto = parseFloat(p.montoPago) || 0;
+                    return sum + monto;
+                }, 0);
+
+                const egresosAdelantos = adelantos.reduce((sum, a) => {
+                    const monto = parseFloat(a.montoAdelanto) || 0;
+                    return sum + monto;
+                }, 0);
+
+                return {
+                    total: egresosFacturas + egresosPagos + egresosAdelantos,
+                    facturas: egresosFacturas,
+                    pagos: egresosPagos,
+                    adelantos: egresosAdelantos,
+                    detalle: { facturas: facturasValidas, pagos, adelantos }
+                };
+            }
+
+            calcularCuentasPorCobrar() {
+                return this.datos.facturasClientes
+                    .filter(f => f.anulado !== "SI" && (parseFloat(f.saldo) || 0) > 0)
+                    .map(f => {
+                        const cliente = this.datos.clientes.find(c => c.idCliente === f.idCliente);
+                        return {
+                            cliente: cliente ? cliente.razonSocial : 'Cliente desconocido',
+                            monto: parseFloat(f.saldo) || 0,
+                            vencimiento: f.fechaVencimiento || 'No definido',
+                            factura: f.numfactura,
+                            dias: this.calcularDiasVencimiento(f.fechaVencimiento)
+                        };
+                    })
+                    .sort((a, b) => new Date(a.vencimiento) - new Date(b.vencimiento));
+            }
+
+            calcularCuentasPorPagar() {
+                return this.datos.facturasProveedores
+                    .filter(f => f.anulado !== "SI" && (parseFloat(f.saldo) || 0) > 0)
+                    .map(f => {
+                        const proveedor = this.datos.proveedores.find(p => p.idProveedor === f.idproveedor);
+                        return {
+                            proveedor: proveedor ? proveedor.razonsocial : 'Proveedor desconocido',
+                            monto: parseFloat(f.saldo) || 0,
+                            vencimiento: f.fecvencimiento || 'No definido',
+                            factura: f.numfactura,
+                            dias: this.calcularDiasVencimiento(f.fecvencimiento)
+                        };
+                    })
+                    .sort((a, b) => new Date(a.vencimiento) - new Date(b.vencimiento));
+            }
+
+            calcularDiasVencimiento(fechaVencimiento) {
+                if (!fechaVencimiento || fechaVencimiento === 'No definido') return 0;
+
+                const hoy = new Date();
+                const vencimiento = new Date(fechaVencimiento);
+                const diferencia = Math.ceil((vencimiento - hoy) / (1000 * 60 * 60 * 24));
+                return diferencia;
+            }
+
+            calcularRentabilidadObras() {
+                return this.datos.obras.map(obra => {
+                    const cliente = this.datos.clientes.find(c => c.idCliente === obra.idCliente);
+
+                    // Calcular ingresos de la obra
+                    const facturasObra = this.datos.facturasClientes.filter(f =>
+                        f.idObra === obra.idObra && f.anulado !== "SI"
+                    );
+
+                    const ingresos = facturasObra.reduce((sum, f) => {
+                        return sum + (parseFloat(f.totventa) || 0);
+                    }, 0);
+
+                    // Calcular costos estimados
+                    const costos = parseFloat(obra.costoEstimado) || parseFloat(obra.presupuesto) || 0;
+                    const utilidad = ingresos - costos;
+                    const margen = ingresos > 0 ? (utilidad / ingresos * 100) : 0;
+
+                    return {
+                        obra: obra.nombre || obra.descripcion || 'Obra sin nombre',
+                        cliente: cliente ? cliente.razonSocial : 'Cliente desconocido',
+                        ingresos,
+                        costos,
+                        utilidad,
+                        margen,
+                        estado: obra.estado || 'Sin estado',
+                        fechaInicio: obra.fechaInicio || 'No definida',
+                        fechaFin: obra.fechaFin || 'No definida'
+                    };
+                }).filter(o => o.ingresos > 0 || o.costos > 0);
+            }
+
+            generarReporte() {
+                if (this.isLoading) return;
+
+                this.isLoading = true;
+                this.mostrarCargando(true);
+
+                setTimeout(() => {
+                    try {
+                        const ingresos = this.calcularIngresos();
+                        const egresos = this.calcularEgresos();
+                        const utilidad = ingresos.total - egresos.total;
+                        const cuentasCobrar = this.calcularCuentasPorCobrar();
+                        const cuentasPagar = this.calcularCuentasPorPagar();
+                        const rentabilidad = this.calcularRentabilidadObras();
+
+                        // Actualizar indicadores
+                        this.actualizarIndicadores(ingresos.total, egresos.total, utilidad);
+
+                        // Actualizar gráficos
+                        this.actualizarGraficos(ingresos, egresos);
+
+                        // Actualizar tablas
+                        this.actualizarTablas(cuentasCobrar, cuentasPagar, rentabilidad);
+
+                        // Guardar reporte
+                        this.guardarReporte({
+                            fecha: new Date().toISOString(),
+                            periodo: {
+                                inicio: document.getElementById('fechaInicio').value,
+                                fin: document.getElementById('fechaFin').value
+                            },
+                            ingresos,
+                            egresos,
+                            utilidad,
+                            cuentasCobrar,
+                            cuentasPagar,
+                            rentabilidad
+                        });
+
+                        this.mostrarCargando(false);
+                        this.mostrarAlerta('Reporte generado exitosamente', 'success');
+
+                    } catch (error) {
+                        console.error('Error al generar reporte:', error);
+                        this.mostrarCargando(false);
+                        this.mostrarAlerta('Error al generar el reporte', 'error');
+                    } finally {
+                        this.isLoading = false;
+                    }
+                }, 1000);
+            }
+
+            actualizarIndicadores(ingresos, egresos, utilidad) {
+                // Actualizar valores principales
+                document.getElementById('totalIngresos').textContent = this.formatearMoneda(ingresos);
+                document.getElementById('totalEgresos').textContent = this.formatearMoneda(egresos);
+                document.getElementById('utilidadNeta').textContent = this.formatearMoneda(utilidad);
+
+                // Calcular obras activas
+                const obrasActivas = this.datos.obras.filter(o =>
+                    o.estado === 'en_progreso' || o.estado === 'activa' || o.estado === 'En Progreso'
+                ).length;
+
+                document.getElementById('obrasActivas').textContent = obrasActivas;
+
+                // Simular cambios porcentuales (en un sistema real, se compararía con período anterior)
+                const cambioIngresos = this.calcularCambioPorcentual(ingresos, 'ingresos');
+                const cambioEgresos = this.calcularCambioPorcentual(egresos, 'egresos');
+                const cambioUtilidad = this.calcularCambioPorcentual(utilidad, 'utilidad');
+
+                this.actualizarCambio('ingresosCambio', cambioIngresos);
+                this.actualizarCambio('egresosCambio', cambioEgresos);
+                this.actualizarCambio('utilidadCambio', cambioUtilidad);
+
+                document.getElementById('obrasProgreso').textContent = `${obrasActivas} en progreso`;
+            }
+
+            calcularCambioPorcentual(valorActual, tipo) {
+                // Simulación de cambio - en un sistema real obtendríamos datos del período anterior
+                const variacion = (Math.random() * 30) - 15; // Entre -15% y +15%
+                return {
+                    porcentaje: variacion,
+                    positivo: variacion > 0
+                };
+            }
+
+            actualizarCambio(elementoId, cambio) {
+                const elemento = document.getElementById(elementoId);
+                if (elemento) {
+                    const signo = cambio.positivo ? '+' : '';
+                    elemento.textContent = `${signo}${cambio.porcentaje.toFixed(1)}% vs período anterior`;
+                    elemento.className = `metric-change ${cambio.positivo ? 'positive' : 'negative'}`;
+                }
+            }
+
+            actualizarGraficos(ingresos, egresos) {
+                this.crearGraficoFlujoCaja(ingresos, egresos);
+                this.crearGraficoGastos(egresos);
+            }
+
+            crearGraficoFlujoCaja(ingresos, egresos) {
+                const ctx = document.getElementById('chartFlujoCaja').getContext('2d');
+
+                if (this.chartFlujoCaja) {
+                    this.chartFlujoCaja.destroy();
+                }
+
+                // Generar datos para los últimos 12 meses
+                const meses = [];
+                const ingresosData = [];
+                const egresosData = [];
+
+                for (let i = 11; i >= 0; i--) {
+                    const fecha = new Date();
+                    fecha.setMonth(fecha.getMonth() - i);
+                    meses.push(fecha.toLocaleDateString('es', { month: 'short', year: '2-digit' }));
+
+                    // Simular datos basados en los totales actuales
+                    const variacionIngresos = 0.8 + (Math.random() * 0.4); // Entre 80% y 120%
+                    const variacionEgresos = 0.8 + (Math.random() * 0.4);
+
+                    ingresosData.push(ingresos.total * variacionIngresos / 12);
+                    egresosData.push(egresos.total * variacionEgresos / 12);
+                }
+
+                this.chartFlujoCaja = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: meses,
+                        datasets: [{
+                            label: 'Ingresos',
+                            data: ingresosData,
+                            borderColor: '#10b981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            tension: 0.4,
+                            fill: true,
+                            borderWidth: 3,
+                            pointBackgroundColor: '#10b981',
+                            pointBorderColor: '#ffffff',
+                            pointBorderWidth: 2,
+                            pointRadius: 6
+                        }, {
+                            label: 'Egresos',
+                            data: egresosData,
+                            borderColor: '#ef4444',
+                            backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                            tension: 0.4,
+                            fill: true,
+                            borderWidth: 3,
+                            pointBackgroundColor: '#ef4444',
+                            pointBorderColor: '#ffffff',
+                            pointBorderWidth: 2,
+                            pointRadius: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                labels: {
+                                    font: {
+                                        family: 'Inter',
+                                        weight: '600'
+                                    },
+                                    usePointStyle: true,
+                                    padding: 20
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: 'rgba(0, 0, 0, 0.05)'
+                                },
+                                ticks: {
+                                    font: {
+                                        family: 'Inter'
+                                    },
+                                    callback: function (value) {
+                                        return '₲ ' + (value / 1000000).toFixed(1) + 'M';
+                                    }
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    display: false
+                                },
+                                ticks: {
+                                    font: {
+                                        family: 'Inter'
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            crearGraficoGastos(egresos) {
+                const ctx = document.getElementById('chartGastos').getContext('2d');
+
+                if (this.chartGastos) {
+                    this.chartGastos.destroy();
+                }
+
+                // Distribuir los gastos por categorías
+                const categorias = ['Materiales', 'Mano de Obra', 'Servicios', 'Otros'];
+                const colores = ['#4f46e5', '#10b981', '#f59e0b', '#ef4444'];
+                const datos = [
+                    egresos.facturas * 0.6,  // 60% en materiales
+                    egresos.facturas * 0.25, // 25% en mano de obra
+                    egresos.pagos,           // Servicios
+                    egresos.adelantos        // Otros
+                ];
+
+                this.chartGastos = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: categorias,
+                        datasets: [{
+                            data: datos,
+                            backgroundColor: colores,
+                            borderWidth: 3,
+                            borderColor: '#ffffff',
+                            hoverBorderWidth: 4,
+                            hoverOffset: 10
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    font: {
+                                        family: 'Inter',
+                                        weight: '600'
+                                    },
+                                    usePointStyle: true,
+                                    padding: 20,
+                                    generateLabels: function (chart) {
+                                        const data = chart.data;
+                                        if (data.labels.length && data.datasets.length) {
+                                            return data.labels.map((label, i) => {
+                                                const dataset = data.datasets[0];
+                                                const value = dataset.data[i];
+                                                const total = dataset.data.reduce((a, b) => a + b, 0);
+                                                const percentage = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
+                                                return {
+                                                    text: `${label}: ${percentage}%`,
+                                                    fillStyle: dataset.backgroundColor[i],
+                                                    strokeStyle: dataset.borderColor,
+                                                    lineWidth: dataset.borderWidth,
+                                                    hidden: isNaN(value),
+                                                    index: i
+                                                };
+                                            });
+                                        }
+                                        return [];
+                                    }
+                                }
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                                titleColor: '#ffffff',
+                                bodyColor: '#ffffff',
+                                borderColor: 'rgba(255, 255, 255, 0.2)',
+                                borderWidth: 1,
+                                cornerRadius: 8,
+                                callbacks: {
+                                    label: function (context) {
+                                        const label = context.label || '';
+                                        const value = context.raw;
+                                        const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                        const percentage = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
+                                        return `${label}: ₲${value.toLocaleString('es-PY')} (${percentage}%)`;
+                                    }
+                                }
+                            }
+                        },
+                        cutout: '60%',
+                        animation: {
+                            animateScale: true,
+                            animateRotate: true
+                        }
+                    }
+                });
+            }
+
+            actualizarTablas(cuentasCobrar, cuentasPagar, rentabilidad) {
+                // Actualizar tabla de cuentas por cobrar
+                this.actualizarTablaCuentasCobrar(cuentasCobrar);
+
+                // Actualizar tabla de cuentas por pagar
+                this.actualizarTablaCuentasPagar(cuentasPagar);
+
+                // Actualizar tabla de rentabilidad
+                this.actualizarTablaRentabilidad(rentabilidad);
+            }
+
+            actualizarTablaCuentasCobrar(cuentasCobrar) {
+                const tablaCobrar = document.getElementById('tablaCuentasCobrar');
+                tablaCobrar.innerHTML = '';
+
+                const cuentasLimitadas = cuentasCobrar.slice(0, 10);
+
+                if (cuentasLimitadas.length === 0) {
+                    tablaCobrar.innerHTML = `
+                        <tr>
+                            <td colspan="3" class="text-center text-muted py-4">
+                                <i class="bi bi-inbox me-2"></i>No hay cuentas por cobrar en el período seleccionado
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+
+                cuentasLimitadas.forEach(cuenta => {
+                    const row = tablaCobrar.insertRow();
+                    const diasVencimiento = cuenta.dias;
+                    let estadoClase = '';
+                    let estadoTexto = '';
+
+                    if (diasVencimiento < 0) {
+                        estadoClase = 'text-danger';
+                        estadoTexto = `Vencida (${Math.abs(diasVencimiento)} días)`;
+                    } else if (diasVencimiento <= 7) {
+                        estadoClase = 'text-warning';
+                        estadoTexto = `Por vencer (${diasVencimiento} días)`;
+                    } else {
+                        estadoClase = 'text-success';
+                        estadoTexto = `${diasVencimiento} días`;
+                    }
+
+                    row.innerHTML = `
+                        <td>
+                            <div class="fw-semibold">${cuenta.cliente}</div>
+                            <small class="text-muted">Factura: ${cuenta.factura}</small>
+                        </td>
+                        <td class="text-end fw-bold">${this.formatearMoneda(cuenta.monto)}</td>
+                        <td class="text-end ${estadoClase}">${estadoTexto}</td>
+                    `;
+                });
+            }
+
+            actualizarTablaCuentasPagar(cuentasPagar) {
+                const tablaPagar = document.getElementById('tablaCuentasPagar');
+                tablaPagar.innerHTML = '';
+
+                const cuentasLimitadas = cuentasPagar.slice(0, 10);
+
+                if (cuentasLimitadas.length === 0) {
+                    tablaPagar.innerHTML = `
+                        <tr>
+                            <td colspan="3" class="text-center text-muted py-4">
+                                <i class="bi bi-inbox me-2"></i>No hay cuentas por pagar en el período seleccionado
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+
+                cuentasLimitadas.forEach(cuenta => {
+                    const row = tablaPagar.insertRow();
+                    const diasVencimiento = cuenta.dias;
+                    let estadoClase = '';
+                    let estadoTexto = '';
+
+                    if (diasVencimiento < 0) {
+                        estadoClase = 'text-danger';
+                        estadoTexto = `Vencida (${Math.abs(diasVencimiento)} días)`;
+                    } else if (diasVencimiento <= 7) {
+                        estadoClase = 'text-warning';
+                        estadoTexto = `Por vencer (${diasVencimiento} días)`;
+                    } else {
+                        estadoClase = 'text-success';
+                        estadoTexto = `${diasVencimiento} días`;
+                    }
+
+                    row.innerHTML = `
+                        <td>
+                            <div class="fw-semibold">${cuenta.proveedor}</div>
+                            <small class="text-muted">Factura: ${cuenta.factura}</small>
+                        </td>
+                        <td class="text-end fw-bold">${this.formatearMoneda(cuenta.monto)}</td>
+                        <td class="text-end ${estadoClase}">${estadoTexto}</td>
+                    `;
+                });
+            }
+
+            actualizarTablaRentabilidad(rentabilidad) {
+                const tablaRent = document.getElementById('tablaRentabilidad');
+                tablaRent.innerHTML = '';
+
+                if (rentabilidad.length === 0) {
+                    tablaRent.innerHTML = `
+                        <tr>
+                            <td colspan="6" class="text-center text-muted py-4">
+                                <i class="bi bi-building me-2"></i>No hay datos de obras en el período seleccionado
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+
+                rentabilidad.forEach(obra => {
+                    const row = tablaRent.insertRow();
+                    const margenClass = obra.margen > 20 ? 'text-success' : obra.margen > 0 ? 'text-warning' : 'text-danger';
+                    const utilidadClass = obra.utilidad > 0 ? 'text-success' : 'text-danger';
+
+                    row.innerHTML = `
+                        <td>
+                            <div class="fw-semibold">${obra.obra}</div>
+                            <small class="text-muted">Estado: ${obra.estado}</small>
+                        </td>
+                        <td>${obra.cliente}</td>
+                        <td class="text-end fw-bold">${this.formatearMoneda(obra.ingresos)}</td>
+                        <td class="text-end fw-bold">${this.formatearMoneda(obra.costos)}</td>
+                        <td class="text-end fw-bold ${utilidadClass}">${this.formatearMoneda(obra.utilidad)}</td>
+                        <td class="text-end fw-bold ${margenClass}">${obra.margen.toFixed(1)}%</td>
+                    `;
+                });
+            }
+
+            mostrarCargando(mostrar) {
+                const container = document.getElementById('alertContainer');
+                if (mostrar) {
+                    container.innerHTML = `
+                        <div class="alert alert-info d-flex align-items-center alert-custom">
+                            <div class="loading-spinner me-3"></div>
+                            <span class="fw-semibold">Generando reporte financiero...</span>
+                        </div>
+                    `;
+                } else {
+                    // Limpiar solo las alertas de carga, no todas las alertas
+                    const alertaCarga = container.querySelector('.alert-info');
+                    if (alertaCarga) {
+                        alertaCarga.remove();
+                    }
+                }
+            }
+
+            mostrarAlerta(mensaje, tipo = 'info') {
+                const container = document.getElementById('alertContainer');
+                const alerta = document.createElement('div');
+
+                const configuraciones = {
+                    success: { clase: 'alert-success', icono: 'bi-check-circle' },
+                    error: { clase: 'alert-danger', icono: 'bi-exclamation-triangle' },
+                    warning: { clase: 'alert-warning', icono: 'bi-exclamation-circle' },
+                    info: { clase: 'alert-info', icono: 'bi-info-circle' }
+                };
+
+                const config = configuraciones[tipo] || configuraciones.info;
+
+                alerta.className = `alert ${config.clase} alert-custom d-flex align-items-center`;
+                alerta.innerHTML = `
+                    <i class="bi ${config.icono} me-2"></i>
+                    <span class="fw-semibold flex-grow-1">${mensaje}</span>
+                    <button type="button" class="btn-close btn-close-white ms-3" onclick="this.parentElement.remove()"></button>
+                `;
+
+                container.appendChild(alerta);
+
+                // Auto eliminar después de 5 segundos
+                setTimeout(() => {
+                    if (alerta.parentNode) {
+                        alerta.style.transform = 'translateX(100%)';
+                        setTimeout(() => alerta.remove(), 300);
+                    }
+                }, 5000);
+            }
+
+            guardarReporte(reporte) {
+                try {
+                    const reportes = JSON.parse(localStorage.getItem('reportesFinancieros')) || [];
+                    reportes.unshift(reporte);
+
+                    // Mantener solo los últimos 50 reportes
+                    if (reportes.length > 50) {
+                        reportes.splice(50);
+                    }
+
+                    localStorage.setItem('reportesFinancieros', JSON.stringify(reportes));
+                    localStorage.setItem('ultimoReporteFinanciero', JSON.stringify(reporte));
+
+                    console.log('Reporte guardado exitosamente');
+                } catch (error) {
+                    console.error('Error al guardar reporte:', error);
+                }
+            }
+
+            exportarReporte() {
+                try {
+                    const reporte = JSON.parse(localStorage.getItem('ultimoReporteFinanciero'));
+                    if (!reporte) {
+                        this.mostrarAlerta('No hay reporte para exportar. Genere un reporte primero.', 'warning');
+                        return;
+                    }
+
+                    const csv = this.convertirACSV(reporte);
+                    this.descargarArchivo(csv, `reporte_financiero_${new Date().toISOString().split('T')[0]}.csv`, 'text/csv');
+                    this.mostrarAlerta('Reporte exportado exitosamente', 'success');
+                } catch (error) {
+                    console.error('Error al exportar:', error);
+                    this.mostrarAlerta('Error al exportar el reporte', 'error');
+                }
+            }
+
+            convertirACSV(reporte) {
+                let csv = 'REPORTE FINANCIERO - 2A CONSTRUCTORA\n';
+                csv += `Período: ${this.formatearFecha(reporte.periodo.inicio)} al ${this.formatearFecha(reporte.periodo.fin)}\n`;
+                csv += `Generado: ${new Date(reporte.fecha).toLocaleString('es-PY')}\n\n`;
+
+                csv += 'RESUMEN EJECUTIVO\n';
+                csv += 'Concepto,Monto\n';
+                csv += `Ingresos Totales,${reporte.ingresos.total}\n`;
+                csv += `Egresos Totales,${reporte.egresos.total}\n`;
+                csv += `Utilidad Neta,${reporte.utilidad}\n\n`;
+
+                if (reporte.cuentasCobrar.length > 0) {
+                    csv += 'CUENTAS POR COBRAR\n';
+                    csv += 'Cliente,Monto,Vencimiento,Días\n';
+                    reporte.cuentasCobrar.forEach(c => {
+                        csv += `"${c.cliente}",${c.monto},"${c.vencimiento}",${c.dias || 0}\n`;
+                    });
+                    csv += '\n';
+                }
+
+                if (reporte.cuentasPagar.length > 0) {
+                    csv += 'CUENTAS POR PAGAR\n';
+                    csv += 'Proveedor,Monto,Vencimiento,Días\n';
+                    reporte.cuentasPagar.forEach(c => {
+                        csv += `"${c.proveedor}",${c.monto},"${c.vencimiento}",${c.dias || 0}\n`;
+                    });
+                    csv += '\n';
+                }
+
+                if (reporte.rentabilidad.length > 0) {
+                    csv += 'RENTABILIDAD POR OBRA\n';
+                    csv += 'Obra,Cliente,Ingresos,Costos,Utilidad,Margen %\n';
+                    reporte.rentabilidad.forEach(o => {
+                        csv += `"${o.obra}","${o.cliente}",${o.ingresos},${o.costos},${o.utilidad},${o.margen.toFixed(2)}\n`;
+                    });
+                }
+
+                return csv;
+            }
+
+            imprimirReporte() {
+                // Agregar clase de impresión al body
+                document.body.classList.add('printing');
+
+                setTimeout(() => {
+                    window.print();
+                    document.body.classList.remove('printing');
+                }, 100);
+            }
+
+            actualizarDatos() {
+                this.cargarDatosDesdeStorage();
+                this.generarReporte();
+                this.mostrarAlerta('Datos actualizados correctamente', 'success');
+            }
+
+            descargarArchivo(contenido, nombreArchivo, tipoMime) {
+                const blob = new Blob([contenido], { type: tipoMime + ';charset=utf-8;' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = nombreArchivo;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+            }
+
+            formatearMoneda(valor) {
+                if (isNaN(valor) || valor === null || valor === undefined) return '₲ 0';
+
+                return new Intl.NumberFormat('es-PY', {
+                    style: 'currency',
+                    currency: 'PYG',
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
+                }).format(valor).replace('PYG', '₲');
+            }
+
+            formatearFecha(fecha) {
+                if (!fecha || fecha === 'No definido') return 'No definido';
+
+                try {
+                    return new Date(fecha).toLocaleDateString('es-PY');
+                } catch (error) {
+                    return 'Fecha inválida';
+                }
+            }
+        }
+
+        // Inicializar el sistema cuando se carga la página
+        document.addEventListener('DOMContentLoaded', function () {
+            // Verificar autenticación
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) {
+                alertify.error("Usuario no encontrado.");
+                setTimeout(() => {
+                    window.location.href = "error.html";
+                }, 2000);
+                return;
+            } else {
+                // Mostrar el nombre del usuario y rol en el menú
+                document.getElementById('nomUsuario').innerText = `${currentUser.nombre} ${currentUser.apellido}`;
+                document.getElementById("rol").textContent = formatearRol(currentUser.rol);
+            }
+
+            // Configurar tema oscuro
+            configurarTemaOscuro();
+
+            // Inicializar reportes mejorados
+            window.reporteFinanciero = new ReporteFinancieroMejorado();
+
+            console.log('Sistema de reportes financieros inicializado correctamente');
+        });
+
+        // Formatear el nombre del rol para mostrar
+        function formatearRol(rol) {
+            const roles = {
+                'administrador': 'Administrador',
+                'jefe_obra': 'Jefe de Obra',
+                'gerente': 'Gerente',
+                'obrero': 'Obrero',
+                'contador': 'Contador/Financiero',
+                'codificador': 'Codificador'
+            };
+            return roles[rol] || rol;
+        }
+
+        // Función para configurar tema oscuro mejorada
+        function configurarTemaOscuro() {
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const htmlElement = document.documentElement;
+
+            // Verificar preferencia guardada
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                htmlElement.setAttribute('data-bs-theme', 'dark');
+                darkModeToggle.innerHTML = '<i class="bi bi-sun"></i>';
+            } else {
+                htmlElement.setAttribute('data-bs-theme', 'light');
+                darkModeToggle.innerHTML = '<i class="bi bi-moon-stars"></i>';
+            }
+
+            // Toggle modo oscuro
+            darkModeToggle.addEventListener('click', function () {
+                const currentTheme = htmlElement.getAttribute('data-bs-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+                htmlElement.setAttribute('data-bs-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+
+                if (newTheme === 'dark') {
+                    darkModeToggle.innerHTML = '<i class="bi bi-sun"></i>';
+                } else {
+                    darkModeToggle.innerHTML = '<i class="bi bi-moon-stars"></i>';
+                }
+
+                // Regenerar gráficos si existen
+                if (window.reporteFinanciero) {
+                    setTimeout(() => {
+                        window.reporteFinanciero.generarReporte();
+                    }, 100);
+                }
+            });
+
+            // Escuchar cambios en preferencias del sistema
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                if (!localStorage.getItem('theme')) {
+                    const newTheme = e.matches ? 'dark' : 'light';
+                    htmlElement.setAttribute('data-bs-theme', newTheme);
+                    darkModeToggle.innerHTML = newTheme === 'dark' ? '<i class="bi bi-sun"></i>' : '<i class="bi bi-moon-stars"></i>';
+                }
+            });
+        }
+
+        // Función de utilidad para cerrar sesión
+        function cerrarSesion() {
+            if (confirm('¿Está seguro que desea cerrar sesión?')) {
+                localStorage.removeItem('currentUser');
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+
+    
+    <style media="print">
+        @page {
+            margin: 1cm;
+            size: A4;
+        }
+
+        .no-print {
+            display: none !important;
+        }
+
+        .card,
+        .metric-card {
+            break-inside: avoid;
+            margin-bottom: 1rem;
+            box-shadow: none !important;
+            border: 1px solid #ddd !important;
+        }
+
+        .chart-container {
+            height: 200px !important;
+        }
+
+        body {
+            font-size: 12px;
+            background: white !important;
+        }
+
+        .gradient-bg {
+            background: #4f46e5 !important;
+            color: white !important;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .table {
+            font-size: 10px;
+        }
+
+        .metric-value {
+            font-size: 1.5rem !important;
+        }
+    </style>
+
+    
+    <script src="js/roleMenuAccess.js"></script>
+    <script src="js/funcionesSistema.js"></script>
+    <script src="menu/scripts.js"></script>
+    <script src="js/cerrarSesion.js"></script>
+    <script src="js/user-functions.js"></script>
+    
+    <script src="menu/bootstrap.bundle.min.js"></script>
+    
+    <script src="dt/jquery-3.7.1.js"></script>
+    <script src="dt/datatables.min.js"></script>
+    <script src="dt/jquery.dataTables.min.js"></script>
+    
+    <script src="dt/dataTables.buttons.min.js"></script>
+    <script src="dt/buttons.print.min.js"></script>
+    <script src="dt/buttons.html5.min.js"></script>
+    
+    <script src="dt/jszip.min.js"></script>
+    <script src="dt/pdfmake.min.js"></script>
+    <script src="dt/vfs_fonts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+
+</html>

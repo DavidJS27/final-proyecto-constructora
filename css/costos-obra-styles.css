@@ -1,0 +1,325 @@
+
+.card {
+    transition: all 0.3s ease;
+    border-radius: 10px;
+    border: none;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+/* Mejoras en la tabla */
+#tablaCostosObra {
+    font-size: 0.9rem;
+}
+
+#tablaCostosObra th {
+    background: linear-gradient(135deg, #343a40, #495057);
+    color: white;
+    font-weight: 600;
+    border: none;
+    padding: 12px;
+    vertical-align: middle;
+}
+
+#tablaCostosObra td {
+    vertical-align: middle;
+    padding: 10px;
+    border: 1px solid #dee2e6;
+}
+
+/* Indicadores de costo */
+.costo-bajo {
+    color: #28a745;
+    font-weight: 600;
+}
+
+.costo-medio {
+    color: #ffc107;
+    font-weight: 600;
+}
+
+.costo-alto {
+    color: #dc3545;
+    font-weight: 600;
+}
+
+/* Botones de acción */
+.btn-action {
+    border-radius: 20px;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.btn-detail {
+    background: linear-gradient(135deg, #17a2b8, #138496);
+    border: none;
+    color: white;
+}
+
+.btn-detail:hover {
+    background: linear-gradient(135deg, #138496, #117a8b);
+    transform: scale(1.05);
+}
+
+/* Estilos para el link de ver detalle */
+.costos-link {
+    color: #007bff;
+    cursor: pointer;
+    text-decoration: underline;
+    font-weight: 500;
+}
+
+.costos-link:hover {
+    color: #0056b3;
+    text-decoration: none;
+}
+
+/* Mejoras en el modal */
+.modal-xl {
+    max-width: 1200px;
+}
+
+.nav-tabs {
+    border-bottom: 2px solid #dee2e6;
+}
+
+.nav-tabs .nav-link {
+    border: none;
+    padding: 0.75rem 1rem;
+    font-weight: 500;
+    border-radius: 0;
+    transition: all 0.3s ease;
+}
+
+.nav-tabs .nav-link:hover {
+    background-color: #f8f9fa;
+    transform: translateY(-2px);
+}
+
+.nav-tabs .nav-link.active {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    border-bottom: 3px solid #0056b3;
+}
+
+/* Filtros avanzados */
+.card-header {
+    background: linear-gradient(135deg, #6c757d, #495057) !important;
+    border: none;
+}
+
+.form-select {
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    padding: 0.5rem 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.form-select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Gráficos y visualizaciones */
+.chart-container {
+    position: relative;
+    height: 300px;
+    margin: 20px 0;
+}
+
+.chart-fallback {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+}
+
+.chart-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    border-radius: 5px;
+    background-color: #f8f9fa;
+}
+
+.chart-color {
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+    min-width: 20px;
+}
+
+/* Mejoras en las barras de progreso */
+.progress {
+    height: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #e9ecef;
+}
+
+.progress-bar {
+    transition: width 0.6s ease;
+    border-radius: 10px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Responsividad mejorada */
+@media (max-width: 768px) {
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .modal-xl {
+        max-width: 95%;
+    }
+    
+    #tablaCostosObra {
+        font-size: 0.8rem;
+    }
+    
+    .nav-tabs .nav-link {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.875rem;
+    }
+    
+    .chart-fallback {
+        padding: 10px;
+    }
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Estados de la tabla */
+.table-row-hover:hover {
+    background-color: #f8f9fa;
+    cursor: pointer;
+}
+
+/* Mejoras en colores de celda según el tipo */
+.costos-mat-cell {
+    background-color: rgba(40, 167, 69, 0.1);
+    border-left: 4px solid #28a745;
+}
+
+.costos-mano-cell {
+    background-color: rgba(255, 193, 7, 0.1);
+    border-left: 4px solid #ffc107;
+}
+
+.costos-other-cell {
+    background-color: rgba(23, 162, 184, 0.1);
+    border-left: 4px solid #17a2b8;
+}
+
+.costos-total-cell {
+    background-color: rgba(0, 123, 255, 0.1);
+    border-left: 4px solid #007bff;
+    font-weight: 600;
+}
+
+/* Mejoras en alertas */
+.alert-success {
+    background: linear-gradient(135deg, #d4edda, #c3e6cb);
+    border: none;
+    border-radius: 10px;
+    border-left: 4px solid #28a745;
+}
+
+/* Mejoras en botones de exportación */
+.btn-light {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border: 1px solid #dee2e6;
+    transition: all 0.3s ease;
+}
+
+.btn-light:hover {
+    background: linear-gradient(135deg, #e9ecef, #dee2e6);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Mejoras en DataTables */
+.dataTables_wrapper .dataTables_filter input {
+    border-radius: 20px;
+    padding: 0.375rem 0.75rem;
+    border: 1px solid #ced4da;
+    margin-left: 0.5rem;
+}
+
+.dataTables_wrapper .dataTables_length select {
+    border-radius: 8px;
+    padding: 0.375rem 0.75rem;
+    border: 1px solid #ced4da;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    border-radius: 20px;
+    margin: 0 2px;
+    padding: 0.375rem 0.75rem;
+    border: 1px solid #dee2e6;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white !important;
+    border-color: #007bff;
+}
+
+/* Mejoras en tooltip */
+[data-bs-toggle="tooltip"] {
+    cursor: help;
+}
+
+/* Mejoras en el modal body */
+.modal-body {
+    padding: 1.5rem;
+}
+
+.modal-body .tab-content {
+    min-height: 300px;
+}
+
+/* Mejoras en tables dentro del modal */
+.modal-body .table-responsive {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.modal-body .table th {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+    font-weight: 600;
+}
+
+.modal-body .table-success {
+    background-color: rgba(40, 167, 69, 0.1);
+}
+
+.modal-body .table-warning {
+    background-color: rgba(255, 193, 7, 0.1);
+}
+
+.modal-body .table-info {
+    background-color: rgba(23, 162, 184, 0.1);
+}

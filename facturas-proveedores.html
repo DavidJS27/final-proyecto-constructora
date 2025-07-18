@@ -1,0 +1,1927 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <title>Registrar Factura a Proveedor</title>
+    <link rel="icon" href="img/2A_constructora_logo.png">
+
+    
+    <link href="menu/styles.css" rel="stylesheet" />
+
+    
+    
+    <link rel="stylesheet" href="bt-icons/bootstrap-icons.min.css">
+    
+    <link rel="stylesheet" href="dt/datatables.min.css">
+    <link rel="stylesheet" href="dt/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="dt/buttons.dataTables.min.css">
+    
+    <link rel="stylesheet" href="alert/alertify.min.css">
+    <link rel="stylesheet" href="alert/themes/default.min.css">
+    <script src="alert/alertify.min.js"></script>
+</head>
+
+<body class="sb-nav-fixed">
+    
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <a class="navbar-brand ps-3" href="menu.html" onclick="cargarPagina('menu')">
+            <img src="img/2A_constructora_logo.png" alt="Logo" height="30" class="me-2">
+            2A Constructora
+        </a>
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#"><i
+                class="bi bi-list"></i></button>
+        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <div class="input-group">
+                <input class="form-control" type="text" placeholder="Buscar..." aria-label="Buscar..."
+                    aria-describedby="btnNavbarSearch" />
+                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="bi bi-search"></i></button>
+            </div>
+        </form>
+        <div class="me-3">
+            <button id="darkModeToggle" class="btn btn-link text-light"><i class="bi bi-moon-stars"></i></button>
+        </div>
+        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false"><i class="bi bi-person-fill"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="configuracion.html">Configuración</a></li>
+                    <li><a class="dropdown-item" href="#">Actividad</a></li>
+                    <li>
+                        <hr class="dropdown-divider" />
+                    </li>
+                    <li><a class="dropdown-item" href="#" onclick="cerrarSesion()">Cerrar sesión</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div id="principal" class="sb-sidenav-menu-heading">Principal</div>
+                        <a id="dashboard" class="nav-link" href="dashboard.html" onclick="cargarPagina('menu')">
+                            <div class="sb-nav-link-icon"><i class="bi bi-speedometer"></i></div>
+                            Dashboard
+                        </a>
+
+                        <div id="modulos" class="sb-sidenav-menu-heading">Módulos</div>
+
+                        
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseFinanzas">
+                            <div class="sb-nav-link-icon"><i class="bi bi-currency-dollar"></i></div>
+                            Finanzas
+                            <div class="sb-sidenav-collapse-arrow"><i class="bi bi-chevron-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseFinanzas" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a id="facturas-proveedores" class="nav-link collapsed" href="#"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseProveedores">
+                                    Facturas de Proveedores
+                                    <div class="sb-sidenav-collapse-arrow"><i class="bi bi-chevron-down"></i></div>
+                                </a>
+                                <div class="collapse" id="collapseProveedores" data-bs-parent="#collapseFinanzas">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        <a href="facturas-proveedores.html" class="nav-link">
+                                            <i class="bi bi-file-earmark-text me-2"></i>Registrar Compras
+                                        </a>
+                                        <a href="mantenimiento-facturas.html" class="nav-link">
+                                            <i class="bi bi-tools me-2"></i>Mantenimiento de Facturas
+                                        </a>
+                                    </nav>
+                                </div>
+
+                                <a id="facturas-clientes" class="nav-link" href="facturas-clientes.html"
+                                    onclick="cargarPagina('facturas-clientes')">Facturas de Clientes</a>
+                                <a href="mantenimiento-facturas-clientes.html" class="nav-link">
+                                    <i class="bi bi-tools me-2"></i>Mantenimiento de Facturas Clientes
+                                </a>
+                                <a id="pagos-proveedores" class="nav-link" href="pagos-proveedores.html"
+                                    onclick="cargarPagina('pagos-proveedores')">Pagos a Proveedores</a>
+                                <a id="cobros-clientes" class="nav-link" href="cobros-clientes.html">Cobros de
+                                    Clientes</a>
+                                <a id="adelantos-anticipos" class="nav-link" href="adelantos-anticipos.html"
+                                    onclick="cargarPagina('adelantos-anticipos')">Adelantos y Anticipos</a>
+                                <a id="costos-obra" class="nav-link" href="costos-obra.html"
+                                    onclick="cargarPagina('costos-obra')">Costos por Obra</a>
+                                <a id="reportes-financieros" class="nav-link" href="reportes-financieros.html"
+                                    onclick="cargarPagina('reportes-financieros')">Reportes Financieros</a>
+                            </nav>
+                        </div>
+
+                        
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseObras">
+                            <div class="sb-nav-link-icon"><i class="bi bi-building"></i></div>
+                            Obras
+                            <div class="sb-sidenav-collapse-arrow"><i class="bi bi-chevron-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseObras" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a id="mantenimiento-obras" class="nav-link" href="mantenimiento-obras.html"
+                                    onclick="cargarPagina('mantenimiento-obras')">Mantenimiento de Obras</a>
+                                <a id="asignar-materiales" class="nav-link" href="asignar-materiales.html"
+                                    onclick="cargarPagina('asignar-materiales')">Asignar Materiales</a>
+                                <a id="control-existencias" class="nav-link" href="control-existencias.html"
+                                    onclick="cargarPagina('control-existencias')">Control de Existencias</a>
+                                <a id="movimientos-materiales" class="nav-link" href="movimientos-materiales.html"
+                                    onclick="cargarPagina('movimientos-materiales')">Movimientos de Materiales</a>
+                                <a id="traslados-materiales" class="nav-link" href="traslado-materiales.html"
+                                    onclick="cargarPagina('traslados-materiales')">Traslados de Materiales</a>
+                                <a id="registro-perdidas" class="nav-link" href="registro-perdidas.html"
+                                    onclick="cargarPagina('registro-perdidas')">Registro de Pérdidas</a>
+                            </nav>
+                        </div>
+
+                        <div id="administracion" class="sb-sidenav-menu-heading">Administración</div>
+
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseMantenimiento">
+                            <div class="sb-nav-link-icon"><i class="bi bi-gear"></i></div>
+                            Mantenimiento
+                            <div class="sb-sidenav-collapse-arrow"><i class="bi bi-chevron-down"></i></div>
+                        </a>
+                        <div class="collapse show" id="collapseMantenimiento" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a id="usuarios" class="nav-link" href="usuarios.html"
+                                    onclick="cargarPagina('usuarios')">Usuarios</a>
+                                <a id="clientes" class="nav-link" href="clientes.html"
+                                    onclick="cargarPagina('clientes')">Clientes</a>
+                                <a id="proveedores" class="nav-link" href="proveedores.html"
+                                    onclick="cargarPagina('proveedores')">Proveedores</a>
+                                <a id="materiales" class="nav-link" href="materiales.html"
+                                    onclick="cargarPagina('materiales')">Materiales</a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Iniciado por:</div>
+                    <div id="nomUsuario"></div>
+                    <div class="small">Rol:</div>
+                    <div id="rol"></div>
+                </div>
+            </nav>
+        </div>
+
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <div class="row mb-4 mt-4">
+                        <div class="col-md-12 d-flex justify-content-between align-items-center">
+                            <h2 class="mb-0"><i class="bi bi-file-earmark-text me-2"></i>Registrar compras a Proveedores
+                            </h2>
+                            <a href="mantenimiento-facturas.html" class="btn btn-primary">
+                                <i class="bi bi-list me-1"></i> Ver Todas las Facturas
+                            </a>
+                        </div>
+                    </div>
+
+                    
+                    <form id="formCompras" class="card shadow-sm fade-in needs-validation" novalidate>
+                        <div class="card-header bg-light">
+                            <h5 class="mb-0"><i class="bi bi-file-earmark-plus me-2"></i>Datos de la Factura</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="col-sm-2">
+                                    <label class="form-label fw-bold">R.U.C.</label>
+                                    <div class="input-group">
+                                        <input type="text" id="ruc" class="form-control" required
+                                            pattern="[0-9]{6,8}-[0-9]{1}" title="Formato: XXXXXXXX-X">
+                                        <button type="button" class="btn btn-outline-secondary" id="btnBuscarRuc"
+                                            title="Buscar proveedor (F2)"><i class="bi bi-search"></i></button>
+                                        <div class="invalid-feedback">Ingrese un RUC válido (XXXXXXXX-X)</div>
+                                    </div>
+                                    <small class="text-muted"><span class="shortcut-badge">F2</span> para buscar</small>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <label class="form-label fw-bold">PROVEEDOR</label>
+                                    <div class="input-group">
+                                        <input type="text" id="proveedor" class="form-control text-uppercase" required
+                                            readonly>
+                                        <button type="button" class="btn btn-outline-secondary" id="btnBuscarNombre"
+                                            title="Buscar por nombre (F2)"><i class="bi bi-search"></i></button>
+                                        <div class="invalid-feedback">Seleccione un proveedor válido</div>
+                                    </div>
+                                    <input type="hidden" id="idproveedor">
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <label class="form-label fw-bold">CONDICIÓN</label>
+                                    <select id="condicion" class="form-select">
+                                        <option value="CONTADO">CONTADO</option>
+                                        <option value="CRÉDITO">CRÉDITO</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <label class="form-label fw-bold">FECHA</label>
+                                    <input type="date" id="fecha" class="form-control" required>
+                                    <div class="invalid-feedback">Ingrese una fecha válida</div>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <label class="form-label fw-bold">N° FACTURA</label>
+                                    <input type="text" id="numfactura" class="form-control" required minlength="7"
+                                        maxlength="15" placeholder="001-001-0000000">
+                                    <div class="invalid-feedback">Formato requerido: XXX-XXX-XXXXXXX</div>
+                                </div>
+                            </div>
+
+                            <div id="seccionFechaVencimiento" class="row mb-3" style="display: none;">
+                                <div class="col-sm-4 offset-sm-8">
+                                    <label class="form-label fw-bold">FECHA DE VENCIMIENTO</label>
+                                    <input type="date" id="fechaVencimiento" class="form-control">
+                                    <div class="invalid-feedback">Ingrese una fecha de vencimiento válida</div>
+                                    <small class="text-muted">Fecha límite para pago de la factura a crédito</small>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-sm-2">
+                                    <label class="form-label fw-bold">COD. BARRA</label>
+                                    <div class="input-group">
+                                        <input type="text" id="codbarra" class="form-control" required maxlength="13">
+                                        <button type="button" class="btn btn-outline-secondary" id="btnBuscarCodigo"
+                                            title="Buscar artículo (F3)"><i class="bi bi-search"></i></button>
+                                        <div class="invalid-feedback">Ingrese un código válido</div>
+                                    </div>
+                                    <small class="text-muted"><span class="shortcut-badge">F3</span> para buscar</small>
+                                    <input type="hidden" id="idarticulo">
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <label class="form-label fw-bold">DESCRIPCIÓN</label>
+                                    <input type="text" id="descripcion" class="form-control text-uppercase" readonly>
+                                    <input type="hidden" id="ivaHidden">
+                                </div>
+
+                                <div class="col-sm-1">
+                                    <label class="form-label fw-bold">CANT.</label>
+                                    <input type="number" id="cantidad" class="form-control" required min="1" max="9999"
+                                        value="1">
+                                    <div class="invalid-feedback">Ingrese una cantidad válida</div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <label class="form-label fw-bold">IVA</label>
+                                    <select id="iva" class="form-select" required>
+                                        <option value="5">5%</option>
+                                        <option value="10" selected>10%</option>
+                                        <option value="0">Exento</option>
+                                    </select>
+                                    <div class="invalid-feedback">Seleccione un tipo de IVA válido</div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <label class="form-label fw-bold" for="preuni">PRE. UNI.</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">₲</span>
+                                        <input type="text" id="preuni" class="form-control" required>
+                                        <div class="invalid-feedback">Ingrese un precio válido</div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <label class="form-label fw-bold">SUBTOTAL</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">₲</span>
+                                        <input type="text" id="subtotal" class="form-control" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-1 d-grid align-items-end">
+                                    <button type="button" id="btnAgregarArticulo" class="btn btn-success"
+                                        title="Agregar artículo (F8)"><i class="bi bi-plus-circle"></i></button>
+                                    <small class="text-muted text-center mt-1"><span
+                                            class="shortcut-badge">F8</span></small>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-header bg-light">
+                                            <h5 class="m-0">Artículos de la Factura</h5>
+                                        </div>
+                                        <div class="card-body p-0">
+                                            <table id="tablaArticulos" class="display table table-striped table-hover"
+                                                style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Item</th>
+                                                        <th>Cod. Barra</th>
+                                                        <th>Descripción</th>
+                                                        <th>I.V.A.</th>
+                                                        <th>Cant.</th>
+                                                        <th>Pre. Uni.</th>
+                                                        <th>Subtotal</th>
+                                                        <th>Acción</th>
+                                                        <th style="display: none;">Id Articulo</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th colspan="6" style="text-align: right;">Total:</th>
+                                                        <th id="totalFactura"
+                                                            style="min-width: 100px; text-align: right;">₲ 0</th>
+                                                        <th></th>
+                                                        <th style="display: none;"></th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-4">
+                                <div class="col-12 text-center">
+                                    <button type="submit" class="btn btn-primary btn-lg" title="Guardar factura (F10)">
+                                        <i class="bi bi-save me-2"></i> Guardar Factura
+                                    </button>
+                                    <small class="d-block text-muted mt-1"><span class="shortcut-badge">F10</span> para
+                                        guardar</small>
+                                    <button type="button" class="btn btn-secondary btn-lg ms-2" id="btnLimpiar">
+                                        <i class="bi bi-x-circle me-2"></i> Limpiar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </main>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; 2A Constructora 2025</div>
+                        <div>
+                            <a href="#">Política de Privacidad</a>
+                            &middot;
+                            <a href="#">Términos &amp; Condiciones</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    
+    <div class="modal fade" id="modalProveedores" tabindex="-1" aria-labelledby="modalProveedoresLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="modalProveedoresLabel">Búsqueda de Proveedores</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="filtroRuc" class="form-label">Filtrar por RUC:</label>
+                            <input type="text" id="filtroRuc" class="form-control" placeholder="Ingrese RUC">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="filtroNombre" class="form-label">Filtrar por Nombre:</label>
+                            <input type="text" id="filtroNombre" class="form-control" placeholder="Ingrese nombre">
+                        </div>
+                        <div class="col-md-4 d-flex align-items-end">
+                            <button id="btnFiltrarProveedores" class="btn btn-primary me-2">
+                                <i class="bi bi-filter me-1"></i> Filtrar
+                            </button>
+                            <button id="btnLimpiarFiltros" class="btn btn-secondary">
+                                <i class="bi bi-x-circle me-1"></i> Limpiar Filtros
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table id="tablaProveedores" class="display table table-striped table-hover w-100">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>RUC</th>
+                                    <th>Nombre</th>
+                                    <th>Teléfono</th>
+                                    <th>Email</th>
+                                    <th>Dirección</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="modal fade" id="modalArticulos" tabindex="-1" aria-labelledby="modalArticulosLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="modalArticulosLabel">Búsqueda de Artículos</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="filtroCodigo" class="form-label">Filtrar por Código:</label>
+                            <input type="text" id="filtroCodigo" class="form-control"
+                                placeholder="Ingrese código de barra">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="filtroDescripcion" class="form-label">Filtrar por Descripción:</label>
+                            <input type="text" id="filtroDescripcion" class="form-control"
+                                placeholder="Ingrese descripción">
+                        </div>
+                        <div class="col-md-4 d-flex align-items-end">
+                            <button id="btnFiltrarArticulos" class="btn btn-primary me-2">
+                                <i class="bi bi-filter me-1"></i> Filtrar
+                            </button>
+                            <button id="btnLimpiarFiltrosArticulos" class="btn btn-secondary">
+                                <i class="bi bi-x-circle me-1"></i> Limpiar Filtros
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table id="tablaArticulosBusqueda" class="display table table-striped table-hover w-100">
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Descripción</th>
+                                    <th>Unidad</th>
+                                    <th>IVA</th>
+                                    <th>Stock</th>
+                                    <th>Precio</th>
+                                    <th>Acción</th>
+                                    <th>ID</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <script src="js/bd.js"></script>
+    <script src="js/roleMenuAccess.js"></script>
+    <script src="js/funcionesSistema.js"></script>
+    <script src="menu/scripts.js"></script>
+    <script src="js/cerrarSesion.js"></script>
+    <script src="dt/jquery-3.7.1.js"></script>
+    
+    <script src="menu/bootstrap.bundle.min.js"></script>
+    
+    <script src="dt/datatables.min.js"></script>
+    <script src="dt/jquery.dataTables.min.js"></script>
+    
+    <script src="dt/dataTables.buttons.min.js"></script>
+    <script src="dt/buttons.print.min.js"></script>
+    <script src="dt/buttons.html5.min.js"></script>
+    
+    <script src="dt/jszip.min.js"></script>
+    <script src="dt/pdfmake.min.js"></script>
+    <script src="dt/vfs_fonts.js"></script>
+    
+    <script src="dt/es-ES.js"></script>
+
+    <script>
+        // Variables globales
+        let idCompraActual = null;
+        let editMode = false;
+
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+        if (!currentUser) {
+            window.location.href = 'error.html';
+        }
+
+        // Control de seguridad del usuario actual
+        document.addEventListener('DOMContentLoaded', function () {
+            try {
+                console.log('=== INICIO DE INICIALIZACIÓN ===');
+
+                // Verificar si el usuario está autenticado
+                if (!currentUser) {
+                    alertify.error("Usuario no encontrado.");
+                    setTimeout(() => {
+                        window.location.href = "error.html";
+                    }, 2000);
+                    return;
+                } else {
+                    // Mostrar el nombre del usuario y rol en el menú
+                    document.getElementById('nomUsuario').innerText = `${currentUser.nombre} ${currentUser.apellido}`;
+                    document.getElementById("rol").textContent = formatearRol(currentUser.rol);
+                }
+
+                // Configurar tema oscuro
+                configurarTemaOscuro();
+
+                // Inicializar la fecha con la fecha actual
+                document.getElementById('fecha').valueAsDate = new Date();
+
+                // Inicializar eventos
+                inicializarEventos();
+
+                // Cargar datos desde bd.js ANTES de inicializar tablas
+                if (typeof datos === 'function') {
+                    console.log('Cargando datos desde bd.js...');
+                    datos();
+                }
+
+                // Cargar datos
+                cargarDatos();
+
+                // Inicializar las tablas DESPUÉS de cargar datos
+                console.log('Inicializando tablas...');
+                inicializarTablas();
+
+                // Verificar inicialización
+                setTimeout(() => {
+                    console.log('Verificando configuración post-inicialización...');
+                    verificarConfiguracionDataTables();
+                }, 500);
+
+                // Inicializar tooltips
+                var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+                var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                    return new bootstrap.Tooltip(tooltipTriggerEl);
+                });
+
+                // Obtener último ID de compra para la nueva factura
+                actualizarIdCompraActual();
+
+                // Verificar si la URL tiene parámetro de edición
+                checkEditParameter();
+
+                // Verificar estado del localStorage (debug)
+                verificarEstadoLocalStorage();
+
+                console.log('=== FIN DE INICIALIZACIÓN ===');
+            } catch (error) {
+                alertify.error("Error al inicializar la página: " + error.message);
+                console.error("Error completo:", error);
+            }
+        });
+
+        // Función para dark mode
+        function configurarTemaOscuro() {
+            // Verificar preferencia inicial
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.classList.add('dark');
+                document.getElementById('darkModeToggle').innerHTML = '<i class="bi bi-sun"></i>';
+            }
+
+            // Toggle modo oscuro
+            document.getElementById('darkModeToggle').addEventListener('click', function () {
+                const html = document.documentElement;
+                html.classList.toggle('dark');
+                this.innerHTML = html.classList.contains('dark') ?
+                    '<i class="bi bi-sun"></i>' :
+                    '<i class="bi bi-moon-stars"></i>';
+            });
+
+            // Escuchar cambios en preferencias del sistema
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                const html = document.documentElement;
+                if (e.matches) {
+                    html.classList.add('dark');
+                    document.getElementById('darkModeToggle').innerHTML = '<i class="bi bi-sun"></i>';
+                } else {
+                    html.classList.remove('dark');
+                    document.getElementById('darkModeToggle').innerHTML = '<i class="bi bi-moon-stars"></i>';
+                }
+            });
+        }
+
+        // Formatear el nombre del rol para mostrar
+        function formatearRol(rol) {
+            switch (rol) {
+                case 'administrador': return 'Administrador';
+                case 'jefe_obra': return 'Jefe de Obra';
+                case 'gerente': return 'Gerente';
+                case 'obrero': return 'Obrero';
+                case 'contador': return 'Contador/Financiero';
+                case 'codificador': return 'Codificador';
+                default: return rol;
+            }
+        }
+
+        // Verificar si hay parámetro de edición en la URL
+        function checkEditParameter() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const editId = urlParams.get('edit');
+            if (editId) {
+                console.log('Parámetro edit encontrado:', editId, 'Tipo:', typeof editId);
+                // Cargar la factura en modo edición
+                cargarFacturaParaEdicion(parseInt(editId));
+            }
+        }
+
+        // Función auxiliar para verificar configuración de DataTables
+        function verificarConfiguracionDataTables() {
+            console.log('=== VERIFICACIÓN DATATABLES ===');
+
+            // Verificar tabla principal
+            if ($.fn.DataTable.isDataTable('#tablaArticulos')) {
+                const tabla = $('#tablaArticulos').DataTable();
+                const settings = tabla.settings()[0];
+
+                console.log('Tabla tablaArticulos inicializada:');
+                console.log('- Columnas configuradas:', settings.aoColumns.length);
+                console.log('- Filas actuales:', tabla.rows().count());
+
+                settings.aoColumns.forEach((col, index) => {
+                    console.log(`  Columna ${index}: ${col.sTitle} (visible: ${col.bVisible})`);
+                });
+            } else {
+                console.log('Tabla tablaArticulos NO está inicializada');
+            }
+
+            console.log('=== FIN VERIFICACIÓN DATATABLES ===');
+        }
+
+        // Función para validar datos antes de agregar a la tabla
+        function validarDatosTabla(rowData, funcionNombre) {
+            console.log(`=== VALIDACIÓN ${funcionNombre} ===`);
+            console.log('Datos a agregar:', rowData);
+            console.log('Número de elementos:', rowData.length);
+
+            if (rowData.length !== 9) {
+                console.error(`ERROR: Se esperaban 9 columnas pero se recibieron ${rowData.length}`);
+                console.error('Datos:', rowData);
+                alertify.error(`Error de validación: datos inconsistentes (${rowData.length} elementos en lugar de 9)`);
+                return false;
+            }
+
+            // Verificar que todos los elementos tengan valor
+            for (let i = 0; i < rowData.length; i++) {
+                if (rowData[i] === undefined || rowData[i] === null) {
+                    console.warn(`Elemento ${i} es undefined/null, asignando valor por defecto`);
+                    rowData[i] = i === 7 ? '<button class="btn btn-danger btn-sm quitar-fila"><i class="bi bi-trash"></i></button>' :
+                        i === 8 ? '0' :
+                            '';
+                }
+            }
+
+            console.log('Validación exitosa');
+            return true;
+        }
+
+        // Función auxiliar para verificar estado del localStorage
+        function verificarEstadoLocalStorage() {
+            console.log('=== VERIFICACIÓN DE LOCALSTORAGE ===');
+            const comprascabecera = JSON.parse(localStorage.getItem("comprascabecera")) || [];
+            const comprasdetalle = JSON.parse(localStorage.getItem("comprasdetalle")) || [];
+
+            console.log('Total facturas en localStorage:', comprascabecera.length);
+            console.log('Total detalles en localStorage:', comprasdetalle.length);
+
+            if (comprascabecera.length > 0) {
+                console.log('Primeras 5 facturas:');
+                comprascabecera.slice(0, 5).forEach(factura => {
+                    console.log(`ID: ${factura.idcompra} (${typeof factura.idcompra}), Número: ${factura.numfactura}, Proveedor: ${factura.idproveedor}`);
+                });
+            }
+
+            console.log('=== FIN VERIFICACIÓN ===');
+        }
+
+        // Obtener el último ID de compra y asignar el siguiente
+        function actualizarIdCompraActual() {
+            try {
+                const comprascabecera = JSON.parse(localStorage.getItem("comprascabecera")) || [];
+                if (comprascabecera.length > 0) {
+                    // Encontrar el máximo idcompra
+                    const maxId = Math.max(...comprascabecera.map(compra => compra.idcompra));
+                    idCompraActual = maxId + 1;
+                } else {
+                    idCompraActual = 1;
+                }
+                console.log("Nuevo ID de compra asignado:", idCompraActual);
+            } catch (error) {
+                console.error("Error al obtener último ID de compra:", error);
+                idCompraActual = 1; // Valor por defecto
+            }
+        }
+
+        // Cargar datos (proveedores, materiales)
+        function cargarDatos() {
+            // Cargar proveedores para el modal
+            cargarProveedoresModal();
+
+            // Cargar materiales para el modal
+            cargarMaterialesModal();
+        }
+
+        // Cargar proveedores en el modal
+        function cargarProveedoresModal() {
+            try {
+                // Obtener proveedores
+                let proveedores = [];
+                if (typeof obtenerProveedores === 'function') {
+                    proveedores = obtenerProveedores();
+                } else {
+                    proveedores = JSON.parse(localStorage.getItem("proveedores")) || [];
+                }
+
+                const tablaProveedores = $('#tablaProveedores').DataTable();
+                tablaProveedores.clear();
+
+                // Si no hay proveedores, mostrar mensaje
+                if (proveedores.length === 0) {
+                    alertify.warning("No hay proveedores registrados en el sistema");
+                    return;
+                }
+
+                // Agregar proveedores a la tabla
+                proveedores.forEach(proveedor => {
+                    const btnSeleccionar = '<button class="btn btn-primary btn-sm btn-tabla seleccionar-proveedor">Seleccionar</button>';
+
+                    tablaProveedores.row.add([
+                        proveedor.idProveedor || '',
+                        proveedor.ruc || '',
+                        proveedor.razonsocial || '',
+                        proveedor.telefono || '',
+                        proveedor.correo_electronico || '',
+                        proveedor.direccion || '',
+                        btnSeleccionar
+                    ]).draw(false);
+                });
+            } catch (error) {
+                alertify.error("Error al cargar proveedores: " + error.message);
+                console.error("Error completo:", error);
+            }
+        }
+
+        // Cargar materiales en el modal
+        function cargarMaterialesModal() {
+            try {
+                // Obtener materiales
+                let materiales = [];
+                if (typeof obtenerMateriales === 'function') {
+                    materiales = obtenerMateriales();
+                } else {
+                    materiales = JSON.parse(localStorage.getItem("materiales")) || [];
+                }
+
+                const tablaArticulos = $('#tablaArticulosBusqueda').DataTable();
+                tablaArticulos.clear();
+
+                // Si no hay materiales, mostrar mensaje
+                if (materiales.length === 0) {
+                    alertify.warning("No hay materiales registrados en el sistema");
+                    return;
+                }
+
+                // Agregar materiales a la tabla
+                materiales.forEach(articulo => {
+                    const btnSeleccionar = '<button class="btn btn-primary btn-sm btn-tabla seleccionar-articulo">Seleccionar</button>';
+
+                    tablaArticulos.row.add([
+                        articulo.codbarra || '',
+                        articulo.descripcion || '',
+                        articulo.unidad || '',
+                        '10%', // IVA por defecto
+                        articulo.stock || '0',
+                        formatoNumero(articulo.precio) || '0',
+                        btnSeleccionar,
+                        articulo.idMaterial || ''
+                    ]).draw(false);
+                });
+            } catch (error) {
+                alertify.error("Error al cargar materiales: " + error.message);
+                console.error("Error completo:", error);
+            }
+        }
+
+        // Inicializar las tablas
+        function inicializarTablas() {
+            // Verificar si la tabla ya está inicializada y destruirla si es necesario
+            if ($.fn.DataTable.isDataTable('#tablaArticulos')) {
+                console.log('Destruyendo tabla existente...');
+                $('#tablaArticulos').DataTable().destroy();
+            }
+
+            console.log('Creando nueva tabla con configuración...');
+
+            // Tabla principal de artículos
+            const tabla = $('#tablaArticulos').DataTable({
+                scrollY: '250px',
+                scrollCollapse: true,
+                paging: false,
+                searching: false,
+                info: false,
+                ordering: false,
+                autoWidth: false,
+                destroy: true,
+                columns: [
+                    { title: 'Item', width: '5%' },
+                    { title: 'Cod. Barra', width: '15%' },
+                    { title: 'Descripción', width: '40%' },
+                    { title: 'I.V.A.', width: '10%' },
+                    { title: 'Cant.', width: '5%', className: 'text-end' },
+                    { title: 'Pre. Uni.', width: '10%', className: 'text-end' },
+                    { title: 'Subtotal', width: '10%', className: 'text-end' },
+                    { title: 'Acción', width: '5%', className: 'text-center' },
+                    { title: 'Id Articulo', visible: false, searchable: false }
+                ],
+                language: {
+                    "decimal": ",",
+                    "thousands": ".",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                    "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros en total)",
+                    "infoPostFix": "",
+                    "lengthMenu": "Mostrar _MENU_ registros",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "No se encontraron coincidencias",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    },
+                    "aria": {
+                        "sortAscending": ": activar para ordenar la columna ascendentemente",
+                        "sortDescending": ": activar para ordenar la columna descendentemente"
+                    }
+                }
+            });
+
+            console.log('Tabla creada con', tabla.columns().count(), 'columnas');
+
+            // Evento delegado para quitar filas
+            $('#tablaArticulos tbody').on('click', '.quitar-fila', function () {
+                console.log('Eliminando fila...');
+                const tabla = $('#tablaArticulos').DataTable();
+                tabla.row($(this).parents('tr')).remove().draw();
+                calcularTotalFactura();
+                actualizarNumerosItem();
+                alertify.success('Artículo eliminado correctamente');
+            });
+
+            // Verificar si la tabla ya está inicializada y destruirla si es necesario
+            if ($.fn.DataTable.isDataTable('#tablaProveedores')) {
+                $('#tablaProveedores').DataTable().destroy();
+            }
+
+            // Tabla de proveedores para búsqueda
+            $('#tablaProveedores').DataTable({
+                scrollY: '400px',
+                scrollCollapse: true,
+                paging: true,
+                searching: true,
+                info: true,
+                ordering: true,
+                language: {
+                    "decimal": ",",
+                    "thousands": ".",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                    "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros en total)",
+                    "infoPostFix": "",
+                    "lengthMenu": "Mostrar _MENU_ registros",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "No se encontraron coincidencias",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    },
+                    "aria": {
+                        "sortAscending": ": activar para ordenar la columna ascendentemente",
+                        "sortDescending": ": activar para ordenar la columna descendentemente"
+                    }
+                },
+                columnDefs: [
+                    { targets: 0, visible: false }, // ID (oculto)
+                    { targets: 1, width: '15%' }, // RUC
+                    { targets: 2, width: '25%' }, // Nombre
+                    { targets: 3, width: '15%' }, // Teléfono
+                    { targets: 4, width: '20%' }, // Email
+                    { targets: 5, width: '15%' }, // Dirección
+                    { targets: 6, width: '10%', className: 'text-center' } // Acción
+                ],
+                dom: 'lfrtip',
+                lengthMenu: [5, 10, 25, 50],
+                pageLength: 5
+            });
+
+            // Evento para seleccionar proveedor
+            $('#tablaProveedores tbody').on('click', '.seleccionar-proveedor', function () {
+                const fila = $(this).closest('tr');
+                const tablaProveedores = $('#tablaProveedores').DataTable();
+                const data = tablaProveedores.row(fila).data();
+                seleccionarProveedor(data[0], data[1], data[2]); // ID, RUC, Nombre
+            });
+
+            // Doble clic para seleccionar proveedor
+            $('#tablaProveedores tbody').on('dblclick', 'tr', function () {
+                const tablaProveedores = $('#tablaProveedores').DataTable();
+                const data = tablaProveedores.row(this).data();
+                seleccionarProveedor(data[0], data[1], data[2]); // ID, RUC, Nombre
+            });
+
+            // Resaltar fila seleccionada en proveedores
+            $('#tablaProveedores tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected-row')) {
+                    $(this).removeClass('selected-row');
+                } else {
+                    $('#tablaProveedores').DataTable().$('tr.selected-row').removeClass('selected-row');
+                    $(this).addClass('selected-row');
+                }
+            });
+
+            // Verificar si la tabla ya está inicializada y destruirla si es necesario
+            if ($.fn.DataTable.isDataTable('#tablaArticulosBusqueda')) {
+                $('#tablaArticulosBusqueda').DataTable().destroy();
+            }
+
+            // Tabla de artículos para búsqueda
+            $('#tablaArticulosBusqueda').DataTable({
+                scrollY: '400px',
+                scrollCollapse: true,
+                paging: true,
+                searching: true,
+                info: true,
+                responsive: true,
+                ordering: true,
+                language: {
+                    "decimal": ",",
+                    "thousands": ".",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                    "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros en total)",
+                    "infoPostFix": "",
+                    "lengthMenu": "Mostrar _MENU_ registros",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "No se encontraron coincidencias",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    },
+                    "aria": {
+                        "sortAscending": ": activar para ordenar la columna ascendentemente",
+                        "sortDescending": ": activar para ordenar la columna descendentemente"
+                    }
+                },
+                columnDefs: [
+                    { targets: 0, width: '15%' }, // Código
+                    { targets: 1, width: '35%' }, // Descripción
+                    { targets: 2, width: '10%' }, // Unidad
+                    { targets: 3, width: '5%' }, // IVA
+                    { targets: 4, width: '10%', className: 'text-end' }, // Stock
+                    { targets: 5, width: '15%', className: 'text-end' }, // Precio
+                    { targets: 6, width: '10%', className: 'text-center' }, // Acción
+                    { targets: 7, visible: false } // ID oculto
+                ],
+                dom: 'lfrtip',
+                lengthMenu: [5, 10, 25, 50],
+                pageLength: 5
+            });
+
+            // Evento para seleccionar artículo
+            $('#tablaArticulosBusqueda tbody').on('click', '.seleccionar-articulo', function () {
+                const fila = $(this).closest('tr');
+                const tablaArticulos = $('#tablaArticulosBusqueda').DataTable();
+                const data = tablaArticulos.row(fila).data();
+                seleccionarArticulo(data[0], data[1], data[3].replace('%', ''), data[5].replace(/\./g, ''), data[7]);
+            });
+
+            // Doble clic para seleccionar artículo
+            $('#tablaArticulosBusqueda tbody').on('dblclick', 'tr', function () {
+                const tablaArticulos = $('#tablaArticulosBusqueda').DataTable();
+                const data = tablaArticulos.row(this).data();
+                seleccionarArticulo(data[0], data[1], data[3].replace('%', ''), data[5].replace(/\./g, ''), data[7]);
+            });
+
+            // Resaltar fila seleccionada en artículos
+            $('#tablaArticulosBusqueda tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected-row')) {
+                    $(this).removeClass('selected-row');
+                } else {
+                    $('#tablaArticulosBusqueda').DataTable().$('tr.selected-row').removeClass('selected-row');
+                    $(this).addClass('selected-row');
+                }
+            });
+        }
+
+        // Actualizar números de item después de eliminar una fila
+        function actualizarNumerosItem() {
+            const tabla = $('#tablaArticulos').DataTable();
+            let contador = 1;
+
+            tabla.rows().every(function () {
+                const data = this.data();
+                if (data && data.length >= 9) {
+                    data[0] = contador++;
+                    this.data(data);
+                } else {
+                    console.error('Fila con datos incompletos encontrada:', data);
+                }
+            });
+
+            tabla.draw(false);
+        }
+
+
+        // Cargar factura para edición
+        function cargarFacturaParaEdicion(id) {
+            try {
+                console.log('Intentando cargar factura con ID:', id);
+
+                // Buscar la factura por ID
+                const comprascabecera = JSON.parse(localStorage.getItem("comprascabecera")) || [];
+                const comprasdetalle = JSON.parse(localStorage.getItem("comprasdetalle")) || [];
+
+                console.log('Facturas en localStorage:', comprascabecera);
+                console.log('Detalles en localStorage:', comprasdetalle);
+
+                const factura = comprascabecera.find(f => f.idcompra === id || f.idcompra === String(id) || String(f.idcompra) === String(id));
+
+                if (!factura) {
+                    console.error('No se encontró la factura con ID:', id);
+                    console.log('IDs disponibles:', comprascabecera.map(f => f.idcompra));
+                    alertify.error('No se encontró la factura con ID: ' + id);
+                    return;
+                }
+
+                console.log('Factura encontrada:', factura);
+
+                // Verificar si está anulada
+                if (factura.anulado === "SI") {
+                    alertify.error('No se puede editar una factura anulada');
+                    setTimeout(() => {
+                        window.location.href = "mantenimiento-facturas.html";
+                    }, 2000);
+                    return;
+                }
+
+                // Buscar detalles de la factura
+                const detalles = comprasdetalle.filter(d => d.idcompra === id || d.idcompra === String(id) || String(d.idcompra) === String(id));
+                console.log('Detalles de la factura:', detalles);
+
+                // Buscar proveedor
+                const proveedores = JSON.parse(localStorage.getItem("proveedores")) || [];
+                const proveedor = proveedores.find(p => p.idProveedor === factura.idproveedor);
+                console.log('Proveedor encontrado:', proveedor);
+
+                // Cargar datos en el formulario
+                document.getElementById('ruc').value = proveedor ? proveedor.ruc : "";
+                document.getElementById('proveedor').value = proveedor ? proveedor.razonsocial : "";
+                document.getElementById('idproveedor').value = factura.idproveedor;
+                document.getElementById('condicion').value = factura.condicion;
+                document.getElementById('fecha').value = factura.feccompra;
+                document.getElementById('numfactura').value = factura.numfactura;
+
+                // Si es crédito, mostrar y establecer fecha de vencimiento
+                if (factura.condicion === "CRÉDITO") {
+                    document.getElementById('seccionFechaVencimiento').style.display = 'block';
+                    document.getElementById('fechaVencimiento').value = factura.fecvencimiento || '';
+                }
+
+                // Cargar artículos
+                console.log('Verificando tabla antes de cargar datos...');
+                verificarConfiguracionDataTables();
+
+                const tabla = $('#tablaArticulos').DataTable();
+                tabla.clear();
+
+                // Buscar materiales
+                const materiales = JSON.parse(localStorage.getItem("materiales")) || [];
+
+                console.log('Iniciando carga de artículos, total detalles:', detalles.length);
+
+                detalles.forEach((detalle, index) => {
+                    // Buscar material para obtener más datos (comparando como string para evitar problemas de tipo)
+                    const material = materiales.find(m => String(m.idMaterial) === String(detalle.idmaterial));
+                    const codbarra = material ? material.codbarra : "No disponible";
+                    const descripcion = material ? material.descripcion : "Material no encontrado";
+
+                    // Crear botón de eliminar
+                    const btnEliminar = '<button class="btn btn-danger btn-sm quitar-fila" title="Eliminar artículo"><i class="bi bi-trash"></i></button>';
+
+                    // Preparar datos para agregar (exactamente 9 columnas)
+                    const rowData = [
+                        index + 1,                          // 0: Item
+                        codbarra,                           // 1: Cod. Barra
+                        descripcion,                        // 2: Descripción
+                        detalle.tiva + '%',                 // 3: I.V.A.
+                        detalle.cantidad,                   // 4: Cantidad
+                        formatoNumero(detalle.preuni),      // 5: Pre. Uni.
+                        formatoNumero(detalle.subtotal),    // 6: Subtotal
+                        btnEliminar,                        // 7: Acción
+                        detalle.idmaterial                  // 8: Id Articulo (oculto)
+                    ];
+
+                    // Validar datos antes de agregar
+                    if (!validarDatosTabla(rowData, `cargarFacturaParaEdicion-item${index + 1}`)) {
+                        console.error('Error en la validación del artículo:', detalle);
+                        return;
+                    }
+
+                    console.log(`Agregando fila ${index + 1} con ${rowData.length} columnas:`, rowData);
+
+                    // Agregar a la tabla
+                    tabla.row.add(rowData).draw(false);
+                });
+
+                // Calcular total
+                calcularTotalFactura();
+
+                // Establecer modo edición
+                editMode = true;
+                idCompraActual = id;
+
+                // Actualizar
+                document.querySelector('#formCompras button[type="submit"]').innerHTML = '<i class="bi bi-save me-2"></i> Actualizar Factura';
+
+                alertify.success('Factura cargada para edición');
+
+            } catch (error) {
+                console.error('Error al cargar factura para edición:', error);
+                alertify.error('Error: ' + error.message);
+            }
+        }
+
+        // Inicializar todos los eventos de la página
+        function inicializarEventos() {
+            // Evento para formatear automáticamente el número de factura
+            const numFacturaInput = document.getElementById('numfactura');
+            numFacturaInput.addEventListener('input', function (e) {
+                // Eliminar todos los caracteres que no sean números
+                let value = this.value.replace(/[^0-9]/g, '');
+
+                // Aplicar formato XXX-XXX-YYYYY
+                if (value.length > 0) {
+                    // Formatea los primeros 3 dígitos
+                    if (value.length <= 3) {
+                        this.value = value;
+                    }
+                    // Formatea los primeros 6 dígitos (XXX-XXX)
+                    else if (value.length <= 6) {
+                        this.value = value.substring(0, 3) + '-' + value.substring(3);
+                    }
+                    // Formatea el número completo (XXX-XXX-YYYYY)
+                    else {
+                        this.value = value.substring(0, 3) + '-' + value.substring(3, 6) + '-' + value.substring(6);
+                    }
+                }
+            });
+
+            // Formatear precio unitario como moneda
+            const preUniInput = document.getElementById('preuni');
+            preUniInput.addEventListener('input', function (e) {
+                // Eliminar caracteres no numéricos
+                let value = this.value.replace(/[^0-9]/g, '');
+
+                // Formatear como número
+                if (value) {
+                    this.value = formatoNumero(parseInt(value));
+                } else {
+                    this.value = '';
+                }
+
+                // Calcular el subtotal
+                calcularSubtotal();
+            });
+
+            // Evento para calcular subtotal cuando cambia la cantidad
+            const cantidadInput = document.getElementById('cantidad');
+            cantidadInput.addEventListener('input', calcularSubtotal);
+
+            // Evento para el botón de agregar artículo
+            document.getElementById('btnAgregarArticulo').addEventListener('click', agregarArticulo);
+
+            // Evento para buscar proveedor por RUC (abrir modal)
+            document.getElementById('btnBuscarRuc').addEventListener('click', abrirModalProveedores);
+
+            // Evento para buscar proveedor por nombre (abrir modal)
+            document.getElementById('btnBuscarNombre').addEventListener('click', abrirModalProveedores);
+
+            // Evento para buscar artículo por código (abrir modal)
+            document.getElementById('btnBuscarCodigo').addEventListener('click', abrirModalArticulos);
+
+            // Evento para limpiar el formulario
+            document.getElementById('btnLimpiar').addEventListener('click', limpiarFormulario);
+
+            // Evento para validar y guardar la factura
+            document.getElementById('formCompras').addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                if (this.checkValidity()) {
+                    guardarFactura();
+                } else {
+                    this.classList.add('was-validated');
+                    alertify.error('Por favor complete todos los campos requeridos');
+                }
+            });
+
+            // Eventos para el modal de proveedores
+            document.getElementById('btnFiltrarProveedores').addEventListener('click', filtrarProveedores);
+            document.getElementById('btnLimpiarFiltros').addEventListener('click', limpiarFiltrosProveedores);
+
+            // Eventos para el modal de artículos
+            document.getElementById('btnFiltrarArticulos').addEventListener('click', filtrarArticulos);
+            document.getElementById('btnLimpiarFiltrosArticulos').addEventListener('click', limpiarFiltrosArticulos);
+
+            // Eventos para filtrar al presionar Enter
+            document.getElementById('filtroRuc').addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    filtrarProveedores();
+                }
+            });
+
+            document.getElementById('filtroNombre').addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    filtrarProveedores();
+                }
+            });
+
+            document.getElementById('filtroCodigo').addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    filtrarArticulos();
+                }
+            });
+
+            document.getElementById('filtroDescripcion').addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    filtrarArticulos();
+                }
+            });
+
+            // Evento para actualizar subtotal cuando cambia el IVA
+            document.getElementById('iva').addEventListener('change', calcularSubtotal);
+
+            // Evento para mostrar/ocultar sección de vencimiento según condición
+            document.getElementById('condicion').addEventListener('change', function () {
+                const seccionFechaVencimiento = document.getElementById('seccionFechaVencimiento');
+                if (this.value === "CRÉDITO") {
+                    seccionFechaVencimiento.style.display = 'block';
+
+                    // Establecer fecha de vencimiento por defecto (30 días después)
+                    const fechaCompra = new Date(document.getElementById('fecha').value);
+                    if (!isNaN(fechaCompra.getTime())) {
+                        const fechaVencimiento = new Date(fechaCompra);
+                        fechaVencimiento.setDate(fechaVencimiento.getDate() + 30);
+                        document.getElementById('fechaVencimiento').valueAsDate = fechaVencimiento;
+                    }
+                } else {
+                    seccionFechaVencimiento.style.display = 'none';
+                }
+            });
+
+            // Atajos de teclado
+            document.addEventListener('keydown', function (event) {
+                // F2 = Buscar proveedor
+                if (event.key === 'F2') {
+                    event.preventDefault();
+                    abrirModalProveedores();
+                }
+                // F3 = Buscar artículo
+                else if (event.key === 'F3') {
+                    event.preventDefault();
+                    abrirModalArticulos();
+                }
+                // F8 = Agregar artículo a la tabla
+                else if (event.key === 'F8') {
+                    event.preventDefault();
+                    agregarArticulo();
+                }
+                // F10 = Guardar factura
+                else if (event.key === 'F10') {
+                    event.preventDefault();
+                    document.getElementById('formCompras').dispatchEvent(new Event('submit'));
+                }
+                // ESC = Cerrar modal abierto
+                else if (event.key === 'Escape') {
+                    const modalProveedores = bootstrap.Modal.getInstance(document.getElementById('modalProveedores'));
+                    const modalArticulos = bootstrap.Modal.getInstance(document.getElementById('modalArticulos'));
+
+                    if (modalProveedores && document.getElementById('modalProveedores').classList.contains('show')) {
+                        modalProveedores.hide();
+                    } else if (modalArticulos && document.getElementById('modalArticulos').classList.contains('show')) {
+                        modalArticulos.hide();
+                    }
+                }
+            });
+        }
+
+        // Agregar artículo a la tabla
+        function agregarArticulo() {
+            try {
+                console.log('=== INICIANDO AGREGAR ARTÍCULO ===');
+
+                const codbarra = document.getElementById('codbarra').value.trim();
+                const descripcion = document.getElementById('descripcion').value.trim();
+                const cantidad = document.getElementById('cantidad').value;
+                const preuni = document.getElementById('preuni').value;
+                const subtotal = document.getElementById('subtotal').value;
+                const iva = document.getElementById('iva').value; // Ahora obtenemos el valor del select, no del hidden
+                const idarticulo = document.getElementById('idarticulo').value;
+
+                console.log('Datos del formulario:', { codbarra, descripcion, cantidad, preuni, subtotal, iva, idarticulo });
+
+                // Validar que todos los campos estén completos
+                if (!codbarra || !descripcion || !cantidad || !preuni || !subtotal || !iva || !idarticulo) {
+                    alertify.error('Debe completar todos los datos del artículo');
+                    return;
+                }
+
+                // Verificar que el artículo no esté ya en la tabla
+                const tabla = $('#tablaArticulos').DataTable();
+                let articuloExistente = false;
+
+                tabla.rows().every(function () {
+                    const data = this.data();
+                    if (data && data.length >= 9 && data[8] === idarticulo) { // Comparar con Id Articulo (columna oculta)
+                        articuloExistente = true;
+                        return false; // Salir del bucle
+                    }
+                });
+
+                if (articuloExistente) {
+                    alertify.error('Este artículo ya está en la lista');
+                    return;
+                }
+
+                // Obtener número de item
+                const numItems = tabla.rows().count() + 1;
+                console.log('Número de item a asignar:', numItems);
+
+                // Crear botón de eliminar
+                const btnEliminar = '<button class="btn btn-danger btn-sm quitar-fila" title="Eliminar artículo"><i class="bi bi-trash"></i></button>';
+
+                // Preparar datos para agregar (exactamente 9 columnas)
+                const rowData = [
+                    numItems,       // 0: Item
+                    codbarra,       // 1: Cod. Barra
+                    descripcion,    // 2: Descripción
+                    iva + '%',      // 3: I.V.A.
+                    cantidad,       // 4: Cantidad
+                    preuni,         // 5: Pre. Uni.
+                    subtotal,       // 6: Subtotal
+                    btnEliminar,    // 7: Acción
+                    idarticulo      // 8: Id Articulo (oculto)
+                ];
+
+                // Validar datos antes de agregar
+                if (!validarDatosTabla(rowData, 'agregarArticulo')) {
+                    return;
+                }
+
+                console.log(`Agregando nuevo artículo con ${rowData.length} columnas:`, rowData);
+
+                // Agregar fila a la tabla
+                tabla.row.add(rowData).draw();
+
+                // Limpiar campos de artículo
+                document.getElementById('codbarra').value = '';
+                document.getElementById('descripcion').value = '';
+                document.getElementById('cantidad').value = '1';
+                document.getElementById('preuni').value = '';
+                document.getElementById('subtotal').value = '';
+                document.getElementById('ivaHidden').value = '';
+                document.getElementById('idarticulo').value = '';
+
+                // Calcular total
+                calcularTotalFactura();
+
+                // Enfocar en código de barra para seguir agregando
+                document.getElementById('codbarra').focus();
+
+                alertify.success('Artículo agregado correctamente');
+                console.log('=== ARTÍCULO AGREGADO EXITOSAMENTE ===');
+
+            } catch (error) {
+                console.error('Error al agregar artículo:', error);
+                alertify.error('Error al agregar el artículo: ' + error.message);
+            }
+        }
+
+        // Calcular subtotal (precio unitario * cantidad)
+        function calcularSubtotal() {
+            const cantidad = parseInt(document.getElementById('cantidad').value) || 0;
+            let preuni = document.getElementById('preuni').value;
+
+            // Convertir precio unitario a número quitando formato
+            preuni = preuni.replace(/\./g, '');
+            preuni = parseInt(preuni) || 0;
+
+            // Calcular subtotal
+            const subtotal = cantidad * preuni;
+
+            // Mostrar subtotal formateado
+            document.getElementById('subtotal').value = formatoNumero(subtotal);
+        }
+
+        // Calcular total de la factura
+        function calcularTotalFactura() {
+            const tabla = $('#tablaArticulos').DataTable();
+            let total = 0;
+
+            tabla.rows().every(function () {
+                const data = this.data();
+                // Obtener subtotal de la columna 6, quitando formato
+                let subtotal = data[6].replace(/\./g, '');
+                subtotal = subtotal.replace('₲', '').trim();
+                subtotal = parseInt(subtotal) || 0;
+                total += subtotal;
+            });
+
+            // Actualizar total en el footer
+            document.getElementById('totalFactura').textContent = '₲ ' + formatoNumero(total);
+        }
+
+        // Abrir modal de proveedores
+        function abrirModalProveedores() {
+            // Limpiar filtros previos
+            limpiarFiltrosProveedores();
+
+            // Si hay un RUC ingresado, usarlo como filtro inicial
+            const ruc = document.getElementById('ruc').value.trim();
+            if (ruc) {
+                document.getElementById('filtroRuc').value = ruc;
+                filtrarProveedores();
+            }
+
+            // Mostrar modal
+            const modalProveedores = new bootstrap.Modal(document.getElementById('modalProveedores'));
+            modalProveedores.show();
+
+            // Enfocar en el campo de filtro
+            setTimeout(() => {
+                if (ruc) {
+                    document.getElementById('filtroNombre').focus();
+                } else {
+                    document.getElementById('filtroRuc').focus();
+                }
+            }, 500);
+        }
+
+        // Abrir modal de artículos
+        function abrirModalArticulos() {
+            // Limpiar filtros previos
+            limpiarFiltrosArticulos();
+
+            // Si hay un código ingresado, usarlo como filtro inicial
+            const codigo = document.getElementById('codbarra').value.trim();
+            if (codigo) {
+                document.getElementById('filtroCodigo').value = codigo;
+                filtrarArticulos();
+            }
+
+            // Mostrar modal
+            const modalArticulos = new bootstrap.Modal(document.getElementById('modalArticulos'));
+            modalArticulos.show();
+
+            // Enfocar en el campo de filtro
+            setTimeout(() => {
+                if (codigo) {
+                    document.getElementById('filtroDescripcion').focus();
+                } else {
+                    document.getElementById('filtroCodigo').focus();
+                }
+            }, 500);
+        }
+
+        // Filtrar proveedores según los criterios ingresados
+        function filtrarProveedores() {
+            const filtroRuc = document.getElementById('filtroRuc').value.trim().toLowerCase();
+            const filtroNombre = document.getElementById('filtroNombre').value.trim().toLowerCase();
+
+            const tabla = $('#tablaProveedores').DataTable();
+
+            // Resetear búsqueda previa
+            tabla.search('').columns().search('').draw();
+
+            // Aplicar filtros si hay alguno
+            if (filtroRuc || filtroNombre) {
+                if (filtroRuc) {
+                    tabla.column(1).search(filtroRuc).draw();
+                }
+
+                if (filtroNombre) {
+                    tabla.column(2).search(filtroNombre).draw();
+                }
+
+                // Informar resultados
+                const numResultados = tabla.page.info().recordsDisplay;
+                if (numResultados === 0) {
+                    alertify.warning('No se encontraron proveedores con los criterios especificados');
+                } else if (numResultados === 1) {
+                    alertify.success('Se encontró 1 proveedor');
+                } else {
+                    alertify.success(`Se encontraron ${numResultados} proveedores`);
+                }
+            } else {
+                alertify.warning('Ingrese al menos un criterio de búsqueda');
+            }
+        }
+
+        // Filtrar artículos según los criterios ingresados
+        function filtrarArticulos() {
+            const filtroCodigo = document.getElementById('filtroCodigo').value.trim().toLowerCase();
+            const filtroDescripcion = document.getElementById('filtroDescripcion').value.trim().toLowerCase();
+
+            const tabla = $('#tablaArticulosBusqueda').DataTable();
+
+            // Resetear búsqueda previa
+            tabla.search('').columns().search('').draw();
+
+            // Aplicar filtros si hay alguno
+            if (filtroCodigo || filtroDescripcion) {
+                if (filtroCodigo) {
+                    tabla.column(0).search(filtroCodigo).draw();
+                }
+
+                if (filtroDescripcion) {
+                    tabla.column(1).search(filtroDescripcion).draw();
+                }
+
+                // Informar resultados
+                const numResultados = tabla.page.info().recordsDisplay;
+                if (numResultados === 0) {
+                    alertify.warning('No se encontraron artículos con los criterios especificados');
+                } else if (numResultados === 1) {
+                    alertify.success('Se encontró 1 artículo');
+                } else {
+                    alertify.success(`Se encontraron ${numResultados} artículos`);
+                }
+            } else {
+                alertify.warning('Ingrese al menos un criterio de búsqueda');
+            }
+        }
+
+        // Limpiar filtros de proveedores
+        function limpiarFiltrosProveedores() {
+            document.getElementById('filtroRuc').value = '';
+            document.getElementById('filtroNombre').value = '';
+
+            // Restaurar tabla completa
+            const tabla = $('#tablaProveedores').DataTable();
+            tabla.search('').columns().search('').draw();
+        }
+
+        // Limpiar filtros de artículos
+        function limpiarFiltrosArticulos() {
+            document.getElementById('filtroCodigo').value = '';
+            document.getElementById('filtroDescripcion').value = '';
+
+            // Restaurar tabla completa
+            const tabla = $('#tablaArticulosBusqueda').DataTable();
+            tabla.search('').columns().search('').draw();
+        }
+
+        // Seleccionar un proveedor del modal
+        function seleccionarProveedor(id, ruc, nombre) {
+            document.getElementById('idproveedor').value = id;
+            document.getElementById('ruc').value = ruc;
+            document.getElementById('proveedor').value = nombre;
+
+            // Cerrar modal
+            const modalProveedores = bootstrap.Modal.getInstance(document.getElementById('modalProveedores'));
+            modalProveedores.hide();
+
+            // Enfocar en el siguiente campo
+            document.getElementById('numfactura').focus();
+
+            // Notificar
+            alertify.success('Proveedor seleccionado correctamente');
+        }
+
+        // Seleccionar un artículo del modal
+        function seleccionarArticulo(codigo, descripcion, iva, precio, id) {
+            document.getElementById('codbarra').value = codigo;
+            document.getElementById('descripcion').value = descripcion;
+            document.getElementById('ivaHidden').value = iva; // Guardamos el IVA en el campo hidden
+            document.getElementById('iva').value = iva;       // Establecemos el valor del dropdown
+            document.getElementById('preuni').value = formatoNumero(precio);
+            document.getElementById('idarticulo').value = id;
+            document.getElementById('cantidad').value = '1';
+
+            // Calcular subtotal inicial
+            calcularSubtotal();
+
+            // Cerrar modal
+            const modalArticulos = bootstrap.Modal.getInstance(document.getElementById('modalArticulos'));
+            modalArticulos.hide();
+
+            // Enfocar en cantidad para editar
+            document.getElementById('cantidad').focus();
+            document.getElementById('cantidad').select();
+
+            // Notificar
+            alertify.success('Artículo seleccionado correctamente');
+        }
+
+        // Guardar factura
+        function guardarFactura() {
+            const tabla = $('#tablaArticulos').DataTable();
+
+            // Verificar que haya al menos un artículo
+            if (tabla.rows().count() === 0) {
+                alertify.error('Debe agregar al menos un artículo a la factura');
+                return;
+            }
+
+            try {
+                // Recopilar datos para cabecera de factura
+                let stexenta = 0;
+                let stiva5 = 0;
+                let stiva10 = 0;
+                let totcompra = 0;
+
+                // Verificar condición de pago y fecha de vencimiento
+                const condicion = document.getElementById('condicion').value;
+                let fecvencimiento = null;
+
+                if (condicion === "CRÉDITO") {
+                    fecvencimiento = document.getElementById('fechaVencimiento').value;
+                    if (!fecvencimiento) {
+                        alertify.error('Debe ingresar una fecha de vencimiento para facturas a crédito');
+                        return;
+                    }
+                }
+
+                // Recopilar artículos
+                const articulos = [];
+                tabla.rows().every(function (index) {
+                    const data = this.data();
+                    const idarticulo = data[8];
+                    const cantidad = parseInt(data[4]);
+                    const preuni = parseInt(data[5].replace(/\./g, ''));
+                    const subtotal = parseInt(data[6].replace(/\./g, ''));
+                    const tiva = parseInt(data[3].replace('%', ''));
+
+                    // Clasificar por IVA
+                    if (tiva === 0) {
+                        stexenta += subtotal;
+                    } else if (tiva === 5) {
+                        stiva5 += subtotal;
+                    } else if (tiva === 10) {
+                        stiva10 += subtotal;
+                    }
+
+                    totcompra += subtotal;
+
+                    articulos.push({
+                        idcompradet: (index + 1),
+                        idcompra: idCompraActual,
+                        item: (index + 1),
+                        idMaterial: idarticulo, // <--- corregido
+                        cantidad: cantidad,
+                        preuni: preuni,
+                        tiva: tiva,
+                        subtotal: subtotal
+                    });
+                });
+
+                // Calcular liquidación de IVA
+                const liqiva5 = Math.round(stiva5 / 21);  // 5% = dividir por 21
+                const liqiva10 = Math.round(stiva10 / 11); // 10% = dividir por 11
+                const totiva = liqiva5 + liqiva10;
+
+                // Crear objeto de cabecera
+                const cabecera = {
+                    idcompra: idCompraActual,
+                    idproveedor: parseInt(document.getElementById('idproveedor').value),
+                    numfactura: document.getElementById('numfactura').value,
+                    feccompra: document.getElementById('fecha').value,
+                    condicion: condicion,
+                    stexenta: stexenta,
+                    stiva5: stiva5,
+                    stiva10: stiva10,
+                    totcompra: totcompra,
+                    liqiva5: liqiva5,
+                    liqiva10: liqiva10,
+                    totiva: totiva,
+                    saldo: condicion === "CRÉDITO" ? totcompra : 0,
+                    anulado: "NO",
+                    fecvencimiento: fecvencimiento
+                };
+
+                // Obtener datos existentes
+                let comprascabecera = JSON.parse(localStorage.getItem("comprascabecera")) || [];
+                let comprasdetalle = JSON.parse(localStorage.getItem("comprasdetalle")) || [];
+
+                if (editMode) {
+                    // Actualizar cabecera existente
+                    const index = comprascabecera.findIndex(c => c.idcompra === idCompraActual);
+                    if (index !== -1) {
+                        // Revertir stock de materiales antiguos
+                        const detallesAntiguos = comprasdetalle.filter(d => d.idcompra === idCompraActual);
+                        revertirStockMateriales(detallesAntiguos);
+
+                        // Actualizar cabecera
+                        comprascabecera[index] = cabecera;
+                    } else {
+
+                        comprascabecera.push(cabecera);
+                    }
+
+                    // Eliminar detalles antiguos
+                    comprasdetalle = comprasdetalle.filter(d => d.idcompra !== idCompraActual);
+                } else {
+                    // Nueva factura
+                    comprascabecera.push(cabecera);
+                }
+
+                // Agregar detalles nuevos
+                comprasdetalle = [...comprasdetalle, ...articulos];
+
+                // Guardar en localStorage
+                localStorage.setItem("comprascabecera", JSON.stringify(comprascabecera));
+                localStorage.setItem("comprasdetalle", JSON.stringify(comprasdetalle));
+
+                // Actualizar stock de materiales
+                actualizarStockMateriales(articulos);
+
+                // Notificar éxito
+                if (editMode) {
+                    alertify.success('Factura actualizada correctamente');
+                } else {
+                    alertify.success('Factura guardada correctamente');
+                }
+
+                // Redirigir inmediatamente a la página de mantenimiento
+                window.location.href = "mantenimiento-facturas.html";
+
+            } catch (error) {
+                console.error('Error al guardar factura:', error);
+                alertify.error('Error al guardar factura: ' + error.message);
+            }
+        }
+
+        // Actualizar stock de materiales
+        function actualizarStockMateriales(articulos) {
+            try {
+                // Obtener materiales
+                let materiales = JSON.parse(localStorage.getItem("materiales")) || [];
+                let actualizacionesRealizadas = false;
+
+                // Actualizar stock y precios
+                articulos.forEach(articulo => {
+                    const idMaterial = articulo.idMaterial; // <--- corregido
+                    const cantidad = parseInt(articulo.cantidad);
+                    const precioUnitario = parseInt(articulo.preuni);
+
+                    const index = materiales.findIndex(m => m.idMaterial === idMaterial);
+                    if (index !== -1) {
+                        // Actualizar stock
+                        const stockActual = parseInt(materiales[index].stock) || 0;
+                        materiales[index].stock = stockActual + cantidad;
+
+                        // Actualizar precio si es diferente y válido
+                        if (precioUnitario > 0 && precioUnitario !== materiales[index].precio) {
+                            const precioAnterior = materiales[index].precio;
+                            materiales[index].precio = precioUnitario;
+                            console.log(`Precio actualizado para material ${idMaterial}: ${precioAnterior} → ${precioUnitario}`);
+                        }
+
+                        actualizacionesRealizadas = true;
+                        console.log(`Stock actualizado para material ${idMaterial}: ${materiales[index].stock}`);
+                    }
+                });
+
+                // Guardar materiales actualizados
+                if (actualizacionesRealizadas) {
+                    localStorage.setItem("materiales", JSON.stringify(materiales));
+                    console.log('Stock y precios actualizados correctamente');
+                }
+
+            } catch (error) {
+                console.error('Error al actualizar stock y precios de materiales:', error);
+                throw new Error('Error al actualizar stock y precios de materiales: ' + error.message);
+            }
+        }
+
+        // Revertir stock de materiales al anular factura o editar
+        function revertirStockMateriales(detalles) {
+            try {
+                const materiales = JSON.parse(localStorage.getItem("materiales")) || [];
+                let actualizacionesRealizadas = false;
+
+                // Recorrer detalles y actualizar stock
+                detalles.forEach(detalle => {
+                    const materialIndex = materiales.findIndex(m => m.idMaterial === detalle.idMaterial);
+
+                    if (materialIndex !== -1) {
+                        // Restar la cantidad del stock
+                        const stockActual = parseInt(materiales[materialIndex].stock) || 0;
+                        materiales[materialIndex].stock = stockActual - parseInt(detalle.cantidad);
+                        actualizacionesRealizadas = true;
+                        console.log(`Stock revertido para material ${detalle.idMaterial}: ${materiales[materialIndex].stock}`);
+                    }
+                });
+
+                // Guardar materiales actualizados
+                if (actualizacionesRealizadas) {
+                    localStorage.setItem("materiales", JSON.stringify(materiales));
+                    console.log('Stock revertido correctamente');
+                }
+
+            } catch (error) {
+                console.error('Error al revertir stock de materiales:', error);
+                throw new Error('Error al revertir stock de materiales: ' + error.message);
+            }
+        }
+
+        // Limpiar formulario completo
+        function limpiarFormulario() {
+            try {
+                // Limpiar campos principales
+                document.getElementById('ruc').value = '';
+                document.getElementById('proveedor').value = '';
+                document.getElementById('idproveedor').value = '';
+                document.getElementById('numfactura').value = '';
+                document.getElementById('fecha').valueAsDate = new Date();
+                document.getElementById('condicion').value = 'CONTADO';
+                document.getElementById('seccionFechaVencimiento').style.display = 'none';
+                document.getElementById('fechaVencimiento').value = '';
+
+                // Limpiar campos de artículo
+                document.getElementById('codbarra').value = '';
+                document.getElementById('descripcion').value = '';
+                document.getElementById('cantidad').value = '1';
+                document.getElementById('preuni').value = '';
+                document.getElementById('subtotal').value = '';
+                document.getElementById('iva').value = '10'; // Establecer un valor predeterminado
+                document.getElementById('ivaHidden').value = '';
+                document.getElementById('idarticulo').value = '';
+
+                // Limpiar tabla
+                const tabla = $('#tablaArticulos').DataTable();
+                tabla.clear().draw();
+
+                // Actualizar total
+                document.getElementById('totalFactura').textContent = '₲ 0';
+
+                // Quitar validaciones
+                document.getElementById('formCompras').classList.remove('was-validated');
+
+                // Si estaba en modo edición, salir de ese modo y actualizar ID
+                if (editMode) {
+                    editMode = false;
+                    actualizarIdCompraActual();
+                    document.querySelector('#formCompras button[type="submit"]').innerHTML = '<i class="bi bi-save me-2"></i> Guardar Factura';
+                }
+
+                // Enfocar en RUC
+                document.getElementById('ruc').focus();
+
+                alertify.message('Formulario limpiado');
+            } catch (error) {
+                console.error('Error al limpiar formulario:', error);
+                alertify.error('Error al limpiar formulario: ' + error.message);
+            }
+        }
+
+        // Formatear número sin símbolo de moneda
+        function formatoNumero(numero) {
+            return new Intl.NumberFormat('es-PY', {
+                maximumFractionDigits: 0
+            }).format(numero);
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,2466 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GMTL² - Facturas de Clientes</title>
+    <link rel="icon" href="img/2A_constructora_logo.png">
+
+    
+    <link href="menu/styles.css" rel="stylesheet" />
+
+    
+    <link rel="stylesheet" href="bt-icons/bootstrap-icons.min.css">
+
+    
+    <link rel="stylesheet" href="dt/datatables.min.css">
+    <link rel="stylesheet" href="dt/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="dt/buttons.dataTables.min.css">
+
+    
+    <link rel="stylesheet" href="alert/alertify.min.css">
+    <link rel="stylesheet" href="alert/themes/default.min.css">
+    <script src="alert/alertify.min.js"></script>
+
+    
+    <link rel="stylesheet" href="menu/styles.css">
+    <link rel="stylesheet" href="css/facturas-style.css">
+
+    
+    <style>
+        .stock-feedback {
+            font-weight: 500;
+            margin-top: 0.25rem;
+            padding: 0.375rem 0.5rem;
+            border-radius: 0.375rem;
+            border: 1px solid transparent;
+        }
+
+        .stock-feedback.text-danger {
+            background-color: #f8d7da;
+            border-color: #f5c2c7;
+            color: #842029;
+        }
+
+        .stock-feedback.text-warning {
+            background-color: #fff3cd;
+            border-color: #ffecb5;
+            color: #664d03;
+        }
+
+        .stock-feedback.text-success {
+            background-color: #d1edff;
+            border-color: #b6d7ff;
+            color: #055160;
+        }
+
+        .form-control.is-invalid {
+            border-color: #dc3545;
+            box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+        }
+
+        .form-control.is-valid {
+            border-color: #198754;
+            box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25);
+        }
+
+        /* Animación suave para los cambios de estado */
+        .stock-feedback {
+            transition: all 0.15s ease-in-out;
+        }
+    </style>
+
+</head>
+
+<body class="sb-nav-fixed">
+    
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <a class="navbar-brand ps-3" href="#" onclick="cargarPagina('dashboard')">
+            <img src="img/2A_constructora_logo.png" alt="Logo" height="30" class="me-2">
+            2A Constructora
+        </a>
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#"><i
+                class="bi bi-list"></i></button>
+        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <div class="input-group">
+                <input class="form-control" type="text" placeholder="Buscar..." aria-label="Buscar..."
+                    aria-describedby="btnNavbarSearch" />
+                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="bi bi-search"></i></button>
+            </div>
+        </form>
+        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false"><i class="bi bi-person-fill"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="configuracion.html"><i
+                                class="bi bi-gear me-2"></i>Configuración</a></li>
+                    <li><a class="dropdown-item" href="#"><i class="bi bi-clock-history me-2"></i>Actividad</a></li>
+                    <li>
+                        <hr class="dropdown-divider" />
+                    </li>
+                    <li><a class="dropdown-item" href="#" onclick="cerrarSesion()"><i
+                                class="bi bi-box-arrow-right me-2"></i>Cerrar sesión</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div class="sb-sidenav-menu-heading">Principal</div>
+                        <a class="nav-link" href="dashboard.html" onclick="cargarPagina('menu')">
+                            <div class="sb-nav-link-icon"><i class="bi bi-speedometer"></i></div>
+                            Dashboard
+                        </a>
+
+                        <div class="sb-sidenav-menu-heading">Módulos</div>
+
+                        
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseFinanzas">
+                            <div class="sb-nav-link-icon"><i class="bi bi-currency-dollar"></i></div>
+                            Finanzas
+                            <div class="sb-sidenav-collapse-arrow"><i class="bi bi-chevron-down"></i></div>
+                        </a>
+                        <div class="collapse show" id="collapseFinanzas" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="facturas-proveedores.html"
+                                    onclick="cargarPagina('facturas-proveedores')">
+                                    <i class="bi bi-file-earmark-text me-2"></i>Facturas de Proveedores
+                                </a>
+                                <a class="nav-link" href="mantenimiento-facturas.html"
+                                    onclick="cargarPagina('mantenimiento-facturas')">
+                                    <i class="bi bi-tools me-2"></i>Mantenimiento de Facturas
+                                </a>
+                                <a class="nav-link active" href="facturas-clientes.html"
+                                    onclick="cargarPagina('facturas-clientes')">
+                                    <i class="bi bi-file-earmark-plus me-2"></i>Facturas de Clientes
+                                </a>
+                                <a href="mantenimiento-facturas-clientes.html" class="nav-link">
+                                    <i class="bi bi-tools me-2"></i>Mantenimiento de Facturas Clientes
+                                </a>
+                                <a class="nav-link" href="pagos-proveedores.html"
+                                    onclick="cargarPagina('pagos-proveedores')">Pagos a
+                                    Proveedores</a>
+                                <a class="nav-link" href="cobros-clientes.html"
+                                    onclick="cargarPagina('cobros-clientes')">Cobros de
+                                    Clientes</a>
+                                <a class="nav-link" href="adelantos-anticipos.html"
+                                    onclick="cargarPagina('adelantos-anticipos')">Adelantos y
+                                    Anticipos</a>
+                                <a class="nav-link" href="costos-obra.html" onclick="cargarPagina('costos-obra')">Costos
+                                    por Obra</a>
+                                <a class="nav-link" href="reportes-financieros.html"
+                                    onclick="cargarPagina('reportes-financieros')">Reportes
+                                    Financieros</a>
+                            </nav>
+                        </div>
+
+                        
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseObras">
+                            <div class="sb-nav-link-icon"><i class="bi bi-building"></i></div>
+                            Obras
+                            <div class="sb-sidenav-collapse-arrow"><i class="bi bi-chevron-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseObras" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="mantenimiento-obras.html"
+                                    onclick="cargarPagina('mantenimiento-obras')">Mantenimiento
+                                    de Obras</a>
+                                <a class="nav-link" href="asignar-materiales.html"
+                                    onclick="cargarPagina('asignar-materiales')">Asignar
+                                    Materiales</a>
+                                <a class="nav-link" href="control-existencias.html"
+                                    onclick="cargarPagina('control-existencias')">Control de
+                                    Existencias</a>
+                                <a class="nav-link" href="movimientos-materiales.html"
+                                    onclick="cargarPagina('movimientos-materiales')">Movimientos de Materiales</a>
+                                <a class="nav-link" href="traslado-materiales.html"
+                                    onclick="cargarPagina('traslados-materiales')">Traslados de
+                                    Materiales</a>
+                                <a class="nav-link" href="registro-perdidas.html"
+                                    onclick="cargarPagina('registro-perdidas')">Registro de
+                                    Pérdidas</a>
+                            </nav>
+                        </div>
+
+                        <div class="sb-sidenav-menu-heading">Administración</div>
+
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseMantenimiento">
+                            <div class="sb-nav-link-icon"><i class="bi bi-gear"></i></div>
+                            Mantenimiento
+                            <div class="sb-sidenav-collapse-arrow"><i class="bi bi-chevron-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseMantenimiento" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="usuarios.html">Usuarios</a>
+                                <a class="nav-link" href="clientes.html" onclick="cargarPagina('clientes')">Clientes</a>
+                                <a class="nav-link" href="proveedores.html"
+                                    onclick="cargarPagina('proveedores')">Proveedores</a>
+                                <a class="nav-link" href="materiales.html"
+                                    onclick="cargarPagina('materiales')">Materiales</a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Iniciado por:</div>
+                    <div id="nomUsuario"></div>
+                    <div class="small">Rol:</div>
+                    <div id="rol"></div>
+                </div>
+            </nav>
+        </div>
+
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <div class="row mb-4 mt-4">
+                        <div class="col-md-12 d-flex justify-content-between align-items-center">
+                            <h2 class="mb-0"><i class="bi bi-file-earmark-plus me-2"></i>Registrar ventas a Clientes
+                            </h2>
+                            <a href="mantenimiento-facturas-clientes.html" class="btn btn-primary">
+                                <i class="bi bi-list me-1"></i> Ver Todas las Facturas
+                            </a>
+                        </div>
+                    </div>
+
+                    
+                    <form id="formVentas" class="card shadow-sm fade-in needs-validation" novalidate>
+                        <div class="card-header bg-light">
+                            <h5 class="mb-0"><i class="bi bi-file-earmark-plus me-2"></i>Datos de la Factura</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="col-sm-2">
+                                    <label class="form-label fw-bold">R.U.C.</label>
+                                    <div class="input-group">
+                                        <input type="text" id="ruc" class="form-control" required
+                                            pattern="[0-9]{6,8}-[0-9]{1}" title="Formato: XXXXXXXX-X">
+                                        <button type="button" class="btn btn-outline-secondary" id="btnBuscarRuc"
+                                            title="Buscar cliente (F2)"><i class="bi bi-search"></i></button>
+                                        <div class="invalid-feedback">Ingrese un RUC válido (XXXXXXXX-X)</div>
+                                    </div>
+                                    <small class="text-muted"><span class="shortcut-badge">F2</span> para buscar</small>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <label class="form-label fw-bold">CLIENTE</label>
+                                    <div class="input-group">
+                                        <input type="text" id="cliente" class="form-control text-uppercase" required
+                                            readonly>
+                                        <button type="button" class="btn btn-outline-secondary" id="btnBuscarNombre"
+                                            title="Buscar por nombre (F2)"><i class="bi bi-search"></i></button>
+                                        <div class="invalid-feedback">Seleccione un cliente válido</div>
+                                    </div>
+                                    <input type="hidden" id="idcliente">
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <label class="form-label fw-bold">OBRA/PROYECTO</label>
+                                    <div class="input-group">
+                                        <select id="idobra" class="form-select" required disabled>
+                                            <option value="">Seleccione una obra</option>
+                                            
+                                        </select>
+                                        <button type="button" class="btn btn-outline-secondary" id="btnBuscarObra"
+                                            title="Buscar obra (F4)" disabled><i class="bi bi-search"></i></button>
+                                        <div class="invalid-feedback">Seleccione una obra asociada al cliente</div>
+                                    </div>
+                                    <small class="text-muted"><span class="shortcut-badge">F4</span> para buscar
+                                        obras</small>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <label class="form-label fw-bold">CONDICIÓN</label>
+                                    <select id="condicion" class="form-select">
+                                        <option value="CONTADO">CONTADO</option>
+                                        <option value="CRÉDITO">CRÉDITO</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-sm-2">
+                                    <label class="form-label fw-bold">FECHA</label>
+                                    <input type="date" id="fecha" class="form-control" required>
+                                    <div class="invalid-feedback">Ingrese una fecha válida</div>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <label class="form-label fw-bold">N° FACTURA</label>
+                                    <input type="text" id="numfactura" class="form-control" required minlength="7"
+                                        maxlength="15" placeholder="001-001-0000000">
+                                    <div class="invalid-feedback">Formato requerido: XXX-XXX-XXXXXXX</div>
+                                </div>
+
+                                <div class="col-sm-3" id="seccionFechaVencimiento" style="display: none;">
+                                    <label class="form-label fw-bold">FECHA DE VENCIMIENTO</label>
+                                    <input type="date" id="fechaVencimiento" class="form-control">
+                                    <div class="invalid-feedback">Ingrese una fecha de vencimiento válida</div>
+                                    <small class="text-muted">Fecha límite para cobro de la factura a crédito</small>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-sm-2">
+                                    <label class="form-label fw-bold">COD. BARRA</label>
+                                    <div class="input-group">
+                                        <input type="text" id="codbarra" class="form-control" required maxlength="13">
+                                        <button type="button" class="btn btn-outline-secondary" id="btnBuscarCodigo"
+                                            title="Buscar artículo (F3)"><i class="bi bi-search"></i></button>
+                                        <div class="invalid-feedback">Ingrese un código válido</div>
+                                    </div>
+                                    <small class="text-muted"><span class="shortcut-badge">F3</span> para buscar</small>
+                                    <input type="hidden" id="idarticulo">
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <label class="form-label fw-bold">DESCRIPCIÓN</label>
+                                    <input type="text" id="descripcion" class="form-control text-uppercase" readonly>
+                                    <input type="hidden" id="ivaHidden">
+                                </div>
+
+                                <div class="col-sm-1">
+                                    <label class="form-label fw-bold">CANT.</label>
+                                    <input type="number" id="cantidad" class="form-control" required min="1" max="9999"
+                                        value="1">
+                                    <div class="invalid-feedback">Ingrese una cantidad válida</div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <label class="form-label fw-bold">IVA</label>
+                                    <select id="iva" class="form-select" required>
+                                        <option value="5">5%</option>
+                                        <option value="10" selected>10%</option>
+                                        <option value="0">Exento</option>
+                                    </select>
+                                    <div class="invalid-feedback">Seleccione un tipo de IVA válido</div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <label class="form-label fw-bold" for="preuni">PRE. UNI.</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">₲</span>
+                                        <input type="text" id="preuni" class="form-control" required>
+                                        <div class="invalid-feedback">Ingrese un precio válido</div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <label class="form-label fw-bold">SUBTOTAL</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">₲</span>
+                                        <input type="text" id="subtotal" class="form-control" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-1 d-grid align-items-end">
+                                    <button type="button" id="btnAgregarArticulo" class="btn btn-success"
+                                        title="Agregar artículo (F8)"><i class="bi bi-plus-circle"></i></button>
+                                    <small class="text-muted text-center mt-1"><span
+                                            class="shortcut-badge">F8</span></small>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-header bg-light">
+                                            <h5 class="m-0">Artículos de la Factura</h5>
+                                        </div>
+                                        <div class="card-body p-0">
+                                            <table id="tablaArticulos" class="display table table-striped table-hover"
+                                                style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Item</th>
+                                                        <th>Cod. Barra</th>
+                                                        <th>Descripción</th>
+                                                        <th>I.V.A.</th>
+                                                        <th>Cant.</th>
+                                                        <th>Pre. Uni.</th>
+                                                        <th>Subtotal</th>
+                                                        <th>Acción</th>
+                                                        <th>Id Articulo</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th colspan="6" style="text-align: right;">Total:</th>
+                                                        <th id="totalFactura"
+                                                            style="min-width: 100px; text-align: right;">₲ 0</th>
+                                                        <th colspan="2"></th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-4">
+                                <div class="col-12 text-center">
+                                    <button type="submit" class="btn btn-primary btn-lg" title="Guardar factura (F10)">
+                                        <i class="bi bi-save me-2"></i> Guardar Factura
+                                    </button>
+                                    <small class="d-block text-muted mt-1"><span class="shortcut-badge">F10</span> para
+                                        guardar</small>
+                                    <button type="button" class="btn btn-secondary btn-lg ms-2" id="btnLimpiar">
+                                        <i class="bi bi-x-circle me-2"></i> Limpiar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </main>
+
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; 2A Constructora 2025</div>
+                        <div>
+                            <a href="#">Política de Privacidad</a>
+                            &middot;
+                            <a href="#">Términos &amp; Condiciones</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    
+    <div class="modal fade" id="modalClientes" tabindex="-1" aria-labelledby="modalClientesLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="modalClientesLabel">Búsqueda de Clientes</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="filtroRuc" class="form-label">Filtrar por RUC:</label>
+                            <input type="text" id="filtroRuc" class="form-control" placeholder="Ingrese RUC">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="filtroNombre" class="form-label">Filtrar por Nombre:</label>
+                            <input type="text" id="filtroNombre" class="form-control" placeholder="Ingrese nombre">
+                        </div>
+                        <div class="col-md-4 d-flex align-items-end">
+                            <button id="btnFiltrarClientes" class="btn btn-primary me-2">
+                                <i class="bi bi-filter me-1"></i> Filtrar
+                            </button>
+                            <button id="btnLimpiarFiltros" class="btn btn-secondary">
+                                <i class="bi bi-x-circle me-1"></i> Limpiar Filtros
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table id="tablaClientes" class="display table table-striped table-hover w-100">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>RUC</th>
+                                    <th>Nombre</th>
+                                    <th>Teléfono</th>
+                                    <th>Email</th>
+                                    <th>Dirección</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="modal fade" id="modalObras" tabindex="-1" aria-labelledby="modalObrasLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="modalObrasLabel">Búsqueda de Obras</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="filtroNombreObra" class="form-label">Filtrar por Nombre:</label>
+                            <input type="text" id="filtroNombreObra" class="form-control"
+                                placeholder="Ingrese nombre de la obra">
+                        </div>
+                        <div class="col-md-6 d-flex align-items-end">
+                            <button id="btnFiltrarObras" class="btn btn-primary me-2">
+                                <i class="bi bi-filter me-1"></i> Filtrar
+                            </button>
+                            <button id="btnLimpiarFiltrosObras" class="btn btn-secondary">
+                                <i class="bi bi-x-circle me-1"></i> Limpiar Filtros
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table id="tablaObras" class="display table table-striped table-hover w-100">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Dirección</th>
+                                    <th>Fecha Inicio</th>
+                                    <th>Fecha Fin</th>
+                                    <th>Estado</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="modal fade" id="modalArticulos" tabindex="-1" aria-labelledby="modalArticulosLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="modalArticulosLabel">Búsqueda de Artículos</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="filtroCodigo" class="form-label">Filtrar por Código:</label>
+                            <input type="text" id="filtroCodigo" class="form-control"
+                                placeholder="Ingrese código de barra">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="filtroDescripcion" class="form-label">Filtrar por Descripción:</label>
+                            <input type="text" id="filtroDescripcion" class="form-control"
+                                placeholder="Ingrese descripción">
+                        </div>
+                        <div class="col-md-4 d-flex align-items-end">
+                            <button id="btnFiltrarArticulos" class="btn btn-primary me-2">
+                                <i class="bi bi-filter me-1"></i> Filtrar
+                            </button>
+                            <button id="btnLimpiarFiltrosArticulos" class="btn btn-secondary">
+                                <i class="bi bi-x-circle me-1"></i> Limpiar Filtros
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table id="tablaArticulosBusqueda" class="display table table-striped table-hover w-100">
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Descripción</th>
+                                    <th>Unidad</th>
+                                    <th>IVA</th>
+                                    <th>Stock</th>
+                                    <th>Precio</th>
+                                    <th>Acción</th>
+                                    <th>ID</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/funcionesSistema.js"></script>
+    <script src="js/bd.js"></script>
+    
+    <script src="menu/bootstrap.bundle.min.js"></script>
+    <script src="menu/scripts.js"></script>
+    
+    <script src="dt/jquery-3.7.1.js"></script>
+    <script src="dt/datatables.min.js"></script>
+    <script src="dt/jquery.dataTables.min.js"></script>
+    
+    <script src="dt/dataTables.buttons.min.js"></script>
+    <script src="dt/buttons.print.min.js"></script>
+    <script src="dt/buttons.html5.min.js"></script>
+    
+    <script src="dt/jszip.min.js"></script>
+    <script src="dt/pdfmake.min.js"></script>
+    <script src="dt/vfs_fonts.js"></script>
+    
+    <script src="dt/es-ES.js"></script>
+
+    <script>
+        // Variables globales
+        let idVentaActual = null;
+        let editMode = false;
+        let obrasCargadas = [];
+
+        // Control de seguridad del usuario actual
+        document.addEventListener('DOMContentLoaded', function () {
+            try {
+                // Verificar si el usuario está autenticado
+                const nombreUsuario = localStorage.getItem("nomUsuario");
+                if (!nombreUsuario) {
+                    window.location.href = "error.html";
+                    return;
+                }
+
+                // Obtener datos del usuario 
+                const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+                const usuarioActual = usuarios.find(u => u.nombre === nombreUsuario);
+
+                // Mostrar el nombre completo del usuario en el menú
+                const nombreCompleto = usuarioActual ?
+                    `${usuarioActual.nombre} ${usuarioActual.apellido || ''}`.trim() :
+                    nombreUsuario;
+                document.getElementById("nomUsuario").textContent = nombreCompleto;
+
+                // Si no hay usuario o el rol no es administrador, gerente o contador, redirigir
+                if (!usuarioActual || (usuarioActual.rol !== 'administrador' && usuarioActual.rol !== 'gerente' && usuarioActual.rol !== 'contador')) {
+                    alertify.error("No tienes permisos para acceder a esta página");
+                    setTimeout(() => {
+                        window.location.href = "error.html";
+                    }, 2000);
+                    return;
+                }
+
+                // Mostrar el rol del usuario en el menú
+                document.getElementById("rol").textContent = formatearRol(usuarioActual.rol);
+
+                // Inicializar la fecha con la fecha actual
+                document.getElementById('fecha').valueAsDate = new Date();
+
+                // Inicializar eventos
+                inicializarEventos();
+
+                // Inicializar las tablas
+                inicializarTablas();
+
+                // Cargar datos
+                cargarDatos();
+
+                // Inicializar tooltips
+                var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+                var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                    return new bootstrap.Tooltip(tooltipTriggerEl);
+                });
+
+                // Inicializar datos de obras si no existen
+                inicializarObras();
+
+                // Obtener último ID de venta para la nueva factura
+                actualizarIdVentaActual();
+
+                // Verificar si la URL tiene parámetro de edición
+                checkEditParameter();
+            } catch (error) {
+                alertify.error("Error al inicializar la página: " + error.message);
+                console.error("Error completo:", error);
+            }
+        });
+
+        // Inicializar datos de obras
+        function inicializarObras() {
+            // Verificar si ya existen obras
+            const obras = JSON.parse(localStorage.getItem("obras")) || [];
+
+            if (obras.length === 0) {
+                // Crear obras de ejemplo
+                const obrasEjemplo = [
+                    {
+                        idobra: 1,
+                        nombre: "Construcción Residencial Villa Esperanza",
+                        idcliente: 3,
+                        fechainicio: "2025-01-10",
+                        fechafin: "2025-12-15",
+                        direccion: "Av. Principal, Km 5, Concepción",
+                        presupuesto: 250000000,
+                        estado: "en_progreso" // en_progreso, finalizada, cancelada
+                    },
+                    {
+                        idobra: 2,
+                        nombre: "Reforma Hospital Regional Fase 1",
+                        idcliente: 9,
+                        fechainicio: "2025-03-01",
+                        fechafin: "2025-08-30",
+                        direccion: "Av. Médicos del Chaco 200, Concepción",
+                        presupuesto: 500000000,
+                        estado: "en_progreso"
+                    },
+                    {
+                        idobra: 3,
+                        nombre: "Construcción Supermercado Central",
+                        idcliente: 7,
+                        fechainicio: "2025-02-15",
+                        fechafin: "2025-10-20",
+                        direccion: "Av. Central 1000, Horqueta",
+                        presupuesto: 350000000,
+                        estado: "en_progreso"
+                    },
+                    {
+                        idobra: 4,
+                        nombre: "Ampliación Estancia La Esperanza",
+                        idcliente: 10,
+                        fechainicio: "2025-04-10",
+                        fechafin: "2025-07-30",
+                        direccion: "Colonia San Juan, Concepción",
+                        presupuesto: 180000000,
+                        estado: "en_progreso"
+                    },
+                    {
+                        idobra: 5,
+                        nombre: "Refacción Municipalidad de Concepción",
+                        idcliente: 1,
+                        fechainicio: "2025-01-05",
+                        fechafin: "2025-06-10",
+                        direccion: "Av. Pdte. Franco c/ Brasil, Concepción",
+                        presupuesto: 420000000,
+                        estado: "en_progreso"
+                    }
+                ];
+
+                localStorage.setItem("obras", JSON.stringify(obrasEjemplo));
+                console.log("Obras de ejemplo inicializadas");
+            }
+        }
+
+        // Verificar si hay parámetro de edición en la URL
+        function checkEditParameter() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const editId = urlParams.get('edit');
+            if (editId) {
+                // Cargar la factura en modo edición
+                cargarFacturaParaEdicion(parseInt(editId));
+            }
+        }
+
+        // Obtener el último ID de venta y asignar el siguiente
+        function actualizarIdVentaActual() {
+            try {
+                const facturasclientes = JSON.parse(localStorage.getItem("facturasclientes")) || [];
+                if (facturasclientes.length > 0) {
+                    // Encontrar el máximo idfactura
+                    const maxId = Math.max(...facturasclientes.map(factura => factura.idfactura));
+                    idVentaActual = maxId + 1;
+                } else {
+                    idVentaActual = 1;
+                }
+                console.log("Nuevo ID de factura asignado:", idVentaActual);
+            } catch (error) {
+                console.error("Error al obtener último ID de factura:", error);
+                idVentaActual = 1; // Valor por defecto
+            }
+        }
+
+        // Cargar datos (clientes, materiales, obras)
+        function cargarDatos() {
+            // Cargar clientes para el modal
+            cargarClientesModal();
+
+            // Cargar materiales para el modal
+            cargarMaterialesModal();
+
+            // Cargar obras para el modal
+            cargarObrasModal();
+        }
+
+        // Cargar clientes en el modal
+        function cargarClientesModal() {
+            try {
+                // Obtener clientes
+                let clientes = [];
+                if (typeof obtenerClientes === 'function') {
+                    clientes = obtenerClientes();
+                } else {
+                    clientes = JSON.parse(localStorage.getItem("clientes")) || [];
+                }
+
+                const tablaClientes = $('#tablaClientes').DataTable();
+                tablaClientes.clear();
+
+                // Si no hay clientes, mostrar mensaje
+                if (clientes.length === 0) {
+                    alertify.warning("No hay clientes registrados en el sistema");
+                    return;
+                }
+
+                // Agregar clientes a la tabla
+                clientes.forEach(cliente => {
+                    const btnSeleccionar = '<button class="btn btn-primary btn-sm btn-tabla seleccionar-cliente">Seleccionar</button>';
+
+                    tablaClientes.row.add([
+                        cliente.idCliente || '',
+                        cliente.rucCi || '',
+                        cliente.razonSocial || '',
+                        cliente.telefono || '',
+                        cliente.email || '',
+                        cliente.direccion || '',
+                        btnSeleccionar
+                    ]).draw(false);
+                });
+            } catch (error) {
+                alertify.error("Error al cargar clientes: " + error.message);
+                console.error("Error completo:", error);
+            }
+        }
+
+        // Cargar materiales en el modal
+        function cargarMaterialesModal() {
+            try {
+                // Obtener materiales
+                let materiales = [];
+                if (typeof obtenerMateriales === 'function') {
+                    materiales = obtenerMateriales();
+                } else {
+                    materiales = JSON.parse(localStorage.getItem("materiales")) || [];
+                }
+
+                const tablaArticulos = $('#tablaArticulosBusqueda').DataTable();
+                tablaArticulos.clear();
+
+                // Si no hay materiales, mostrar mensaje
+                if (materiales.length === 0) {
+                    alertify.warning("No hay materiales registrados en el sistema");
+                    return;
+                }
+
+                // Agregar materiales a la tabla
+                materiales.forEach(articulo => {
+                    const btnSeleccionar = '<button class="btn btn-primary btn-sm btn-tabla seleccionar-articulo">Seleccionar</button>';
+
+                    // Para ventas, verificamos que haya stock disponible
+                    if (articulo.stock > 0) {
+                        tablaArticulos.row.add([
+                            articulo.codbarra || '',
+                            articulo.descripcion || '',
+                            articulo.unidad || '',
+                            '10%', // IVA por defecto
+                            articulo.stock || '0',
+                            formatoNumero(articulo.precio * 1.3) || '0', // Incremento del 30% para ventas
+                            btnSeleccionar,
+                            articulo.idMaterial || ''
+                        ]).draw(false);
+                    }
+                });
+            } catch (error) {
+                alertify.error("Error al cargar materiales: " + error.message);
+                console.error("Error completo:", error);
+            }
+        }
+
+        // Cargar obras en el modal y en el select
+        function cargarObrasModal() {
+            try {
+                // Obtener obras
+                const obras = JSON.parse(localStorage.getItem("obras")) || [];
+                obrasCargadas = obras;
+
+                const tablaObras = $('#tablaObras').DataTable();
+                tablaObras.clear();
+
+                // Si no hay obras, mostrar mensaje
+                if (obras.length === 0) {
+                    alertify.warning("No hay obras registradas en el sistema");
+                    return;
+                }
+
+                // Agregar obras a la tabla
+                obras.forEach(obra => {
+                    const btnSeleccionar = '<button class="btn btn-primary btn-sm btn-tabla seleccionar-obra">Seleccionar</button>';
+
+                    // Formatear fechas
+                    const fechaInicio = new Date(obra.fechainicio).toLocaleDateString('es-PY');
+                    const fechaFin = new Date(obra.fechafin).toLocaleDateString('es-PY');
+
+                    // Formatear estado
+                    let estadoText = "";
+                    let estadoClass = "";
+                    switch (obra.estado) {
+                        case "en_progreso":
+                            estadoText = "En Progreso";
+                            estadoClass = "success";
+                            break;
+                        case "finalizada":
+                            estadoText = "Finalizada";
+                            estadoClass = "primary";
+                            break;
+                        case "cancelada":
+                            estadoText = "Cancelada";
+                            estadoClass = "danger";
+                            break;
+                        default:
+                            estadoText = obra.estado;
+                            estadoClass = "secondary";
+                    }
+
+                    const estadoFormateado = `<span class="badge bg-${estadoClass}">${estadoText}</span>`;
+
+                    tablaObras.row.add([
+                        obra.idobra || '',
+                        obra.nombre || '',
+                        obra.direccion || '',
+                        fechaInicio,
+                        fechaFin,
+                        estadoFormateado,
+                        btnSeleccionar
+                    ]).draw(false);
+                });
+            } catch (error) {
+                alertify.error("Error al cargar obras: " + error.message);
+                console.error("Error completo:", error);
+            }
+        }
+
+        // Cargar obras por cliente
+        function cargarObrasPorCliente(idCliente) {
+            try {
+                const idClienteNum = parseInt(idCliente);
+                const obras = JSON.parse(localStorage.getItem("obras")) || [];
+                const selectObra = document.getElementById('idobra');
+
+                // Limpiar opciones actuales
+                selectObra.innerHTML = '<option value="">Seleccione una obra</option>';
+
+                // Filtrar obras por cliente (corregir inconsistencias de nombres de campo)
+                const obrasCliente = obras.filter(obra => {
+                    // Verificar diferentes posibles nombres de campo para el ID del cliente
+                    const idClienteObra = obra.cliente || obra.idcliente || obra.idCliente;
+                    return idClienteObra === idClienteNum;
+                });
+
+                if (obrasCliente.length === 0) {
+                    alertify.warning(`No hay obras registradas para el cliente seleccionado`);
+                    selectObra.disabled = true;
+                    document.getElementById('btnBuscarObra').disabled = true;
+                    return;
+                }
+
+                obrasCliente.forEach(obra => {
+                    const option = document.createElement('option');
+                    // Verificar diferentes posibles nombres de campo para el ID de la obra
+                    const idObra = obra.idObra || obra.idobra || obra.idObra;
+                    option.value = idObra;
+                    option.textContent = obra.nombre;
+                    selectObra.appendChild(option);
+                });
+
+                selectObra.disabled = false;
+                document.getElementById('btnBuscarObra').disabled = false;
+
+                alertify.success(`Se cargaron ${obrasCliente.length} obras del cliente`);
+            } catch (error) {
+                console.error("Error al cargar obras por cliente:", error);
+                alertify.error("Error: " + error.message);
+            }
+        }
+
+        // Formatear el nombre del rol para mostrar
+        function formatearRol(rol) {
+            switch (rol) {
+                case 'administrador': return 'Administrador';
+                case 'jefe_obra': return 'Jefe de Obra';
+                case 'gerente': return 'Gerente';
+                case 'obrero': return 'Obrero';
+                case 'contador': return 'Contador/Financiero';
+                case 'codificador': return 'Codificador';
+                default: return rol;
+            }
+        }
+
+        // Inicializar las tablas
+        function inicializarTablas() {
+            // Tabla principal de artículos
+            $('#tablaArticulos').DataTable({
+                scrollY: '250px',
+                scrollCollapse: true,
+                paging: false,
+                searching: false,
+                info: false,
+                ordering: false,
+                language: spanish || {
+                    "decimal": ",",
+                    "thousands": ".",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                    "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros en total)",
+                    "infoPostFix": "",
+                    "lengthMenu": "Mostrar _MENU_ registros",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "No se encontraron coincidencias",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    },
+                    "aria": {
+                        "sortAscending": ": activar para ordenar la columna ascendentemente",
+                        "sortDescending": ": activar para ordenar la columna descendentemente"
+                    }
+                },
+                columnDefs: [
+                    { targets: 0, width: '5%' },
+                    { targets: 1, width: '15%' },
+                    { targets: 2, width: '40%' },
+                    { targets: 3, width: '10%' },
+                    { targets: 4, width: '5%', className: 'text-end' },
+                    { targets: 5, width: '10%', className: 'text-end' },
+                    { targets: 6, width: '10%', className: 'text-end' },
+                    { targets: 7, width: '5%', className: 'text-center' },
+                    { targets: 8, visible: false }
+                ]
+            });
+
+            // Evento delegado para quitar filas
+            $('#tablaArticulos tbody').on('click', '.quitar-fila', function () {
+                const tabla = $('#tablaArticulos').DataTable();
+                tabla.row($(this).parents('tr')).remove().draw();
+                calcularTotalFactura();
+                actualizarNumerosItem();
+                alertify.success('Artículo eliminado correctamente');
+            });
+
+            // Tabla de clientes para búsqueda
+            $('#tablaClientes').DataTable({
+                scrollY: '400px',
+                scrollCollapse: true,
+                paging: true,
+                searching: true,
+                info: true,
+                ordering: true,
+                language: spanish || {
+                    "decimal": ",",
+                    "thousands": ".",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                    "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros en total)",
+                    "infoPostFix": "",
+                    "lengthMenu": "Mostrar _MENU_ registros",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "No se encontraron coincidencias",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    },
+                    "aria": {
+                        "sortAscending": ": activar para ordenar la columna ascendentemente",
+                        "sortDescending": ": activar para ordenar la columna descendentemente"
+                    }
+                },
+                columnDefs: [
+                    { targets: 0, visible: false }, // ID (oculto)
+                    { targets: 1, width: '15%' }, // RUC
+                    { targets: 2, width: '25%' }, // Nombre
+                    { targets: 3, width: '15%' }, // Teléfono
+                    { targets: 4, width: '20%' }, // Email
+                    { targets: 5, width: '15%' }, // Dirección
+                    { targets: 6, width: '10%', className: 'text-center' } // Acción
+                ],
+                dom: 'lfrtip',
+                lengthMenu: [5, 10, 25, 50],
+                pageLength: 5
+            });
+
+            // Evento para seleccionar cliente
+            $('#tablaClientes tbody').on('click', '.seleccionar-cliente', function () {
+                const fila = $(this).closest('tr');
+                const tablaClientes = $('#tablaClientes').DataTable();
+                const data = tablaClientes.row(fila).data();
+                seleccionarCliente(data[0], data[1], data[2]); // ID, RUC, Nombre
+            });
+
+            // Doble clic para seleccionar cliente
+            $('#tablaClientes tbody').on('dblclick', 'tr', function () {
+                const tablaClientes = $('#tablaClientes').DataTable();
+                const data = tablaClientes.row(this).data();
+                seleccionarCliente(data[0], data[1], data[2]); // ID, RUC, Nombre
+            });
+
+            // Resaltar fila seleccionada en clientes
+            $('#tablaClientes tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected-row')) {
+                    $(this).removeClass('selected-row');
+                } else {
+                    $('#tablaClientes').DataTable().$('tr.selected-row').removeClass('selected-row');
+                    $(this).addClass('selected-row');
+                }
+            });
+
+            // Tabla de obras para búsqueda
+            $('#tablaObras').DataTable({
+                scrollY: '400px',
+                scrollCollapse: true,
+                paging: true,
+                searching: true,
+                info: true,
+                ordering: true,
+                language: spanish || {
+                    "decimal": ",",
+                    "thousands": ".",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                    "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros en total)",
+                    "infoPostFix": "",
+                    "lengthMenu": "Mostrar _MENU_ registros",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "No se encontraron coincidencias",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    },
+                    "aria": {
+                        "sortAscending": ": activar para ordenar la columna ascendentemente",
+                        "sortDescending": ": activar para ordenar la columna descendentemente"
+                    }
+                },
+                columnDefs: [
+                    { targets: 0, visible: false }, // ID (oculto)
+                    { targets: 1, width: '30%' }, // Nombre
+                    { targets: 2, width: '30%' }, // Dirección
+                    { targets: 3, width: '10%' }, // Fecha Inicio
+                    { targets: 4, width: '10%' }, // Fecha Fin
+                    { targets: 5, width: '10%', className: 'text-center' }, // Estado
+                    { targets: 6, width: '10%', className: 'text-center' } // Acción
+                ],
+                dom: 'lfrtip',
+                lengthMenu: [5, 10, 25, 50],
+                pageLength: 5
+            });
+
+            // Evento para seleccionar obra
+            $('#tablaObras tbody').on('click', '.seleccionar-obra', function () {
+                const fila = $(this).closest('tr');
+                const tablaObras = $('#tablaObras').DataTable();
+                const data = tablaObras.row(fila).data();
+                seleccionarObra(data[0], data[1]); // ID, Nombre
+            });
+
+            // Doble clic para seleccionar obra
+            $('#tablaObras tbody').on('dblclick', 'tr', function () {
+                const tablaObras = $('#tablaObras').DataTable();
+                const data = tablaObras.row(this).data();
+                seleccionarObra(data[0], data[1]); // ID, Nombre
+            });
+
+            // Resaltar fila seleccionada en obras
+            $('#tablaObras tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected-row')) {
+                    $(this).removeClass('selected-row');
+                } else {
+                    $('#tablaObras').DataTable().$('tr.selected-row').removeClass('selected-row');
+                    $(this).addClass('selected-row');
+                }
+            });
+
+            // Tabla de artículos para búsqueda
+            $('#tablaArticulosBusqueda').DataTable({
+                scrollY: '400px',
+                scrollCollapse: true,
+                paging: true,
+                searching: true,
+                info: true,
+                ordering: true,
+                language: spanish || {
+                    "decimal": ",",
+                    "thousands": ".",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                    "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros en total)",
+                    "infoPostFix": "",
+                    "lengthMenu": "Mostrar _MENU_ registros",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "No se encontraron coincidencias",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    },
+                    "aria": {
+                        "sortAscending": ": activar para ordenar la columna ascendentemente",
+                        "sortDescending": ": activar para ordenar la columna descendentemente"
+                    }
+                },
+                columnDefs: [
+                    { targets: 0, width: '15%' }, // Código
+                    { targets: 1, width: '35%' }, // Descripción
+                    { targets: 2, width: '10%' }, // Unidad
+                    { targets: 3, width: '5%' }, // IVA
+                    { targets: 4, width: '10%', className: 'text-end' }, // Stock
+                    { targets: 5, width: '15%', className: 'text-end' }, // Precio
+                    { targets: 6, width: '10%', className: 'text-center' }, // Acción
+                    { targets: 7, visible: false } // ID oculto
+                ],
+                dom: 'lfrtip',
+                lengthMenu: [5, 10, 25, 50],
+                pageLength: 5
+            });
+
+            // Evento para seleccionar artículo
+            $('#tablaArticulosBusqueda tbody').on('click', '.seleccionar-articulo', function () {
+                const fila = $(this).closest('tr');
+                const tablaArticulos = $('#tablaArticulosBusqueda').DataTable();
+                const data = tablaArticulos.row(fila).data();
+                seleccionarArticulo(data[0], data[1], data[3].replace('%', ''), data[5].replace(/\./g, ''), data[7]);
+            });
+
+            // Doble clic para seleccionar artículo
+            $('#tablaArticulosBusqueda tbody').on('dblclick', 'tr', function () {
+                const tablaArticulos = $('#tablaArticulosBusqueda').DataTable();
+                const data = tablaArticulos.row(this).data();
+                seleccionarArticulo(data[0], data[1], data[3].replace('%', ''), data[5].replace(/\./g, ''), data[7]);
+            });
+
+            // Resaltar fila seleccionada en artículos
+            $('#tablaArticulosBusqueda tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected-row')) {
+                    $(this).removeClass('selected-row');
+                } else {
+                    $('#tablaArticulosBusqueda').DataTable().$('tr.selected-row').removeClass('selected-row');
+                    $(this).addClass('selected-row');
+                }
+            });
+        }
+
+        // Actualizar números de item después de eliminar una fila
+        function actualizarNumerosItem() {
+            const tabla = $('#tablaArticulos').DataTable();
+            let contador = 1;
+
+            tabla.rows().every(function () {
+                const data = this.data();
+                data[0] = contador++;
+                this.data(data);
+            });
+        }
+
+        // Cargar factura para edición
+        function cargarFacturaParaEdicion(id) {
+            try {
+                // Buscar la factura por ID
+                const facturasclientes = JSON.parse(localStorage.getItem("facturasclientes")) || [];
+                const detallefacturacliente = JSON.parse(localStorage.getItem("detallefacturacliente")) || [];
+                const factura = facturasclientes.find(f => f.idfactura === id);
+
+                if (!factura) {
+                    alertify.error('No se encontró la factura con ID: ' + id);
+                    return;
+                }
+
+                // Verificar si está anulada
+                if (factura.anulado === "SI") {
+                    alertify.error('No se puede editar una factura anulada');
+                    window.location.href = "mantenimiento-facturas-clientes.html";
+                    return;
+                }
+
+                // Buscar detalles de la factura
+                const detalles = detallefacturacliente.filter(d => d.idfactura === id);
+
+                // Buscar cliente
+                const clientes = JSON.parse(localStorage.getItem("clientes")) || [];
+                const cliente = clientes.find(c => c.idCliente === factura.idCliente);
+
+                // Cargar datos en el formulario
+                document.getElementById('ruc').value = cliente ? cliente.rucCi : "";
+                document.getElementById('cliente').value = cliente ? cliente.razonSocial : "";
+                document.getElementById('idcliente').value = factura.idCliente;
+
+                // Cargar obras relacionadas con el cliente
+                cargarObrasPorCliente(factura.idCliente);
+
+                // Seleccionar la obra correspondiente
+                const selectObra = document.getElementById('idobra');
+                // Verificar diferentes posibles nombres de campo para el ID de la obra
+                const obraId = factura.idObra || factura.idobra || factura.idObra;
+
+                if (obraId) {
+                    // Esperar que se carguen las obras
+                    const intervalId = setInterval(() => {
+                        if (selectObra.options.length > 1) { // Más de una opción (la primera es "Seleccione una obra")
+                            clearInterval(intervalId);
+                            selectObra.value = obraId;
+
+                            // Verificar que la obra se haya seleccionado correctamente
+                            if (selectObra.value !== String(obraId)) {
+                                console.warn('No se pudo seleccionar la obra automáticamente. Obra ID:', obraId);
+                                console.warn('Opciones disponibles:', Array.from(selectObra.options).map(opt => opt.value));
+                                alertify.warning('La obra de esta factura no se pudo seleccionar automáticamente. Por favor, verifique la obra seleccionada.');
+                            } else {
+                                alertify.success('Obra cargada correctamente para la factura');
+                            }
+                        }
+                    }, 100); // Revisar cada 100ms
+
+                    // Timeout de seguridad después de 2 segundos
+                    setTimeout(() => {
+                        clearInterval(intervalId);
+                        if (selectObra.value !== String(obraId)) {
+                            alertify.warning('No se pudo cargar la obra automáticamente. Por favor, seleccione la obra manualmente.');
+                        }
+                    }, 2000);
+                } else {
+                    alertify.warning('Esta factura no tiene obra asociada. Por favor, seleccione una obra.');
+                }
+
+                document.getElementById('condicion').value = factura.condicion;
+                document.getElementById('fecha').value = factura.fecventa;
+                document.getElementById('numfactura').value = factura.numfactura;
+
+                // Si es crédito, mostrar y establecer fecha de vencimiento
+                if (factura.condicion === "CRÉDITO") {
+                    document.getElementById('seccionFechaVencimiento').style.display = 'block';
+                    document.getElementById('fechaVencimiento').value = factura.fechaVencimiento || '';
+                }
+
+                // Cargar artículos
+                const tabla = $('#tablaArticulos').DataTable();
+                tabla.clear();
+
+                // Buscar materiales
+                const materiales = JSON.parse(localStorage.getItem("materiales")) || [];
+
+                detalles.forEach((detalle, index) => {
+                    // Buscar material para obtener más datos
+                    const material = materiales.find(m => m.idMaterial === detalle.idMaterial);
+                    const codbarra = material ? material.codbarra : "No disponible";
+                    const descripcion = material ? material.descripcion : "Material no encontrado";
+
+                    // Crear botón de eliminar
+                    const btnEliminar = '<button class="btn btn-danger btn-sm quitar-fila" title="Eliminar artículo"><i class="bi bi-trash"></i></button>';
+
+                    // Agregar a la tabla
+                    tabla.row.add([
+                        index + 1,
+                        codbarra,
+                        descripcion,
+                        detalle.tiva + '%',
+                        detalle.cantidad,
+                        formatoNumero(detalle.preuni),
+                        formatoNumero(detalle.subtotal),
+                        btnEliminar,
+                        detalle.idMaterial
+                    ]).draw(false);
+                });
+
+                // Calcular total
+                calcularTotalFactura();
+
+                // Establecer modo edición
+                editMode = true;
+                idVentaActual = id;
+
+                // Actualizar
+                document.querySelector('#formVentas button[type="submit"]').innerHTML = '<i class="bi bi-save me-2"></i> Actualizar Factura';
+
+                alertify.success('Factura cargada para edición');
+
+            } catch (error) {
+                console.error('Error al cargar factura para edición:', error);
+                alertify.error('Error: ' + error.message);
+            }
+        }
+
+        // Inicializar todos los eventos de la página
+        function inicializarEventos() {
+            // Evento para formatear automáticamente el número de factura
+            const numFacturaInput = document.getElementById('numfactura');
+            numFacturaInput.addEventListener('input', function (e) {
+                // Eliminar todos los caracteres que no sean números
+                let value = this.value.replace(/[^0-9]/g, '');
+
+                // Aplicar formato XXX-XXX-YYYYY
+                if (value.length > 0) {
+                    // Formatea los primeros 3 dígitos
+                    if (value.length <= 3) {
+                        this.value = value;
+                    }
+                    // Formatea los primeros 6 dígitos (XXX-XXX)
+                    else if (value.length <= 6) {
+                        this.value = value.substring(0, 3) + '-' + value.substring(3);
+                    }
+                    // Formatea el número completo (XXX-XXX-YYYYY)
+                    else {
+                        this.value = value.substring(0, 3) + '-' + value.substring(3, 6) + '-' + value.substring(6);
+                    }
+                }
+            });
+
+            // Formatear precio unitario como moneda
+            const preUniInput = document.getElementById('preuni');
+            preUniInput.addEventListener('input', function (e) {
+                // Eliminar caracteres no numéricos
+                let value = this.value.replace(/[^0-9]/g, '');
+
+                // Formatear como número
+                if (value) {
+                    this.value = formatoNumero(parseInt(value));
+                } else {
+                    this.value = '';
+                }
+
+                // Calcular el subtotal
+                calcularSubtotal();
+            });
+
+            // Evento para calcular subtotal cuando cambia la cantidad
+            const cantidadInput = document.getElementById('cantidad');
+            cantidadInput.addEventListener('input', function () {
+                calcularSubtotal();
+                validarStockEnTiempoReal();
+            });
+
+            // Evento para validar stock cuando se pierde el foco del campo cantidad
+            cantidadInput.addEventListener('blur', validarStockEnTiempoReal);
+
+            // Evento para el botón de agregar artículo
+            document.getElementById('btnAgregarArticulo').addEventListener('click', agregarArticulo);
+
+            // Evento para buscar cliente por RUC (abrir modal)
+            document.getElementById('btnBuscarRuc').addEventListener('click', abrirModalClientes);
+
+            // Evento para buscar cliente por nombre (abrir modal)
+            document.getElementById('btnBuscarNombre').addEventListener('click', abrirModalClientes);
+
+            // Evento para buscar obra (abrir modal)
+            document.getElementById('btnBuscarObra').addEventListener('click', abrirModalObras);
+
+            // Evento para buscar artículo por código (abrir modal)
+            document.getElementById('btnBuscarCodigo').addEventListener('click', abrirModalArticulos);
+
+            // Evento para limpiar el formulario
+            document.getElementById('btnLimpiar').addEventListener('click', limpiarFormulario);
+
+            // Evento para validar y guardar la factura
+            document.getElementById('formVentas').addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                if (this.checkValidity()) {
+                    guardarFactura();
+                } else {
+                    this.classList.add('was-validated');
+                    alertify.error('Por favor complete todos los campos requeridos');
+                }
+            });
+
+            // Eventos para el modal de clientes
+            document.getElementById('btnFiltrarClientes').addEventListener('click', filtrarClientes);
+            document.getElementById('btnLimpiarFiltros').addEventListener('click', limpiarFiltrosClientes);
+
+            // Eventos para el modal de obras
+            document.getElementById('btnFiltrarObras').addEventListener('click', filtrarObras);
+            document.getElementById('btnLimpiarFiltrosObras').addEventListener('click', limpiarFiltrosObras);
+
+            // Eventos para el modal de artículos
+            document.getElementById('btnFiltrarArticulos').addEventListener('click', filtrarArticulos);
+            document.getElementById('btnLimpiarFiltrosArticulos').addEventListener('click', limpiarFiltrosArticulos);
+
+            // Eventos para filtrar al presionar Enter
+            document.getElementById('filtroRuc').addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    filtrarClientes();
+                }
+            });
+
+            document.getElementById('filtroNombre').addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    filtrarClientes();
+                }
+            });
+
+            document.getElementById('filtroNombreObra').addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    filtrarObras();
+                }
+            });
+
+            document.getElementById('filtroCodigo').addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    filtrarArticulos();
+                }
+            });
+
+            document.getElementById('filtroDescripcion').addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    filtrarArticulos();
+                }
+            });
+
+            // Evento para actualizar subtotal cuando cambia el IVA
+            document.getElementById('iva').addEventListener('change', calcularSubtotal);
+
+            // Evento para mostrar/ocultar sección de vencimiento según condición
+            document.getElementById('condicion').addEventListener('change', function () {
+                const seccionFechaVencimiento = document.getElementById('seccionFechaVencimiento');
+                if (this.value === "CRÉDITO") {
+                    seccionFechaVencimiento.style.display = 'block';
+
+                    // Establecer fecha de vencimiento por defecto (30 días después)
+                    const fechaVenta = new Date(document.getElementById('fecha').value);
+                    if (!isNaN(fechaVenta.getTime())) {
+                        const fechaVencimiento = new Date(fechaVenta);
+                        fechaVencimiento.setDate(fechaVencimiento.getDate() + 30);
+                        document.getElementById('fechaVencimiento').valueAsDate = fechaVencimiento;
+                    }
+                } else {
+                    seccionFechaVencimiento.style.display = 'none';
+                }
+            });
+
+            // Atajos de teclado
+            document.addEventListener('keydown', function (event) {
+                // F2 = Buscar cliente
+                if (event.key === 'F2') {
+                    event.preventDefault();
+                    abrirModalClientes();
+                }
+                // F3 = Buscar artículo
+                else if (event.key === 'F3') {
+                    event.preventDefault();
+                    abrirModalArticulos();
+                }
+                // F4 = Buscar obra
+                else if (event.key === 'F4') {
+                    event.preventDefault();
+                    if (!document.getElementById('btnBuscarObra').disabled) {
+                        abrirModalObras();
+                    }
+                }
+                // F8 = Agregar artículo a la tabla
+                else if (event.key === 'F8') {
+                    event.preventDefault();
+                    agregarArticulo();
+                }
+                // F10 = Guardar factura
+                else if (event.key === 'F10') {
+                    event.preventDefault();
+                    document.getElementById('formVentas').dispatchEvent(new Event('submit'));
+                }
+                // ESC = Cerrar modal abierto
+                else if (event.key === 'Escape') {
+                    const modalClientes = bootstrap.Modal.getInstance(document.getElementById('modalClientes'));
+                    const modalObras = bootstrap.Modal.getInstance(document.getElementById('modalObras'));
+                    const modalArticulos = bootstrap.Modal.getInstance(document.getElementById('modalArticulos'));
+
+                    if (modalClientes && modalClientes._isShown) {
+                        modalClientes.hide();
+                    } else if (modalObras && modalObras._isShown) {
+                        modalObras.hide();
+                    } else if (modalArticulos && modalArticulos._isShown) {
+                        modalArticulos.hide();
+                    }
+                }
+            });
+
+            document.getElementById('ruc').addEventListener('blur', function () {
+                const rucIngresado = normalizarRuc(this.value);
+                if (!rucIngresado) return;
+
+                const clientes = JSON.parse(localStorage.getItem("clientes")) || [];
+                const cliente = clientes.find(c => normalizarRuc(c.rucCi) === rucIngresado);
+
+                if (cliente) {
+                    document.getElementById('idcliente').value = cliente.idCliente;
+                    document.getElementById('cliente').value = cliente.razonSocial;
+                    cargarObrasPorCliente(cliente.idCliente);
+                } else {
+                    document.getElementById('idcliente').value = '';
+                    document.getElementById('cliente').value = '';
+                    document.getElementById('idobra').innerHTML = '<option value="">Seleccione una obra</option>';
+                    document.getElementById('idobra').disabled = true;
+                    document.getElementById('btnBuscarObra').disabled = true;
+                    alertify.error('RUC no encontrado. Seleccione un cliente válido.');
+                }
+            });
+        }
+
+        function normalizarRuc(ruc) {
+            return ruc.replace(/\./g, '').trim();
+        }
+
+        // Agregar artículo a la tabla
+        function agregarArticulo() {
+            const codbarra = document.getElementById('codbarra').value.trim();
+            const descripcion = document.getElementById('descripcion').value.trim();
+            const cantidad = parseInt(document.getElementById('cantidad').value) || 0;
+            const preuni = document.getElementById('preuni').value;
+            const subtotal = document.getElementById('subtotal').value;
+            const iva = document.getElementById('iva').value;
+            const idarticulo = document.getElementById('idarticulo').value;
+
+            // Validar que todos los campos estén completos
+            if (!codbarra || !descripcion || !cantidad || cantidad <= 0 || !preuni || !subtotal || !iva || !idarticulo) {
+                if (cantidad <= 0) {
+                    alertify.error('La cantidad debe ser mayor a cero');
+                } else {
+                    alertify.error('Debe completar todos los datos del artículo');
+                }
+                return;
+            }
+
+            // Verificar que el artículo no esté ya en la tabla
+            const tabla = $('#tablaArticulos').DataTable();
+            let articuloExistente = false;
+            let cantidadYaEnTabla = 0;
+
+            tabla.rows().every(function () {
+                const data = this.data();
+                if (data[8] === idarticulo) { // Comparar con Id Articulo (columna oculta)
+                    articuloExistente = true;
+                    cantidadYaEnTabla = parseInt(data[4]) || 0; // Obtener cantidad ya agregada
+                    return false; // Salir del bucle
+                }
+            });
+
+            if (articuloExistente) {
+                alertify.error('Este artículo ya está en la lista. Modifique la cantidad en la tabla si es necesario');
+                return;
+            }
+
+            // Verificar stock disponible de manera detallada
+            const materiales = JSON.parse(localStorage.getItem("materiales")) || [];
+            const material = materiales.find(m => m.idMaterial == idarticulo || String(m.idMaterial) === String(idarticulo));
+
+            if (!material) {
+                alertify.error('Material no encontrado en el inventario');
+                return;
+            }
+
+            const stockActual = parseInt(material.stock) || 0;
+            const cantidadSolicitada = cantidad;
+
+            console.log(`Validación de stock - Material: ${material.descripcion}, Stock actual: ${stockActual}, Cantidad solicitada: ${cantidadSolicitada}`);
+
+            if (cantidadSolicitada > stockActual) {
+                alertify.error(`Cantidad solicitada (${cantidadSolicitada}) supera al stock disponible (${stockActual}). Favor disminuir cantidad.`);
+
+                // Enfocar en el campo cantidad para que el usuario pueda corregir
+                setTimeout(() => {
+                    document.getElementById('cantidad').focus();
+                    document.getElementById('cantidad').select();
+                }, 300);
+
+                return;
+            }
+
+            // Mostrar advertencia si el stock es bajo después de la venta
+            const stockRestante = stockActual - cantidadSolicitada;
+            const stockMinimo = parseInt(material.stockMinimo) || 0;
+
+            if (stockRestante <= stockMinimo && stockMinimo > 0) {
+                alertify.warning(`Stock bajo: Quedarán ${stockRestante} unidades`);
+            }
+
+            // Obtener número de item
+            const numItems = tabla.rows().count() + 1;
+
+            // Crear botón de eliminar
+            const btnEliminar = '<button class="btn btn-danger btn-sm quitar-fila" title="Eliminar artículo"><i class="bi bi-trash"></i></button>';
+
+            // Agregar fila a la tabla
+            tabla.row.add([
+                numItems,
+                codbarra,
+                descripcion,
+                iva + '%',
+                cantidad,
+                preuni,
+                subtotal,
+                btnEliminar,
+                idarticulo
+            ]).draw();
+
+            // Limpiar campos de artículo
+            document.getElementById('codbarra').value = '';
+            document.getElementById('descripcion').value = '';
+            document.getElementById('cantidad').value = '1';
+            document.getElementById('preuni').value = '';
+            document.getElementById('subtotal').value = '';
+            document.getElementById('ivaHidden').value = '';
+            document.getElementById('idarticulo').value = '';
+
+            // Limpiar validaciones de stock
+            const cantidadInput = document.getElementById('cantidad');
+            cantidadInput.classList.remove('is-valid', 'is-invalid');
+            const feedbackElement = cantidadInput.parentNode.querySelector('.stock-feedback');
+            if (feedbackElement) {
+                feedbackElement.remove();
+            }
+
+            // Calcular total
+            calcularTotalFactura();
+
+            // Enfocar en código de barra para seguir agregando
+            document.getElementById('codbarra').focus();
+
+            alertify.success(`Artículo agregado. Stock restante: ${stockRestante}`);
+        }
+
+        // Validar stock en tiempo real cuando el usuario cambia la cantidad
+        function validarStockEnTiempoReal() {
+            const cantidadElement = document.getElementById('cantidad');
+            const idarticuloElement = document.getElementById('idarticulo');
+            const descripcionElement = document.getElementById('descripcion');
+
+            if (!cantidadElement || !idarticuloElement || !descripcionElement) {
+                return;
+            }
+
+            const cantidad = parseInt(cantidadElement.value) || 0;
+            const idarticulo = idarticuloElement.value;
+            const descripcion = descripcionElement.value;
+
+            // Limpiar estilos previos
+            cantidadElement.classList.remove('is-valid', 'is-invalid');
+
+            // Si no hay artículo seleccionado o cantidad es 0, no validar
+            if (!idarticulo || cantidad <= 0) {
+                return;
+            }
+
+            // Obtener materiales del localStorage
+            const materiales = JSON.parse(localStorage.getItem("materiales")) || [];
+            const material = materiales.find(m => m.idMaterial == idarticulo || String(m.idMaterial) === String(idarticulo));
+
+            if (!material) {
+                cantidadElement.classList.add('is-invalid');
+                return;
+            }
+
+            const stockActual = parseInt(material.stock) || 0;
+            const stockMinimo = parseInt(material.stockMinimo) || 0;
+
+            // Crear o actualizar el elemento de feedback
+            let feedbackElement = cantidadElement.parentNode.querySelector('.stock-feedback');
+            if (!feedbackElement) {
+                feedbackElement = document.createElement('div');
+                feedbackElement.className = 'stock-feedback small mt-1';
+                cantidadElement.parentNode.appendChild(feedbackElement);
+            }
+
+            if (cantidad > stockActual) {
+                // Stock insuficiente
+                cantidadElement.classList.add('is-invalid');
+                feedbackElement.className = 'stock-feedback small mt-1 text-danger';
+                feedbackElement.innerHTML = `<i class="bi bi-exclamation-triangle"></i> Stock insuficiente. Disponible: ${stockActual} - Solicitado: ${cantidad}`;
+            } else if ((stockActual - cantidad) <= stockMinimo && stockMinimo > 0) {
+                // Stock bajo pero válido
+                cantidadElement.classList.add('is-valid');
+                feedbackElement.className = 'stock-feedback small mt-1 text-warning';
+                feedbackElement.innerHTML = `<i class="bi bi-exclamation-circle"></i> Quedará poco stock: ${stockActual - cantidad} unidades`;
+            } else {
+                // Stock suficiente
+                cantidadElement.classList.add('is-valid');
+                feedbackElement.className = 'stock-feedback small mt-1 text-success';
+                feedbackElement.innerHTML = `<i class="bi bi-check-circle"></i> Stock OK. Disponible: ${stockActual}`;
+            }
+        }
+
+        // Calcular subtotal (precio unitario * cantidad)
+        function calcularSubtotal() {
+            const cantidad = parseInt(document.getElementById('cantidad').value) || 0;
+            let preuni = document.getElementById('preuni').value;
+
+            // Convertir precio unitario a número quitando formato
+            preuni = preuni.replace(/\./g, '');
+            preuni = parseInt(preuni) || 0;
+
+            // Calcular subtotal
+            const subtotal = cantidad * preuni;
+
+            // Mostrar subtotal formateado
+            document.getElementById('subtotal').value = formatoNumero(subtotal);
+        }
+
+        // Calcular total de la factura
+        function calcularTotalFactura() {
+            const tabla = $('#tablaArticulos').DataTable();
+            let total = 0;
+
+            tabla.rows().every(function () {
+                const data = this.data();
+                // Obtener subtotal de la columna 6, quitando formato
+                let subtotal = data[6].replace(/\./g, '');
+                subtotal = subtotal.replace('₲', '').trim();
+                subtotal = parseInt(subtotal) || 0;
+                total += subtotal;
+            });
+
+            // Actualizar total en el footer
+            document.getElementById('totalFactura').textContent = '₲ ' + formatoNumero(total);
+        }
+
+        // Abrir modal de clientes
+        function abrirModalClientes() {
+            // Limpiar filtros previos
+            limpiarFiltrosClientes();
+
+            // Si hay un RUC ingresado, usarlo como filtro inicial
+            const ruc = document.getElementById('ruc').value.trim();
+            if (ruc) {
+                document.getElementById('filtroRuc').value = ruc;
+                filtrarClientes();
+            }
+
+            // Mostrar modal
+            const modalClientes = new bootstrap.Modal(document.getElementById('modalClientes'));
+            modalClientes.show();
+
+            // Enfocar en el campo de filtro
+            setTimeout(() => {
+                if (ruc) {
+                    document.getElementById('filtroNombre').focus();
+                } else {
+                    document.getElementById('filtroRuc').focus();
+                }
+            }, 500);
+        }
+
+        // Abrir modal de obras
+        function abrirModalObras() {
+            // Limpiar filtros previos
+            limpiarFiltrosObras();
+
+            // Obtener ID del cliente actual
+            const idCliente = document.getElementById('idcliente').value;
+
+            if (!idCliente) {
+                alertify.error('Debe seleccionar un cliente primero');
+                return;
+            }
+
+            // Filtrar tabla de obras por cliente
+            const tablaObras = $('#tablaObras').DataTable();
+            tablaObras.clear();
+
+            // Obtener obras del cliente (corregir inconsistencias de nombres de campo)
+            const idClienteNum = parseInt(idCliente);
+            const obras = JSON.parse(localStorage.getItem("obras")) || [];
+            const obrasCliente = obras.filter(obra => {
+                // Verificar diferentes posibles nombres de campo para el ID del cliente
+                const idClienteObra = obra.cliente || obra.idcliente || obra.idCliente;
+                return idClienteObra === idClienteNum;
+            });
+
+            if (obrasCliente.length === 0) {
+                alertify.error('No hay obras registradas para este cliente');
+                return;
+            }
+
+            // Agregar obras a la tabla
+            obrasCliente.forEach(obra => {
+                const btnSeleccionar = '<button class="btn btn-primary btn-sm btn-tabla seleccionar-obra">Seleccionar</button>';
+
+                // Formatear fechas
+                const fechaInicio = new Date(obra.fechainicio).toLocaleDateString('es-PY');
+                const fechaFin = new Date(obra.fechafin).toLocaleDateString('es-PY');
+
+                // Formatear estado
+                let estadoText = "";
+                let estadoClass = "";
+                switch (obra.estado) {
+                    case "en_progreso":
+                        estadoText = "En Progreso";
+                        estadoClass = "success";
+                        break;
+                    case "finalizada":
+                        estadoText = "Finalizada";
+                        estadoClass = "primary";
+                        break;
+                    case "cancelada":
+                        estadoText = "Cancelada";
+                        estadoClass = "danger";
+                        break;
+                    default:
+                        estadoText = obra.estado;
+                        estadoClass = "secondary";
+                }
+
+                const estadoFormateado = `<span class="badge bg-${estadoClass}">${estadoText}</span>`;
+
+                tablaObras.row.add([
+                    obra.idobra || obra.idObra || '',
+                    obra.nombre || '',
+                    obra.direccion || '',
+                    fechaInicio,
+                    fechaFin,
+                    estadoFormateado,
+                    btnSeleccionar
+                ]).draw(false);
+            });
+
+            // Mostrar modal
+            const modalObras = new bootstrap.Modal(document.getElementById('modalObras'));
+            modalObras.show();
+
+            // Enfocar en el campo de filtro
+            setTimeout(() => {
+                document.getElementById('filtroNombreObra').focus();
+            }, 500);
+        }
+
+        // Abrir modal de artículos
+        function abrirModalArticulos() {
+            // Limpiar filtros previos
+            limpiarFiltrosArticulos();
+
+            // Si hay un código ingresado, usarlo como filtro inicial
+            const codigo = document.getElementById('codbarra').value.trim();
+            if (codigo) {
+                document.getElementById('filtroCodigo').value = codigo;
+                filtrarArticulos();
+            }
+
+            // Mostrar modal
+            const modalArticulos = new bootstrap.Modal(document.getElementById('modalArticulos'));
+            modalArticulos.show();
+
+            // Enfocar en el campo de filtro
+            setTimeout(() => {
+                if (codigo) {
+                    document.getElementById('filtroDescripcion').focus();
+                } else {
+                    document.getElementById('filtroCodigo').focus();
+                }
+            }, 500);
+        }
+
+        // Filtrar clientes según los criterios ingresados
+        function filtrarClientes() {
+            const filtroRuc = document.getElementById('filtroRuc').value.trim();
+            const tabla = $('#tablaClientes').DataTable();
+            tabla.search('').columns().search('').draw();
+
+            if (filtroRuc) {
+                tabla.column(1).search('^' + filtroRuc + '$', true, false).draw(); // Búsqueda exacta
+            }
+
+            // Informar resultados
+            const numResultados = tabla.page.info().recordsDisplay;
+            if (numResultados === 0) {
+                alertify.warning('No se encontraron clientes con los criterios especificados');
+            } else if (numResultados === 1) {
+                alertify.success('Se encontró 1 cliente');
+            } else {
+                alertify.success(`Se encontraron ${numResultados} clientes`);
+
+            }
+        }
+
+        // Filtrar obras según los criterios ingresados
+        function filtrarObras() {
+            const filtroNombreObra = document.getElementById('filtroNombreObra').value.trim().toLowerCase();
+
+            const tabla = $('#tablaObras').DataTable();
+
+            // Resetear búsqueda previa
+            tabla.search('').columns().search('').draw();
+
+            // Aplicar filtros si hay alguno
+            if (filtroNombreObra) {
+                tabla.column(1).search(filtroNombreObra).draw();
+
+                // Informar resultados
+                const numResultados = tabla.page.info().recordsDisplay;
+                if (numResultados === 0) {
+                    alertify.warning('No se encontraron obras con los criterios especificados');
+                } else if (numResultados === 1) {
+                    alertify.success('Se encontró 1 obra');
+                } else {
+                    alertify.success(`Se encontraron ${numResultados} obras`);
+                }
+            } else {
+                alertify.warning('Ingrese un criterio de búsqueda');
+            }
+        }
+
+        // Filtrar artículos según los criterios ingresados
+        function filtrarArticulos() {
+            const filtroCodigo = document.getElementById('filtroCodigo').value.trim().toLowerCase();
+            const filtroDescripcion = document.getElementById('filtroDescripcion').value.trim().toLowerCase();
+
+            const tabla = $('#tablaArticulosBusqueda').DataTable();
+
+            // Resetear búsqueda previa
+            tabla.search('').columns().search('').draw();
+
+            // Aplicar filtros si hay alguno
+            if (filtroCodigo || filtroDescripcion) {
+                if (filtroCodigo) {
+                    tabla.column(0).search(filtroCodigo).draw();
+                }
+
+                if (filtroDescripcion) {
+                    tabla.column(1).search(filtroDescripcion).draw();
+                }
+
+                // Informar resultados
+                const numResultados = tabla.page.info().recordsDisplay;
+                if (numResultados === 0) {
+                    alertify.warning('No se encontraron artículos con los criterios especificados');
+                } else if (numResultados === 1) {
+                    alertify.success('Se encontró 1 artículo');
+                } else {
+                    alertify.success(`Se encontraron ${numResultados} artículos`);
+                }
+            } else {
+                alertify.warning('Ingrese al menos un criterio de búsqueda');
+            }
+        }
+
+        // Limpiar filtros de clientes
+        function limpiarFiltrosClientes() {
+            document.getElementById('filtroRuc').value = '';
+            document.getElementById('filtroNombre').value = '';
+
+            // Restaurar tabla completa
+            const tabla = $('#tablaClientes').DataTable();
+            tabla.search('').columns().search('').draw();
+        }
+
+        // Limpiar filtros de obras
+        function limpiarFiltrosObras() {
+            document.getElementById('filtroNombreObra').value = '';
+
+            // Restaurar tabla completa
+            const tabla = $('#tablaObras').DataTable();
+            tabla.search('').columns().search('').draw();
+        }
+
+        // Limpiar filtros de artículos
+        function limpiarFiltrosArticulos() {
+            document.getElementById('filtroCodigo').value = '';
+            document.getElementById('filtroDescripcion').value = '';
+
+            // Restaurar tabla completa
+            const tabla = $('#tablaArticulosBusqueda').DataTable();
+            tabla.search('').columns().search('').draw();
+        }
+
+        // Seleccionar un cliente del modal
+        function seleccionarCliente(id, ruc, nombre) {
+            document.getElementById('idcliente').value = id;
+            document.getElementById('ruc').value = ruc;
+            document.getElementById('cliente').value = nombre;
+
+            // Cargar obras relacionadas con el cliente
+            cargarObrasPorCliente(id);
+
+            // Cerrar modal
+            const modalClientes = bootstrap.Modal.getInstance(document.getElementById('modalClientes'));
+            modalClientes.hide();
+
+            // Notificar
+            alertify.success('Cliente seleccionado correctamente');
+        }
+
+        // Seleccionar una obra del modal
+        function seleccionarObra(id, nombre) {
+            document.getElementById('idobra').value = id;
+
+            // Cerrar modal
+            const modalObras = bootstrap.Modal.getInstance(document.getElementById('modalObras'));
+            modalObras.hide();
+
+            // Enfocar en el siguiente campo
+            document.getElementById('numfactura').focus();
+
+            // Notificar
+            alertify.success('Obra seleccionada correctamente');
+        }
+
+        // Seleccionar un artículo del modal
+        function seleccionarArticulo(codigo, descripcion, iva, precio, id) {
+            document.getElementById('codbarra').value = codigo;
+            document.getElementById('descripcion').value = descripcion;
+            document.getElementById('ivaHidden').value = iva;
+            document.getElementById('iva').value = iva;
+            document.getElementById('preuni').value = formatoNumero(precio);
+            document.getElementById('idarticulo').value = id;
+            document.getElementById('cantidad').value = '1';
+
+            // Calcular subtotal inicial
+            calcularSubtotal();
+
+            // Validar stock inmediatamente después de seleccionar
+            setTimeout(() => {
+                validarStockEnTiempoReal();
+            }, 100);
+
+            // Cerrar modal
+            const modalArticulos = bootstrap.Modal.getInstance(document.getElementById('modalArticulos'));
+            modalArticulos.hide();
+
+            // Enfocar en cantidad para editar
+            document.getElementById('cantidad').focus();
+            document.getElementById('cantidad').select();
+
+            // Mostrar información del stock disponible
+            const materiales = JSON.parse(localStorage.getItem("materiales")) || [];
+            const material = materiales.find(m => m.idMaterial == id || String(m.idMaterial) === String(id));
+
+            if (material) {
+                const stockActual = parseInt(material.stock) || 0;
+                alertify.success(`Artículo seleccionado. Stock disponible: ${stockActual} unidades`);
+            } else {
+                alertify.success('Artículo seleccionado correctamente');
+            }
+        }
+
+        // Guardar factura
+        function guardarFactura() {
+            const tabla = $('#tablaArticulos').DataTable();
+
+            // Verificar que haya al menos un artículo
+            if (tabla.rows().count() === 0) {
+                alertify.error('Debe agregar al menos un artículo a la factura');
+                return;
+            }
+
+            // Verificar que se haya seleccionado una obra
+            if (!document.getElementById('idobra').value) {
+                alertify.error('Debe seleccionar una obra asociada al cliente');
+                return;
+            }
+
+            // Deshabilitar el botón de guardar para evitar duplicados
+            const btnGuardar = document.querySelector('#formVentas button[type="submit"]');
+            const textoOriginal = btnGuardar.innerHTML;
+            btnGuardar.disabled = true;
+            btnGuardar.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Guardando...';
+
+            try {
+                // Recopilar datos para cabecera de factura
+                let stexenta = 0;
+                let stiva5 = 0;
+                let stiva10 = 0;
+                let totventa = 0;
+
+                // Verificar condición de pago y fecha de vencimiento
+                const condicion = document.getElementById('condicion').value;
+                let fecvencimiento = null;
+
+                if (condicion === "CRÉDITO") {
+                    fecvencimiento = document.getElementById('fechaVencimiento').value;
+                    if (!fecvencimiento) {
+                        alertify.error('Debe ingresar una fecha de vencimiento para facturas a crédito');
+                        // Rehabilitar el botón
+                        btnGuardar.disabled = false;
+                        btnGuardar.innerHTML = textoOriginal;
+                        return;
+                    }
+                }
+
+                // Recopilar artículos
+                const articulos = [];
+                tabla.rows().every(function (index) {
+                    const data = this.data();
+                    const idarticulo = data[8];
+                    const cantidad = parseInt(data[4]);
+                    const preuni = parseInt(data[5].replace(/\./g, ''));
+                    const subtotal = parseInt(data[6].replace(/\./g, ''));
+                    const tiva = parseInt(data[3].replace('%', ''));
+
+                    // Clasificar por IVA
+                    if (tiva === 0) {
+                        stexenta += subtotal;
+                    } else if (tiva === 5) {
+                        stiva5 += subtotal;
+                    } else if (tiva === 10) {
+                        stiva10 += subtotal;
+                    }
+
+                    totventa += subtotal;
+
+                    articulos.push({
+                        iddetalle: (index + 1),
+                        idfactura: idVentaActual,
+                        item: (index + 1),
+                        idMaterial: idarticulo,
+                        cantidad: cantidad,
+                        preuni: preuni,
+                        tiva: tiva,
+                        subtotal: subtotal
+                    });
+                });
+
+                // Calcular liquidación de IVA
+                const liqiva5 = Math.round(stiva5 / 21);  // 5% = dividir por 21
+                const liqiva10 = Math.round(stiva10 / 11); // 10% = dividir por 11
+                const totiva = liqiva5 + liqiva10;
+
+                // Crear objeto de cabecera
+                const cabecera = {
+                    idfactura: idVentaActual,
+                    idCliente: parseInt(document.getElementById('idcliente').value),
+                    idObra: parseInt(document.getElementById('idobra').value),
+                    numfactura: document.getElementById('numfactura').value,
+                    fecventa: document.getElementById('fecha').value,
+                    condicion: condicion,
+                    stexenta: stexenta,
+                    stiva5: stiva5,
+                    stiva10: stiva10,
+                    totventa: totventa,
+                    liqiva5: liqiva5,
+                    liqiva10: liqiva10,
+                    totiva: totiva,
+                    saldo: condicion === "CRÉDITO" ? totventa : 0,
+                    anulado: "NO",
+                    fechaVencimiento: fecvencimiento
+                };
+
+                // Obtener datos existentes
+                let ventascabecera = JSON.parse(localStorage.getItem("facturasclientes")) || [];
+                let ventasdetalle = JSON.parse(localStorage.getItem("detallefacturacliente")) || [];
+
+                if (editMode) {
+                    // Actualizar cabecera existente
+                    const index = ventascabecera.findIndex(c => c.idfactura === idVentaActual);
+                    if (index !== -1) {
+                        // Revertir stock de materiales antiguos
+                        const detallesAntiguos = ventasdetalle.filter(d => d.idfactura === idVentaActual);
+                        revertirStockMateriales(detallesAntiguos);
+
+                        // Actualizar cabecera
+                        ventascabecera[index] = cabecera;
+                    } else {
+                        ventascabecera.push(cabecera);
+                    }
+
+                    // Eliminar detalles antiguos
+                    ventasdetalle = ventasdetalle.filter(d => d.idfactura !== idVentaActual);
+                } else {
+                    // Nueva factura
+                    ventascabecera.push(cabecera);
+                }
+
+                // Agregar detalles nuevos
+                ventasdetalle = [...ventasdetalle, ...articulos];
+
+                // Guardar en localStorage
+                localStorage.setItem("facturasclientes", JSON.stringify(ventascabecera));
+                localStorage.setItem("detallefacturacliente", JSON.stringify(ventasdetalle));
+
+                // Actualizar stock de materiales
+                actualizarStockMateriales(articulos);
+
+                // Notificar éxito y redirigir inmediatamente
+                if (editMode) {
+                    alertify.success('Factura actualizada correctamente');
+                } else {
+                    alertify.success('Factura guardada correctamente');
+                }
+
+                // Redirigir inmediatamente a la página de mantenimiento
+                window.location.href = "mantenimiento-facturas-clientes.html";
+
+            } catch (error) {
+                console.error('Error al guardar factura:', error);
+                alertify.error('Error al guardar factura: ' + error.message);
+                // Rehabilitar el botón en caso de error
+                btnGuardar.disabled = false;
+                btnGuardar.innerHTML = textoOriginal;
+            }
+        }
+
+        // Actualizar stock de materiales
+        function actualizarStockMateriales(articulos) {
+            try {
+                let materiales = JSON.parse(localStorage.getItem("materiales")) || [];
+                let actualizacionesRealizadas = false;
+
+                articulos.forEach(articulo => {
+                    // Asegúrate de comparar como string o número según corresponda
+                    const idMaterial = String(articulo.idMaterial);
+                    const cantidad = parseInt(articulo.cantidad);
+
+                    // Busca el material por idMaterial
+                    const index = materiales.findIndex(m => String(m.idMaterial) === idMaterial);
+                    if (index !== -1) {
+                        const stockActual = parseInt(materiales[index].stock) || 0;
+                        materiales[index].stock = stockActual - cantidad;
+                        actualizacionesRealizadas = true;
+                    }
+                });
+
+                if (actualizacionesRealizadas) {
+                    localStorage.setItem("materiales", JSON.stringify(materiales));
+                }
+            } catch (error) {
+                console.error('Error al actualizar stock de materiales:', error);
+                throw new Error('Error al actualizar stock de materiales: ' + error.message);
+            }
+        }
+
+        // Revertir stock de materiales al anular factura o editar
+        function revertirStockMateriales(detalles) {
+            try {
+                const materiales = JSON.parse(localStorage.getItem("materiales")) || [];
+                let actualizacionesRealizadas = false;
+
+                // Recorrer detalles y actualizar stock
+                detalles.forEach(detalle => {
+                    const materialIndex = materiales.findIndex(m => m.idMaterial === detalle.idMaterial);
+
+                    if (materialIndex !== -1) {
+                        // Para ventas, al revertir sumamos al stock
+                        const stockActual = parseInt(materiales[materialIndex].stock) || 0;
+                        materiales[materialIndex].stock = stockActual + parseInt(detalle.cantidad);
+                        actualizacionesRealizadas = true;
+                        console.log(`Stock revertido para material ${detalle.idMaterial}: ${materiales[materialIndex].stock}`);
+                    }
+                });
+
+                // Guardar materiales actualizados
+                if (actualizacionesRealizadas) {
+                    localStorage.setItem("materiales", JSON.stringify(materiales));
+                    console.log('Stock revertido correctamente');
+                }
+
+            } catch (error) {
+                console.error('Error al revertir stock de materiales:', error);
+                throw new Error('Error al revertir stock de materiales: ' + error.message);
+            }
+        }
+
+        // Limpiar formulario completo
+        function limpiarFormulario() {
+            try {
+                // Limpiar campos principales
+                document.getElementById('ruc').value = '';
+                document.getElementById('cliente').value = '';
+                document.getElementById('idcliente').value = '';
+                document.getElementById('idobra').value = '';
+                document.getElementById('idobra').disabled = true;
+                document.getElementById('btnBuscarObra').disabled = true;
+                document.getElementById('numfactura').value = '';
+                document.getElementById('fecha').valueAsDate = new Date();
+                document.getElementById('condicion').value = 'CONTADO';
+                document.getElementById('seccionFechaVencimiento').style.display = 'none';
+                document.getElementById('fechaVencimiento').value = '';
+
+                // Limpiar campos de artículo
+                document.getElementById('codbarra').value = '';
+                document.getElementById('descripcion').value = '';
+                document.getElementById('cantidad').value = '1';
+                document.getElementById('preuni').value = '';
+                document.getElementById('subtotal').value = '';
+                document.getElementById('iva').value = '10'; // Establecer un valor predeterminado
+                document.getElementById('ivaHidden').value = '';
+                document.getElementById('idarticulo').value = '';
+
+                // Limpiar validaciones de stock y mensajes de feedback
+                const cantidadInput = document.getElementById('cantidad');
+                cantidadInput.classList.remove('is-valid', 'is-invalid');
+                const feedbackElement = cantidadInput.parentNode.querySelector('.stock-feedback');
+                if (feedbackElement) {
+                    feedbackElement.remove();
+                }
+
+                // Limpiar tabla
+                const tabla = $('#tablaArticulos').DataTable();
+                tabla.clear().draw();
+
+                // Actualizar total
+                document.getElementById('totalFactura').textContent = '₲ 0';
+
+                // Quitar validaciones
+                document.getElementById('formVentas').classList.remove('was-validated');
+
+                // Si estaba en modo edición, salir de ese modo y actualizar ID
+                if (editMode) {
+                    editMode = false;
+                    actualizarIdVentaActual();
+                    document.querySelector('#formVentas button[type="submit"]').innerHTML = '<i class="bi bi-save me-2"></i> Guardar Factura';
+                }
+
+                // Enfocar en RUC
+                document.getElementById('ruc').focus();
+
+                alertify.message('Formulario limpiado');
+            } catch (error) {
+                console.error('Error al limpiar formulario:', error);
+                alertify.error('Error al limpiar formulario: ' + error.message);
+            }
+        }
+
+        // Formatear número sin símbolo de moneda
+        function formatoNumero(numero) {
+            // Verificar si el número es válido
+            if (numero === null || numero === undefined || numero === '' || isNaN(numero)) {
+                return new Intl.NumberFormat('es-PY', {
+                    maximumFractionDigits: 0
+                }).format(0);
+            }
+
+            // Convertir a número si es string
+            const num = typeof numero === 'string' ? parseFloat(numero) : numero;
+
+            // Verificar nuevamente después de la conversión
+            if (isNaN(num)) {
+                return new Intl.NumberFormat('es-PY', {
+                    maximumFractionDigits: 0
+                }).format(0);
+            }
+
+            return new Intl.NumberFormat('es-PY', {
+                maximumFractionDigits: 0
+            }).format(num);
+        }
+
+        // Cerrar sesión
+        function cerrarSesion() {
+            localStorage.removeItem("nomUsuario");
+            window.location.href = "login.html";
+        }
+    </script>
+</body>
+
+</html>

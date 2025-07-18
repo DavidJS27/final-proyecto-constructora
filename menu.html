@@ -1,0 +1,265 @@
+<!DOCTYPE html> 
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <title>GMTL²</title>
+    <link rel="icon" href="img/2A_constructora_logo.png">
+
+    <!-- Estilos -->
+    <!-- Estilos propios -->
+    <link rel="stylesheet" href="menu/styles.css"/>
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Frameworks -->
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="bt-icons/bootstrap-icons.min.css">
+    <!-- AlertifyJS -->
+    <link rel="stylesheet" href="alert/alertify.min.css">
+    <link rel="stylesheet" href="alert/themes/default.min.css">
+    <script src="alert/alertify.min.js"></script>   
+</head>
+<body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <a class="navbar-brand ps-3" href="menu.html" onclick="cargarPagina('menu')">
+            <img src="img/2A_constructora_logo.png" alt="Logo" height="30" class="me-2">
+            2A Constructora
+        </a>
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#"><i class="bi bi-list"></i></button>
+        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <div class="input-group">
+                <input class="form-control" type="text" placeholder="Buscar..." aria-label="Buscar..." aria-describedby="btnNavbarSearch" />
+                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="bi bi-search"></i></button>
+            </div>
+        </form>
+        <div class="me-3">
+            <button id="darkModeToggle" class="btn btn-link text-light"><i class="bi bi-moon-stars"></i></button>
+        </div>
+        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-fill"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="configuracion.html">Configuración</a></li>
+                    <li><a class="dropdown-item" href="#">Actividad</a></li>
+                    <li><hr class="dropdown-divider" /></li>
+                    <li><a class="dropdown-item" href="#" onclick="cerrarSesion()">Cerrar sesión</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div id="principal" class="sb-sidenav-menu-heading">Principal</div>
+                        <a id="dashboard" class="nav-link" href="dashboard.html" onclick="cargarPagina('dashboard')">
+                            <div class="sb-nav-link-icon"><i class="bi bi-speedometer"></i></div>
+                            Dashboard
+                        </a>
+
+                        <div id="modulos" class="sb-sidenav-menu-heading">Módulos</div>
+
+                        <!-- Finanzas -->
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseFinanzas">
+                            <div class="sb-nav-link-icon"><i class="bi bi-currency-dollar"></i></div>
+                            Finanzas
+                            <div class="sb-sidenav-collapse-arrow"><i class="bi bi-chevron-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseFinanzas" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a id="facturas-proveedores" class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseProveedores">
+                                    Facturas de Proveedores
+                                    <div class="sb-sidenav-collapse-arrow"><i class="bi bi-chevron-down"></i></div>
+                                </a>
+                                <div class="collapse" id="collapseProveedores" data-bs-parent="#collapseFinanzas">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        <a href="facturas-proveedores.html" class="nav-link">
+                                            <i class="bi bi-file-earmark-text me-2"></i>Registrar Compras
+                                        </a>
+                                        <a href="" class="nav-link">
+                                            <i class="bi bi-tools me-2"></i>Mantenimiento de Facturas
+                                        </a>
+                                    </nav>
+                                </div>
+                                
+                                <a id="facturas-clientes" class="nav-link" href="facturas-clientes.html" onclick="cargarPagina('facturas-clientes')">Facturas de Clientes</a>
+                                <a id="pagos-proveedores" class="nav-link" href="pagos-proveedores.html" onclick="cargarPagina('pagos-proveedores')">Pagos a Proveedores</a>
+                                <a id="cobros-clientes" class="nav-link" href="cobros-clientes.html">Cobros de Clientes</a>
+                                <a id="adelantos-anticipos" class="nav-link" href="adelantos-anticipos.html" onclick="cargarPagina('adelantos-anticipos')">Adelantos y Anticipos</a>
+                                <a id="costos-obra" class="nav-link" href="costos-obra.html" onclick="cargarPagina('costos-obra')">Costos por Obra</a>
+                                <a id="reportes-financieros" class="nav-link" href="reportes-financieros.html" onclick="cargarPagina('reportes-financieros')">Reportes Financieros</a>
+                            </nav>
+                        </div>
+
+                        <!-- Obras -->
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseObras">
+                            <div class="sb-nav-link-icon"><i class="bi bi-building"></i></div>
+                            Obras
+                            <div class="sb-sidenav-collapse-arrow"><i class="bi bi-chevron-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseObras" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a id="mantenimiento-obras" class="nav-link" href="mantenimiento-obras.html" onclick="cargarPagina('mantenimiento-obras')">Mantenimiento de Obras</a>
+                                <a id="asignar-materiales" class="nav-link" href="asignar-materiales.html" onclick="cargarPagina('asignar-materiales')">Asignar Materiales</a>
+                                <a id="control-existencias" class="nav-link" href="control-existencias.html" onclick="cargarPagina('control-existencias')">Control de Existencias</a>
+                                <a id="movimientos-materiales" class="nav-link" href="movimientos-materiales.html" onclick="cargarPagina('movimientos-materiales')">Movimientos de Materiales</a>
+                                <a id="traslados-materiales" class="nav-link" href="traslado-materiales.html" onclick="cargarPagina('traslados-materiales')">Traslados de Materiales</a>
+                                <a id="registro-perdidas" class="nav-link" href="registro-perdidas.html" onclick="cargarPagina('registro-perdidas')">Registro de Pérdidas</a>
+                            </nav>
+                        </div>
+
+                        <div id="administracion" class="sb-sidenav-menu-heading">Administración</div>
+
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseMantenimiento">
+                            <div class="sb-nav-link-icon"><i class="bi bi-gear"></i></div>
+                            Mantenimiento
+                            <div class="sb-sidenav-collapse-arrow"><i class="bi bi-chevron-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseMantenimiento" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a id="usuarios" class="nav-link" href="usuarios.html" onclick="cargarPagina('usuarios')">Usuarios</a>
+                                <a id="clientes" class="nav-link" href="clientes.html" onclick="cargarPagina('clientes')">Clientes</a>
+                                <a id="proveedores" class="nav-link" href="proveedores.html" onclick="cargarPagina('proveedores')">Proveedores</a>
+                                <a id="materiales" class="nav-link" href="materiales.html" onclick="cargarPagina('materiales')">Materiales</a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Iniciado por:</div>
+                    <div id="nomUsuario"></div>
+                    <div class="small">Rol:</div>
+                    <div id="rol"></div>
+                </div>
+            </nav>
+        </div>
+
+        <div id="layoutSidenav_content">
+            <main>
+                <div id="contenidoPrincipal" class="container-fluid px-4">
+                </div>
+            </main>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; 2A Constructora 2025</div>
+                        <div>
+                            <a href="#">Política de Privacidad</a>
+                            &middot;
+                            <a href="#">Términos &amp; Condiciones</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Scripts del sistema -->
+    <script src="js/funcionesSistema.js"></script>
+    <script src="menu/bootstrap.bundle.min.js"></script>
+    <script src="menu/scripts.js"></script>
+    <script src="js/roleMenuAccess.js"></script>
+
+    <script>
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        // const currentUser = parseInt(localStorage.getItem("idUsuarioActual"));
+
+        if(!currentUser) {
+            window.location.href = 'error.html';
+        } else {
+            document.getElementById('nomUsuario').innerText =  `${currentUser.nombre} ${currentUser.apellido}`;
+            document.getElementById("rol").textContent = formatearRol(currentUser.rol);
+        }
+
+        // Alertify configuración
+        alertify.defaults.notifier.position = 'top-right';
+        alertify.defaults.transition = 'slide';
+        alertify.defaults.theme.ok = 'btn btn-primary';
+        alertify.defaults.theme.cancel = 'btn btn-danger';
+        alertify.defaults.theme.input = 'form-control';
+
+        // Control de seguridad del usuario actual
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!currentUser || (currentUser.rol !== 'administrador' && currentUser.rol !== 'gerente' && currentUser.rol != 'jefe_obra' 
+            && currentUser.rol !== 'obrero' 
+            && currentUser.rol !== 'codificador' 
+            && currentUser.rol !== 'contador')) {
+                alertify.error("No tienes permisos para acceder a esta página");
+                setTimeout(() => {
+                    window.location.href = "error.html";
+                }, 2000);
+                return;
+            }
+ 
+            // Cargar el dashboard inicial
+            cargarPagina('dashboard');
+        });
+
+        // Función para formatear el rol del usuario
+        function formatearRol(rol) {
+            const roles = {
+                'administrador': 'Administrador',
+                'gerente': 'Gerente',
+                'jefe_obra': 'Jefe de Obra',
+                'operario': 'Operario',
+                'contador': 'Contador'
+            };
+            return roles[rol] || rol.charAt(0).toUpperCase() + rol.slice(1).replace('_', ' ');
+        }
+
+        // Dark mode inicial
+        function checkDarkMode() {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.classList.add('dark');
+                document.getElementById('darkModeToggle').innerHTML = '<i class="bi bi-sun"></i>';
+                updateDarkModeElements(true);
+            }
+        }
+
+        // Toggle modo oscuro
+        document.getElementById('darkModeToggle').addEventListener('click', function () {
+            const html = document.documentElement;
+            const isDarkMode = html.classList.toggle('dark');
+            this.innerHTML = isDarkMode ? '<i class="bi bi-sun"></i>' : '<i class="bi bi-moon-stars"></i>';
+            updateDarkModeElements(isDarkMode);
+        });
+
+        // Función para actualizar elementos específicos en modo oscuro
+        function updateDarkModeElements(isDarkMode) {
+            // Actualizar clases específicas si es necesario
+            const footer = document.querySelector('footer');
+            if (footer) {
+                if (isDarkMode) {
+                    footer.classList.remove('bg-light');
+                    footer.classList.add('bg-dark');
+                } else {
+                    footer.classList.remove('bg-dark');
+                    footer.classList.add('bg-light');
+                }
+            }
+        }
+
+        // Inicializa el modo oscuro si es necesario
+        checkDarkMode();
+
+        // Función para cargar páginas en el contenido principal
+        function cargarPagina(pagina) {
+            const contenedor = document.getElementById('contenidoPrincipal');
+            // Aquí se cargaría el contenido de la página mediante fetch o XMLHttpRequest
+            // Por ahora, solo mostramos un mensaje indicando qué página se cargaría
+            contenedor.innerHTML = `
+                    <h1 class="mt-4">${pagina.charAt(0).toUpperCase() + pagina.slice(1).replace('-', ' ')}</h1>
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <p>Contenido de la página ${pagina}...</p>
+                        </div>
+                    </div>
+                `;
+        }
+    </script>
+</body>
+</html>

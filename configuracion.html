@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GMTL²</title>
+    <link rel="icon" href="img/2A_constructora_logo.png" />
+
+    
+    <link href="menu/styles.css" rel="stylesheet" />
+
+    
+    <link rel="stylesheet" href="bt-icons/bootstrap-icons.min.css" />
+
+    
+    <link rel="stylesheet" href="alert/alertify.min.css" />
+    <link rel="stylesheet" href="alert/themes/default.min.css" />
+    <script src="alert/alertify.min.js"></script>
+
+    
+    <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+    <div class="card col-md-6 mx-auto mt-5">
+        <div class="card-header text-center">
+            <h5 class="card-title">Configuración Personal</h5>
+        </div>
+
+        <div class="card-body">
+            <img src="img/2A_constructora_logo.png" alt="login" class="mx-auto d-block mb-3" width="100" />
+
+            <form class="row g-3 needs-validation mt-2" id="formEditarUsuario" novalidate>
+                <div class="col-md-8 mx-auto">
+                    <label for="usuario" class="form-label">Ingrese el nuevo usuario</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+                        <input type="text" class="form-control" id="usuario" placeholder="Nuevo Usuario" required />
+                    </div>
+                </div>
+
+                <div class="col-md-8 mx-auto">
+                    <label for="contrasena" class="form-label">Ingrese la nueva contraseña</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-key-fill"></i></span>
+                        <input type="password" class="form-control" id="contrasena" placeholder="Nueva Contraseña"
+                            required />
+                        <button class="btn btn-outline-secondary" type="button" onclick="togglePassword()">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="col-12 d-flex justify-content-center mb-3">
+                    <button class="btn btn-success mx-2" type="button" onclick="actualizarUsuario()">
+                        <i class="bi bi-arrow-clockwise"></i> Actualizar
+                    </button>
+                    <button class="btn btn-danger" type="button" onclick="cancelarFormulario()">
+                        <i class="bi bi-exclamation-circle"></i> Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="card-footer text-center">
+            <label id="mensaje"></label>
+        </div>
+    </div>
+
+    
+    <script src="js/bd.js"></script>
+    <script src="js/funcionesSistema.js"></script>
+    <script src="dt/jquery-3.7.1.js"></script>
+    <script src="dt/datatables.min.js"></script>
+    <script src="dt/es-ES.js"></script>
+
+    
+    <script>
+        function togglePassword() {
+            const contrasena = document.getElementById("contrasena");
+            contrasena.type = contrasena.type === "password" ? "text" : "password";
+        }
+
+        function cancelarFormulario() {
+            alertify.warning(
+                "Operación Cancelada..."
+            );
+            setTimeout(() => {
+                document.getElementById("formEditarUsuario").reset();
+                window.location.href = "menu.html"; // Ruta del menú principal
+            }, 2000);
+            
+        }
+
+        function actualizarUsuario() {
+            const nuevoUsuario = document.getElementById("usuario").value.trim();
+            const nuevaContrasena = document.getElementById("contrasena").value.trim();
+
+            if (!nuevoUsuario || !nuevaContrasena) {
+                alertify.error("Todos los campos son obligatorios");
+                return;
+            }
+
+            const idUsuario = parseInt(localStorage.getItem("idUsuarioActual"));
+            if (!idUsuario) {
+                alertify.error("No hay sesión activa");
+                return;
+            }
+
+            let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+            const indexActual = usuarios.findIndex(
+                (u) => u.idusuario === idUsuario
+            );
+
+            if (indexActual === -1) {
+                alertify.error("Usuario actual no encontrado");
+                return;
+            }
+
+            const duplicado = usuarios.some(
+                (u, i) => u.usuario === nuevoUsuario && i !== indexActual
+            );
+            if (duplicado) {
+                alertify.error("El nuevo usuario ya está en uso por otro");
+                return;
+            }
+
+            usuarios[indexActual].usuario = nuevoUsuario;
+            usuarios[indexActual].contrasena = nuevaContrasena;
+
+            localStorage.setItem("usuarios", JSON.stringify(usuarios));
+            localStorage.setItem("idUsuarioActual",usuarios[indexActual].idusuario
+            ); // sigue igual
+
+            alertify.success(
+                "Usuario actualizado correctamente. Cerrando sesión..."
+            );
+
+            
+            setTimeout(() => {
+                cerrarSesion();
+            }, 2000);
+        }
+
+        // Opcional: cargar datos actuales al abrir la página
+        window.onload = function () {
+            const idUsuario = parseInt(localStorage.getItem("idUsuarioActual"));
+            const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+            const actual = usuarios.find(u => u.idusuario === idUsuario);
+            if (actual) {
+                document.getElementById("usuario").value = actual.usuario;
+                document.getElementById("contrasena").value = actual.contrasena;
+            }
+        };
+        function cerrarSesion() {
+                    localStorage.removeItem("idUsuarioActual");
+                    window.location.href = "login.html";
+                }
+    </script>
+</body>
+
+</html>

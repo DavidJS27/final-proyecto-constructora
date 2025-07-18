@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <title>Cobros a Clientes</title>
+    <link rel="icon" href="img/2A_constructora_logo.png">
+
+    
+    <link href="menu/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/usuario-styles.css">
+
+    
+    
+    <link rel="stylesheet" href="bt-icons/bootstrap-icons.min.css">
+    
+    <link rel="stylesheet" href="dt/datatables.min.css">
+    <link rel="stylesheet" href="dt/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="dt/buttons.dataTables.min.css">
+    
+    <link rel="stylesheet" href="alert/alertify.min.css">
+    <link rel="stylesheet" href="alert/themes/default.min.css">
+    <script src="alert/alertify.min.js"></script>
+</head>
+
+<body class="sb-nav-fixed">
+    
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <a class="navbar-brand ps-3" href="menu.html" onclick="cargarPagina('menu')">
+            <img src="img/2A_constructora_logo.png" alt="Logo" height="30" class="me-2">
+            2A Constructora
+        </a>
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#"><i
+                class="bi bi-list"></i></button>
+        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <div class="input-group">
+                <input class="form-control" type="text" placeholder="Buscar..." aria-label="Buscar..."
+                    aria-describedby="btnNavbarSearch" />
+                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="bi bi-search"></i></button>
+            </div>
+        </form>
+        <div class="me-3">
+            <button id="darkModeToggle" class="btn btn-link text-light"><i class="bi bi-moon-stars"></i></button>
+        </div>
+        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false"><i class="bi bi-person-fill"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="configuracion.html">Configuración</a></li>
+                    <li><a class="dropdown-item" href="#">Actividad</a></li>
+                    <li>
+                        <hr class="dropdown-divider" />
+                    </li>
+                    <li><a class="dropdown-item" href="#" onclick="cerrarSesion()">Cerrar sesión</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div id="principal" class="sb-sidenav-menu-heading">Principal</div>
+                        <a id="dashboard" class="nav-link" href="dashboard.html">
+                            <div class="sb-nav-link-icon"><i class="bi bi-speedometer"></i></div>
+                            Dashboard
+                        </a>
+
+                        <div id="modulos" class="sb-sidenav-menu-heading">Módulos</div>
+
+                        
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseFinanzas">
+                            <div class="sb-nav-link-icon"><i class="bi bi-currency-dollar"></i></div>
+                            Finanzas
+                            <div class="sb-sidenav-collapse-arrow"><i class="bi bi-chevron-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseFinanzas" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a id="facturas-proveedores" class="nav-link" href="facturas-proveedores.html">Facturas
+                                    de
+                                    Proveedores</a>
+                                <a id="mantenimiento-facturas" class="nav-link"
+                                    href="mantenimiento-facturas.html">Mantenimiento de
+                                    Facturas</a>
+                                <a id="facturas-clientes" class="nav-link" href="facturas-clientes.html">Facturas de
+                                    Clientes</a>
+                                <a id="mantenimiento-facturas-clientes" class="nav-link"
+                                    href="mantenimiento-facturas-clientes.html">Mantenimiento Facturas Clientes</a>
+                                <a id="pagos-proveedores" class="nav-link" href="pagos-proveedores.html">Pagos a
+                                    Proveedores</a>
+                                <a id="cobros-clientes" class="nav-link" href="cobros-clientes.html">Cobros de
+                                    Clientes</a>
+                                <a id="adelantos-anticipos" class="nav-link" href="adelantos-anticipos.html">Adelantos y
+                                    Anticipos</a>
+                                <a id="costos-obra" class="nav-link" href="costos-obra.html">Costos por Obra</a>
+                                <a id="reportes-financieros" class="nav-link" href="reportes-financieros.html">Reportes
+                                    Financieros</a>
+                                <a id="historial-movimientos" class="nav-link"
+                                    href="historial-movimientos.html">Historial de
+                                    Movimientos</a>
+                            </nav>
+                        </div>
+
+                        
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseObras">
+                            <div class="sb-nav-link-icon"><i class="bi bi-building"></i></div>
+                            Obras
+                            <div class="sb-sidenav-collapse-arrow"><i class="bi bi-chevron-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseObras" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a id="mantenimiento-obras" class="nav-link"
+                                    href="mantenimiento-obras.html">Mantenimiento de
+                                    Obras</a>
+                                <a id="asignar-materiales" class="nav-link" href="asignar-materiales.html">Asignar
+                                    Materiales</a>
+                                <a id="control-existencias" class="nav-link" href="control-existencias.html">Control de
+                                    Existencias</a>
+                                <a id="movimientos-materiales" class="nav-link"
+                                    href="movimientos-materiales.html">Movimientos
+                                    de Materiales</a>
+                                <a id="traslados-materiales" class="nav-link" href="traslado-materiales.html">Traslados
+                                    de
+                                    Materiales</a>
+                                <a id="registro-perdidas" class="nav-link" href="registro-perdidas.html">Registro de
+                                    Pérdidas</a>
+                            </nav>
+                        </div>
+
+                        <div id="administracion" class="sb-sidenav-menu-heading">Administración</div>
+                        <a id="usuarios" class="nav-link" href="usuarios.html">Usuarios</a>
+                        <a id="clientes" class="nav-link" href="clientes.html">Clientes</a>
+                        <a id="proveedores" class="nav-link" href="proveedores.html">Proveedores</a>
+                        <a id="materiales" class="nav-link" href="materiales.html">Materiales</a>
+                        <a id="configuracion" class="nav-link" href="configuracion.html">Configuración</a>
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Iniciado por:</div>
+                    <div id="nomUsuario"></div>
+                    <div class="small">Rol:</div>
+                    <div id="rol"></div>
+                </div>
+            </nav>
+        </div>
+
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <div class="row mb-4 mt-4">
+                        <div class="col-md-12 d-flex justify-content-between align-items-center">
+                            <h2 class="mb-0"><i class="bi bi-cash-coin me-2"></i>Cobros a Clientes</h2>
+                            <a href="historial-movimientos.html" class="btn btn-primary">
+                                <i class="bi bi-list me-1"></i> Ver Historial de Movimientos
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        
+                        <div class="col-md-4 mb-4">
+                            <div class="card shadow-sm fade-in">
+                                <div class="card-header bg-primary text-white">
+                                    <h5 class="mb-0"><i class="bi bi-search me-2"></i>Seleccionar Cliente</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row g-3">
+                                        <div class="col-md-12">
+                                            <label class="form-label fw-bold">Cliente:</label>
+                                            <select id="selectCliente" class="form-select">
+                                                <option value="">Seleccione un cliente</option>
+                                                
+                                            </select>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label class="form-label fw-bold">RUC:</label>
+                                            <input type="text" id="rucCliente" class="form-control" readonly>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="d-grid">
+                                                <button id="btnBuscarFacturas" class="btn btn-primary" disabled>
+                                                    <i class="bi bi-search me-1"></i> Buscar Facturas Pendientes
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div id="panelCobro" class="card shadow-sm fade-in mt-4" style="display: none;">
+                                <div class="card-header bg-success text-white">
+                                    <h5 class="mb-0"><i class="bi bi-cash me-2"></i>Datos del Cobro</h5>
+                                </div>
+                                <div class="card-body">
+                                    <form id="formCobro" class="needs-validation" novalidate>
+                                        <div class="row g-3">
+                                            <div class="col-md-6">
+                                                <label class="form-label fw-bold">Fecha:</label>
+                                                <input type="date" id="fechaCobro" class="form-control" required>
+                                                <div class="invalid-feedback">Ingrese la fecha de cobro</div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label fw-bold">Monto Total:</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text">₲</span>
+                                                    <input type="text" id="montoCobro" class="form-control" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label class="form-label fw-bold">Forma de Cobro:</label>
+                                                <select id="formaCobro" class="form-select" required>
+                                                    <option value="">Seleccione una forma de cobro</option>
+                                                    <option value="efectivo">Efectivo</option>
+                                                    <option value="transferencia">Transferencia Bancaria</option>
+                                                    <option value="cheque">Cheque</option>
+                                                    <option value="deposito">Depósito Bancario</option>
+                                                </select>
+                                                <div class="invalid-feedback">Seleccione una forma de cobro</div>
+                                            </div>
+                                            <div class="col-md-12" id="contenedorReferencia" style="display: none;">
+                                                <label class="form-label fw-bold">Número de Referencia:</label>
+                                                <input type="text" id="numeroReferencia" class="form-control">
+                                                <div class="invalid-feedback">Ingrese el número de referencia</div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label class="form-label fw-bold">Observaciones:</label>
+                                                <textarea id="observacionesCobro" class="form-control"
+                                                    rows="2"></textarea>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="d-grid">
+                                                    <button type="submit" id="btnProcesarCobro" class="btn btn-success">
+                                                        <i class="bi bi-check-circle me-1"></i> Procesar Cobro
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-8 mb-4">
+                            <div id="panelFacturas" class="card shadow-sm fade-in" style="display: none;">
+                                <div class="card-header bg-info text-white">
+                                    <h5 class="mb-0"><i class="bi bi-file-earmark-text me-2"></i>Facturas Pendientes
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="tablaFacturasPendientes"
+                                            class="display table table-striped table-hover w-100">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Fecha</th>
+                                                    <th>N° Factura</th>
+                                                    <th>Total</th>
+                                                    <th>Saldo</th>
+                                                    <th>Vencimiento</th>
+                                                    <th>Cobrar</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="panelFacturasSeleccionadas" class="card shadow-sm fade-in mt-4"
+                                style="display: none;">
+                                <div class="card-header bg-warning">
+                                    <h5 class="mb-0"><i class="bi bi-check-square me-2"></i>Facturas Seleccionadas para
+                                        Cobro</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="tablaFacturasSeleccionadas"
+                                            class="display table table-striped table-hover w-100">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>N° Factura</th>
+                                                    <th>Saldo</th>
+                                                    <th>Monto a Cobrar</th>
+                                                    <th>Acción</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th colspan="3" class="text-end">Total a Cobrar:</th>
+                                                    <th id="totalCobrar" class="text-end">₲ 0</th>
+                                                    <th></th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; 2A Constructora 2025</div>
+                        <div>
+                            <a href="#">Política de Privacidad</a>
+                            &middot;
+                            <a href="#">Términos &amp; Condiciones</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    
+    <div class="modal fade" id="modalMontoCobro" tabindex="-1" aria-labelledby="modalMontoCobroLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="modalMontoCobroLabel">Ingresar Monto a Cobrar</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formMontoCobro" class="needs-validation" novalidate>
+                        <input type="hidden" id="idFacturaMonto">
+                        <input type="hidden" id="numFacturaMonto">
+                        <input type="hidden" id="saldoFacturaMonto">
+                        <div class="row g-3">
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">N° de Factura:</label>
+                                <p id="labelNumFactura" class="form-control-plaintext"></p>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">Saldo Pendiente:</label>
+                                <p id="labelSaldoPendiente" class="form-control-plaintext"></p>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="montoACobrar" class="form-label fw-bold">Monto a Cobrar:</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">₲</span>
+                                    <input type="number" id="montoACobrar" class="form-control" required min="1">
+                                    <div class="invalid-feedback">Ingrese un monto válido</div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="cobroCompleto">
+                                    <label class="form-check-label" for="cobroCompleto">
+                                        Cobrar saldo completo
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" id="btnConfirmarMontoCobro" class="btn btn-primary">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <script src="js/roleMenuAccess.js"></script>
+    <script src="js/funcionesSistema.js"></script>
+    <script src="menu/scripts.js"></script>
+    <script src="js/cerrarSesion.js"></script>
+    <script src="js/user-functions.js"></script>
+    
+    <script src="menu/bootstrap.bundle.min.js"></script>
+    
+    <script src="dt/jquery-3.7.1.js"></script>
+    <script src="dt/datatables.min.js"></script>
+    <script src="dt/jquery.dataTables.min.js"></script>
+    
+    <script src="dt/dataTables.buttons.min.js"></script>
+    <script src="dt/buttons.print.min.js"></script>
+    <script src="dt/buttons.html5.min.js"></script>
+    
+    <script src="dt/jszip.min.js"></script>
+    <script src="dt/pdfmake.min.js"></script>
+    <script src="dt/vfs_fonts.js"></script>
+    
+    <script src="dt/es-ES.js"></script>
+
+    <script>
+        let clienteSeleccionado = null;
+        let facturasParaCobro = [];
+        let idCobroActual = null;
+
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+        if (!currentUser) {
+            window.location.href = 'error.html';
+        }
+
+        // Control de seguridad del usuario currentUser
+        document.addEventListener('DOMContentLoaded', function () {
+            // Verificar si el usuario está autenticado
+            if (!currentUser) {
+                alertify.error("Usuario no encontrado.");
+                setTimeout(() => {
+                    window.location.href = "error.html";
+                }, 2000);
+                return;
+            } else {
+                // Mostrar el nombre del usuario y rol en el menú
+                document.getElementById('nomUsuario').innerText = `${currentUser.nombre} ${currentUser.apellido}`;
+                document.getElementById("rol").textContent = formatearRol(currentUser.rol);
+            }
+
+            // Configurar tema oscuro
+            configurarTemaOscuro();
+
+            // Inicializar la fecha de cobro con la fecha actual
+            document.getElementById('fechaCobro').valueAsDate = new Date();
+
+            // Configurar evento para mostrar/ocultar campo de referencia
+            document.getElementById('formaCobro').addEventListener('change', function () {
+                const contenedorReferencia = document.getElementById('contenedorReferencia');
+                const numeroReferencia = document.getElementById('numeroReferencia');
+
+                if (this.value === 'transferencia' || this.value === 'cheque' || this.value === 'deposito') {
+                    contenedorReferencia.style.display = 'block';
+                    numeroReferencia.required = true;
+                } else {
+                    contenedorReferencia.style.display = 'none';
+                    numeroReferencia.required = false;
+                    numeroReferencia.value = '';
+                }
+            });
+        });
+
+        // Función para dark mode
+        function configurarTemaOscuro() {
+            // Verificar preferencia inicial
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.classList.add('dark');
+                document.getElementById('darkModeToggle').innerHTML = '<i class="bi bi-sun"></i>';
+            }
+
+            // Toggle modo oscuro
+            document.getElementById('darkModeToggle').addEventListener('click', function () {
+                const html = document.documentElement;
+                html.classList.toggle('dark');
+                this.innerHTML = html.classList.contains('dark') ?
+                    '<i class="bi bi-sun"></i>' :
+                    '<i class="bi bi-moon-stars"></i>';
+            });
+
+            // Escuchar cambios en preferencias del sistema
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                const html = document.documentElement;
+                if (e.matches) {
+                    html.classList.add('dark');
+                    document.getElementById('darkModeToggle').innerHTML = '<i class="bi bi-sun"></i>';
+                } else {
+                    html.classList.remove('dark');
+                    document.getElementById('darkModeToggle').innerHTML = '<i class="bi bi-moon-stars"></i>';
+                }
+            });
+        }
+
+        // Formatear el nombre del rol para mostrar
+        function formatearRol(rol) {
+            switch (rol) {
+                case 'administrador': return 'Administrador';
+                case 'jefe_obra': return 'Jefe de Obra';
+                case 'gerente': return 'Gerente';
+                case 'obrero': return 'Obrero';
+                case 'contador': return 'Contador/Financiero';
+                case 'codificador': return 'Codificador';
+                default: return rol;
+            }
+        }
+
+        // Función para cargar páginas en el contenido principal
+        function cargarPagina(pagina) {
+            const contenedor = document.getElementById('contenidoPrincipal');
+            // Aquí se cargaría el contenido de la página mediante fetch o XMLHttpRequest
+            // Por ahora, solo mostramos un mensaje indicando qué página se cargaría
+            contenedor.innerHTML = `
+                    <h1 class="mt-4">${pagina.charAt(0).toUpperCase() + pagina.slice(1).replace('-', ' ')}</h1>
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <p>Contenido de la página ${pagina}...</p>
+                        </div>
+                    </div>
+                `;
+        }
+
+        // Cargar clientes desde localStorage al select
+        document.addEventListener('DOMContentLoaded', function () {
+            const clientes = JSON.parse(localStorage.getItem("clientes")) || [];
+            const selectCliente = document.getElementById('selectCliente');
+            selectCliente.innerHTML = '<option value="">Seleccione un cliente</option>';
+            clientes.forEach(cliente => {
+                const option = document.createElement('option');
+                option.value = cliente.idCliente;
+                option.textContent = cliente.razonSocial;
+                selectCliente.appendChild(option);
+            });
+
+            // Mostrar RUC al seleccionar cliente
+            selectCliente.addEventListener('change', function () {
+                const clienteSel = clientes.find(c => String(c.idCliente) === String(this.value));
+                document.getElementById('rucCliente').value = clienteSel ? clienteSel.rucCi : '';
+                document.getElementById('btnBuscarFacturas').disabled = !this.value;
+                // Limpiar paneles al cambiar cliente
+                document.getElementById('panelFacturas').style.display = 'none';
+                document.getElementById('panelFacturasSeleccionadas').style.display = 'none';
+            });
+        });
+
+        // Obtener facturas pendientes desde localStorage
+        function obtenerFacturasPendientes(idCliente) {
+            const facturas = JSON.parse(localStorage.getItem("facturasclientes")) || [];
+            return facturas.filter(f =>
+                String(f.idCliente) === String(idCliente) &&
+                f.anulado !== "SI" &&
+                Number(f.saldo) > 0
+            );
+        }
+
+        // Buscar facturas pendientes y mostrarlas en la tabla
+        document.getElementById('btnBuscarFacturas').addEventListener('click', function () {
+            const idCliente = document.getElementById('selectCliente').value;
+            if (!idCliente) {
+                alertify.error("Seleccione un cliente");
+                return;
+            }
+            const facturasPendientes = obtenerFacturasPendientes(idCliente);
+
+            // Inicializar DataTable si no existe
+            let tabla = $('#tablaFacturasPendientes').DataTable();
+            tabla.clear();
+
+            facturasPendientes.forEach(f => {
+                const fecha = new Date(f.fecventa || f.fecha).toLocaleDateString('es-PY');
+                const vencimiento = f.fecvencimiento || f.fechaVencimiento
+                    ? new Date(f.fecvencimiento || f.fechaVencimiento).toLocaleDateString('es-PY')
+                    : '-';
+                tabla.row.add([
+                    f.idfactura,
+                    fecha,
+                    f.numfactura,
+                    '₲ ' + Number(f.total || f.totventa).toLocaleString('es-PY'),
+                    '₲ ' + Number(f.saldo).toLocaleString('es-PY'),
+                    vencimiento,
+                    `<button class="btn btn-success btn-sm seleccionar-factura" data-id="${f.idfactura}"><i class="bi bi-check-circle"></i> Cobrar</button>`
+                ]);
+            });
+            tabla.draw();
+            document.getElementById('panelFacturas').style.display = 'block';
+        });
+
+        let facturaSeleccionada = null;
+
+        // Mostrar modal al hacer clic en "Cobrar"
+        $(document).on('click', '.seleccionar-factura', function () {
+            const idFactura = $(this).data('id');
+            const facturas = JSON.parse(localStorage.getItem("facturasclientes")) || [];
+            const factura = facturas.find(f => String(f.idfactura) === String(idFactura));
+            if (!factura) return;
+            $('#idFacturaMonto').val(factura.idfactura);
+            $('#numFacturaMonto').val(factura.numfactura);
+            $('#saldoFacturaMonto').val(factura.saldo);
+            $('#labelNumFactura').text(factura.numfactura);
+            $('#labelSaldoPendiente').text('₲ ' + Number(factura.saldo).toLocaleString('es-PY'));
+            $('#montoACobrar').val(factura.saldo);
+            $('#cobroCompleto').prop('checked', true);
+            $('#formMontoCobro')[0].classList.remove('was-validated');
+            $('#modalMontoCobro').modal('show');
+        });
+
+        // Cobrar saldo completo
+        $('#cobroCompleto').on('change', function () {
+            if (this.checked) {
+                $('#montoACobrar').val($('#saldoFacturaMonto').val());
+            }
+        });
+
+        // Confirmar monto a cobrar desde el modal
+        $('#btnConfirmarMontoCobro').on('click', function () {
+            const idFactura = $('#idFacturaMonto').val();
+            const numFactura = $('#numFacturaMonto').val();
+            const saldo = Number($('#saldoFacturaMonto').val());
+            let montoCobrar = Number($('#montoACobrar').val());
+            if (isNaN(montoCobrar) || montoCobrar <= 0 || montoCobrar > saldo) {
+                $('#montoACobrar')[0].setCustomValidity('Monto inválido');
+                $('#formMontoCobro')[0].reportValidity();
+                return;
+            }
+            $('#montoACobrar')[0].setCustomValidity('');
+            agregarFacturaACobro(idFactura, numFactura, saldo, montoCobrar);
+            $('#modalMontoCobro').modal('hide');
+        });
+
+        // Quitar factura de la lista de cobro
+        $(document).on('click', '.quitar-factura', function () {
+            const tabla = $('#tablaFacturasSeleccionadas').DataTable();
+            const row = tabla.row($(this).parents('tr'));
+            const data = row.data();
+            const idFactura = data[0];
+            quitarFacturaDeCobro(idFactura);
+        });
+
+        // Función para agregar factura a la lista de cobro
+        function agregarFacturaACobro(idFactura, numFactura, saldo, montoCobrar) {
+            const facturaExistente = facturasParaCobro.findIndex(f => f.idFactura == idFactura);
+            if (facturaExistente !== -1) {
+                facturasParaCobro[facturaExistente].montoCobrar = montoCobrar;
+            } else {
+                facturasParaCobro.push({
+                    idFactura: idFactura,
+                    numFactura: numFactura,
+                    saldo: saldo,
+                    montoCobrar: montoCobrar
+                });
+            }
+            actualizarPanelFacturasSeleccionadas();
+            actualizarBotonesFacturasPendientes();
+        }
+
+        // Función para quitar factura de la lista de cobro
+        function quitarFacturaDeCobro(idFactura) {
+            facturasParaCobro = facturasParaCobro.filter(f => f.idFactura != idFactura);
+            actualizarPanelFacturasSeleccionadas();
+            actualizarBotonesFacturasPendientes();
+        }
+
+        // Actualizar panel de facturas seleccionadas
+        function actualizarPanelFacturasSeleccionadas() {
+            const panelFacturasSeleccionadas = document.getElementById('panelFacturasSeleccionadas');
+            const panelCobro = document.getElementById('panelCobro');
+            if (facturasParaCobro.length === 0) {
+                panelFacturasSeleccionadas.style.display = 'none';
+                panelCobro.style.display = 'none';
+                document.getElementById('montoCobro').value = '';
+                return;
+            }
+            const tablaSeleccionadas = $('#tablaFacturasSeleccionadas').DataTable();
+            tablaSeleccionadas.clear();
+            let totalCobrar = 0;
+            facturasParaCobro.forEach(factura => {
+                const btnQuitar = `
+            <button class="btn btn-sm btn-danger quitar-factura" title="Quitar de la lista">
+                <i class="bi bi-trash"></i>
+            </button>
+        `;
+                tablaSeleccionadas.row.add([
+                    factura.idFactura,
+                    factura.numFactura,
+                    '₲ ' + formatoNumero(factura.saldo),
+                    '₲ ' + formatoNumero(factura.montoCobrar),
+                    btnQuitar
+                ]).draw(false);
+                totalCobrar += factura.montoCobrar;
+            });
+            document.getElementById('totalCobrar').textContent = '₲ ' + formatoNumero(totalCobrar);
+            document.getElementById('montoCobro').value = totalCobrar; // sin formato para el input
+            panelFacturasSeleccionadas.style.display = 'block';
+            panelCobro.style.display = 'block';
+        }
+
+        // Actualizar botones de la tabla de pendientes
+        function actualizarBotonesFacturasPendientes() {
+            const tabla = $('#tablaFacturasPendientes').DataTable();
+            tabla.rows().every(function () {
+                const data = this.data();
+                const idFactura = data[0];
+                const btn = $(this.node()).find('.seleccionar-factura');
+                if (facturasParaCobro.some(f => String(f.idFactura) === String(idFactura))) {
+                    btn.prop('disabled', true);
+                } else {
+                    btn.prop('disabled', false);
+                }
+            });
+        }
+
+        // Formatear número
+        function formatoNumero(numero) {
+            return new Intl.NumberFormat('es-PY', {
+                maximumFractionDigits: 0
+            }).format(numero);
+        }
+
+        // Procesar el cobro al enviar el formulario principal
+        document.getElementById('formCobro').addEventListener('submit', function (e) {
+            e.preventDefault();
+            if (facturasParaCobro.length === 0) {
+                document.getElementById('panelFacturasSeleccionadas').scrollIntoView({ behavior: "smooth" });
+                return;
+            }
+
+            // Generar nuevo ID de cobro
+            let cobrosClientes = JSON.parse(localStorage.getItem("cobrosClientes")) || [];
+            let idCobroActual = cobrosClientes.length > 0 ? Math.max(...cobrosClientes.map(c => c.idcobro)) + 1 : 1;
+
+            // Datos del formulario
+            const fechaCobro = document.getElementById('fechaCobro').value;
+            const formaCobro = document.getElementById('formaCobro').value;
+            const referencia = document.getElementById('numeroReferencia').value || null;
+            const observaciones = document.getElementById('observacionesCobro').value || null;
+            const idcliente = document.getElementById('selectCliente').value;
+
+            let montoTotal = 0;
+            facturasParaCobro.forEach(factura => {
+                montoTotal += factura.montoCobrar;
+            });
+
+            // Crear objeto de cobro
+            const cobro = {
+                idcobro: idCobroActual,
+                idcliente: idcliente,
+                fechacobro: fechaCobro,
+                montocobro: montoTotal,
+                formacobro: formaCobro,
+                referencia: referencia,
+                observaciones: observaciones,
+                idusuario: currentUser.idusuario,
+                usuario: currentUser.nombre + " " + currentUser.apellido
+            };
+
+            // Guardar el cobro
+            cobrosClientes.push(cobro);
+            localStorage.setItem("cobrosClientes", JSON.stringify(cobrosClientes));
+
+            // GUARDAR DETALLES DEL COBRO (NUEVO)
+            let cobroDetalles = JSON.parse(localStorage.getItem("cobroDetalles")) || [];
+            facturasParaCobro.forEach((factura, idx) => {
+                cobroDetalles.push({
+                    idcobrodet: `${idCobroActual}_${idx + 1}`,
+                    idcobro: idCobroActual,
+                    idfactura: factura.idFactura,
+                    numfactura: factura.numFactura,
+                    montocobrado: factura.montoCobrar
+                });
+            });
+            localStorage.setItem("cobroDetalles", JSON.stringify(cobroDetalles));
+
+            // Actualizar saldos de facturas
+            let facturasclientes = JSON.parse(localStorage.getItem("facturasclientes")) || [];
+            facturasParaCobro.forEach(factura => {
+                const idx = facturasclientes.findIndex(f => String(f.idfactura) === String(factura.idFactura));
+                if (idx !== -1) {
+                    facturasclientes[idx].saldo = Math.max(0, Number(facturasclientes[idx].saldo) - Number(factura.montoCobrar));
+                }
+            });
+            localStorage.setItem("facturasclientes", JSON.stringify(facturasclientes));
+
+            // Limpiar selección y actualizar paneles
+            facturasParaCobro = [];
+            actualizarPanelFacturasSeleccionadas();
+            actualizarBotonesFacturasPendientes();
+            document.getElementById('formCobro').reset();
+            document.getElementById('panelCobro').style.display = 'none';
+            document.getElementById('panelFacturas').style.display = 'none';
+            document.getElementById('panelFacturasSeleccionadas').style.display = 'none';
+            document.getElementById('selectCliente').value = '';
+            document.getElementById('rucCliente').value = '';
+            document.getElementById('fechaCobro').valueAsDate = new Date();
+            alertify.success("Cobro guardado correctamente");
+            // window.location.href = "historial-movimientos.html";
+        });
+
+        // Inicializar DataTables si no existen
+        $(document).ready(function () {
+            if (!$.fn.DataTable.isDataTable('#tablaFacturasPendientes')) {
+                $('#tablaFacturasPendientes').DataTable({
+                    language: { url: "dt/es-ES.js" }
+                });
+            }
+            if (!$.fn.DataTable.isDataTable('#tablaFacturasSeleccionadas')) {
+                $('#tablaFacturasSeleccionadas').DataTable({
+                    language: { url: "dt/es-ES.js" },
+                    paging: false,
+                    searching: false,
+                    info: false
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

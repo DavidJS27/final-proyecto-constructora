@@ -1,0 +1,1502 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <title>Dashboard - 2A Constructora</title>
+    <link rel="icon" href="img/2A_constructora_logo.png">
+
+    
+    <link href="bt/bootstrap.min.css" rel="stylesheet" />
+    <link href="menu/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/usuario-styles.css">
+    <link rel="stylesheet" href="css/dashboard-styles.css">
+
+    
+    
+    <link rel="stylesheet" href="bt-icons/bootstrap-icons.min.css">
+    
+    <link rel="stylesheet" href="dt/datatables.min.css">
+    <link rel="stylesheet" href="dt/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="dt/buttons.dataTables.min.css">
+    
+    <link rel="stylesheet" href="alert/alertify.min.css">
+    <link rel="stylesheet" href="alert/themes/default.min.css">
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    
+    <script src="alert/alertify.min.js"></script>
+    <script src="./js/bd.js"></script>
+</head>
+
+<body class="sb-nav-fixed">
+    
+    <nav class="sb-topnav navbar navbar-expand bg-dark">
+        <a class="navbar-brand ps-3" href="menu.html" onclick="cargarPagina('menu')">
+            <img src="img/2A_constructora_logo.png" alt="Logo" height="30" class="me-2">
+            2A Constructora
+        </a>
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#"><i
+                class="bi bi-list"></i></button>
+        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <div class="input-group">
+                <input class="form-control" type="text" placeholder="Buscar..." aria-label="Buscar..."
+                    aria-describedby="btnNavbarSearch" />
+                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="bi bi-search"></i></button>
+            </div>
+        </form>
+        <div class="me-3">
+            <button id="darkModeToggle" class="btn btn-link text-light"><i class="bi bi-moon-stars"></i></button>
+        </div>
+        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false"><i class="bi bi-person-fill"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="configuracion.html">Configuración</a></li>
+                    <li><a class="dropdown-item" href="#">Actividad</a></li>
+                    <li>
+                        <hr class="dropdown-divider" />
+                    </li>
+                    <li><a class="dropdown-item" href="#" onclick="cerrarSesion()">Cerrar sesión</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div id="principal" class="sb-sidenav-menu-heading">Principal</div>
+                        <a id="dashboard" class="nav-link" href="dashboard.html" onclick="cargarPagina('menu')">
+                            <div class="sb-nav-link-icon"><i class="bi bi-speedometer"></i></div>
+                            Dashboard
+                        </a>
+
+                        <div id="modulos" class="sb-sidenav-menu-heading">Módulos</div>
+
+                        
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseFinanzas">
+                            <div class="sb-nav-link-icon"><i class="bi bi-currency-dollar"></i></div>
+                            Finanzas
+                            <div class="sb-sidenav-collapse-arrow"><i class="bi bi-chevron-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseFinanzas" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a id="facturas-proveedores" class="nav-link collapsed" href="#"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseProveedores">
+                                    Facturas de Proveedores
+                                    <div class="sb-sidenav-collapse-arrow"><i class="bi bi-chevron-down"></i></div>
+                                </a>
+                                <div class="collapse" id="collapseProveedores" data-bs-parent="#collapseFinanzas">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        <a href="facturas-proveedores.html" class="nav-link">
+                                            <i class="bi bi-file-earmark-text me-2"></i>Registrar Compras
+                                        </a>
+                                        <a href="mantenimiento-facturas.html" class="nav-link">
+                                            <i class="bi bi-tools me-2"></i>Mantenimiento de Facturas
+                                        </a>
+                                    </nav>
+                                </div>
+
+                                <a id="facturas-clientes" class="nav-link" href="facturas-clientes.html"
+                                    onclick="cargarPagina('facturas-clientes')">Facturas de Clientes</a>
+                                <a href="mantenimiento-facturas-clientes.html" class="nav-link">
+                                    <i class="bi bi-tools me-2"></i>Mantenimiento de Facturas</a>
+                                <a id="pagos-proveedores" class="nav-link" href="pagos-proveedores.html"
+                                    onclick="cargarPagina('pagos-proveedores')">Pagos a Proveedores</a>
+                                <a id="cobros-clientes" class="nav-link" href="cobros-clientes.html">Cobros de
+                                    Clientes</a>
+                                <a id="adelantos-anticipos" class="nav-link" href="adelantos-anticipos.html"
+                                    onclick="cargarPagina('adelantos-anticipos')">Adelantos y Anticipos</a>
+                                <a id="costos-obra" class="nav-link" href="costos-obra.html"
+                                    onclick="cargarPagina('costos-obra')">Costos por Obra</a>
+                                <a id="reportes-financieros" class="nav-link" href="reportes-financieros.html"
+                                    onclick="cargarPagina('reportes-financieros')">Reportes Financieros</a>
+                            </nav>
+                        </div>
+
+                        
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseObras">
+                            <div class="sb-nav-link-icon"><i class="bi bi-building"></i></div>
+                            Obras
+                            <div class="sb-sidenav-collapse-arrow"><i class="bi bi-chevron-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseObras" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a id="mantenimiento-obras" class="nav-link" href="mantenimiento-obras.html"
+                                    onclick="cargarPagina('mantenimiento-obras')">Mantenimiento de Obras</a>
+                                <a id="asignar-materiales" class="nav-link" href="asignar-materiales.html"
+                                    onclick="cargarPagina('asignar-materiales')">Asignar Materiales</a>
+                                <a id="control-existencias" class="nav-link" href="control-existencias.html"
+                                    onclick="cargarPagina('control-existencias')">Control de Existencias</a>
+                                <a id="movimientos-materiales" class="nav-link" href="movimientos-materiales.html"
+                                    onclick="cargarPagina('movimientos-materiales')">Movimientos de Materiales</a>
+                                <a id="traslados-materiales" class="nav-link" href="traslado-materiales.html"
+                                    onclick="cargarPagina('traslados-materiales')">Traslados de Materiales</a>
+                                <a id="registro-perdidas" class="nav-link" href="registro-perdidas.html"
+                                    onclick="cargarPagina('registro-perdidas')">Registro de Pérdidas</a>
+                            </nav>
+                        </div>
+
+                        <div id="administracion" class="sb-sidenav-menu-heading">Administración</div>
+
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseMantenimiento">
+                            <div class="sb-nav-link-icon"><i class="bi bi-gear"></i></div>
+                            Mantenimiento
+                            <div class="sb-sidenav-collapse-arrow"><i class="bi bi-chevron-down"></i></div>
+                        </a>
+                        <div class="collapse show" id="collapseMantenimiento" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a id="usuarios" class="nav-link" href="usuarios.html"
+                                    onclick="cargarPagina('usuarios')">Usuarios</a>
+                                <a id="clientes" class="nav-link" href="clientes.html"
+                                    onclick="cargarPagina('clientes')">Clientes</a>
+                                <a id="proveedores" class="nav-link" href="proveedores.html"
+                                    onclick="cargarPagina('proveedores')">Proveedores</a>
+                                <a id="materiales" class="nav-link" href="materiales.html"
+                                    onclick="cargarPagina('materiales')">Materiales</a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Iniciado por:</div>
+                    <div id="nomUsuario"></div>
+                    <div class="small">Rol:</div>
+                    <div id="rol"></div>
+                </div>
+            </nav>
+        </div>
+
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4">Dashboard</h1>
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item active">Dashboard</li>
+                    </ol>
+
+                    
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">
+                                        <i class="bi bi-person-circle me-2"></i>
+                                        Información del Usuario Actual
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="text-center">
+                                                <i class="bi bi-person-circle"
+                                                    style="font-size: 4rem; color: #007bff;"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <p><strong>Nombre:</strong> <span id="usuario-nombre">-</span></p>
+                                                    <p><strong>Apellido:</strong> <span id="usuario-apellido">-</span>
+                                                    </p>
+                                                    <p><strong>Email:</strong> <span id="usuario-email">-</span></p>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <p><strong>Rol:</strong> <span id="usuario-rol-detalle"
+                                                            class="badge bg-primary">-</span></p>
+                                                    <p><strong>Estado:</strong> <span id="usuario-estado"
+                                                            class="badge bg-success">Activo</span></p>
+                                                    <p><strong>Último acceso:</strong> <span id="ultimo-acceso">-</span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card primary">
+                            <div class="stat-card-header">
+                                <div class="stat-icon">
+                                    <i class="bi bi-people-fill"></i>
+                                </div>
+                                <div class="stat-trend">
+                                    <i class="bi bi-arrow-up trend-up"></i>
+                                </div>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-title">Total de Usuarios</div>
+                                <div class="stat-value" id="total-users">0</div>
+                                <div class="stat-change positive">
+                                    <i class="bi bi-arrow-up"></i>
+                                    <span>Activos en el sistema</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card success">
+                            <div class="stat-card-header">
+                                <div class="stat-icon">
+                                    <i class="bi bi-box-seam-fill"></i>
+                                </div>
+                                <div class="stat-trend">
+                                    <i class="bi bi-arrow-up trend-up"></i>
+                                </div>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-title">Materiales en Stock</div>
+                                <div class="stat-value" id="total-materials">0</div>
+                                <div class="stat-change positive">
+                                    <i class="bi bi-arrow-up"></i>
+                                    <span>Tipos de materiales</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card warning">
+                            <div class="stat-card-header">
+                                <div class="stat-icon">
+                                    <i class="bi bi-cart-fill"></i>
+                                </div>
+                                <div class="stat-trend">
+                                    <i class="bi bi-arrow-down trend-down"></i>
+                                </div>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-title">Compras Registradas</div>
+                                <div class="stat-value">Gs. <span id="total-purchases-amount">0</span></div>
+                                <div class="stat-subvalue"><span id="total-purchases">0</span> compras realizadas</div>
+                                <div class="stat-change positive">
+                                    <i class="bi bi-arrow-up"></i>
+                                    <span>Total invertido</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card danger">
+                            <div class="stat-card-header">
+                                <div class="stat-icon">
+                                    <i class="bi bi-building-fill"></i>
+                                </div>
+                                <div class="stat-trend">
+                                    <i class="bi bi-arrow-up trend-up"></i>
+                                </div>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-title">Obras Registradas</div>
+                                <div class="stat-value">Gs. <span id="total-projects-amount">0</span></div>
+                                <div class="stat-subvalue"><span id="total-projects">0</span> obras totales</div>
+                                <div class="stat-change positive">
+                                    <i class="bi bi-arrow-up"></i>
+                                    <span>Valor total proyectos</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card info">
+                            <div class="stat-card-header">
+                                <div class="stat-icon">
+                                    <i class="bi bi-people-fill"></i>
+                                </div>
+                                <div class="stat-trend">
+                                    <i class="bi bi-arrow-up trend-up"></i>
+                                </div>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-title">Clientes Registrados</div>
+                                <div class="stat-value" id="total-clients">0</div>
+                                <div class="stat-change positive">
+                                    <i class="bi bi-arrow-up"></i>
+                                    <span>Total clientes</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card purple">
+                            <div class="stat-card-header">
+                                <div class="stat-icon">
+                                    <i class="bi bi-truck"></i>
+                                </div>
+                                <div class="stat-trend">
+                                    <i class="bi bi-arrow-up trend-up"></i>
+                                </div>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-title">Proveedores Activos</div>
+                                <div class="stat-value" id="total-providers">0</div>
+                                <div class="stat-change positive">
+                                    <i class="bi bi-arrow-up"></i>
+                                    <span>Proveedores disponibles</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="bi bi-bar-chart me-1"></i>
+                                    Distribución de Costos por Obra
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="chartCostosPorObra" width="100%" height="40"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="bi bi-pie-chart me-1"></i>
+                                    Estado de Obras
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="chartEstadoObras" width="100%" height="40"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="bi bi-graph-up me-1"></i>
+                                    Compras por Mes
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="paymentsChart" width="100%" height="40"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="bi bi-pie-chart me-1"></i>
+                                    Tipos de Pago
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="paymentTypesChart" width="100%" height="40"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="bi bi-funnel me-1"></i>
+                                    Filtros
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label for="filtroCliente" class="form-label">Cliente</label>
+                                            <select id="filtroCliente" class="form-select">
+                                                <option value="">Todos</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="filtroEstado" class="form-label">Estado</label>
+                                            <select id="filtroEstado" class="form-select">
+                                                <option value="">Todos</option>
+                                                <option value="activo">Activo</option>
+                                                <option value="inactivo">Inactivo</option>
+                                                <option value="finalizado">Finalizado</option>
+                                                <option value="pausado">Pausado</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="filtroFechaDesde" class="form-label">Fecha Desde</label>
+                                            <input type="date" id="filtroFechaDesde" class="form-control">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="filtroFechaHasta" class="form-label">Fecha Hasta</label>
+                                            <input type="date" id="filtroFechaHasta" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-md-12">
+                                            <button type="button" id="btnAplicarFiltros" class="btn btn-primary me-2">
+                                                <i class="bi bi-filter"></i> Aplicar Filtros
+                                            </button>
+                                            <button type="button" id="btnLimpiarFiltros" class="btn btn-secondary">
+                                                <i class="bi bi-arrow-clockwise"></i> Limpiar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="bi bi-people-fill me-1"></i>
+                                    Clientes Registrados
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="clientesTable" class="table table-striped table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Nombre</th>
+                                                    <th>Teléfono</th>
+                                                    <th>Email</th>
+                                                    <th>Obras</th>
+                                                    <th>Acciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="bi bi-table me-1"></i>
+                                    Resumen de Obras
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="dataTable" class="table table-striped table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Obra</th>
+                                                    <th>Cliente</th>
+                                                    <th>Estado</th>
+                                                    <th>Costo</th>
+                                                    <th>Acciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="bi bi-table me-1"></i>
+                                    Detalle Completo de Obras
+                                </div>
+                                <div class="card-body">
+                                    <table id="obrasDetalleTable" class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Obra</th>
+                                                <th>Cliente</th>
+                                                <th>Inicio</th>
+                                                <th>Fin</th>
+                                                <th>Estado</th>
+                                                <th>Costo Total</th>
+                                                <th>Dimensiones</th>
+                                                <th>Margen Est.</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="bi bi-bell me-1"></i>
+                                    Alertas del Sistema
+                                </div>
+                                <div class="card-body">
+                                    <div id="alertasContainer">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; 2A Constructora 2025</div>
+                        <div>
+                            <a href="#">Política de Privacidad</a>
+                            &middot;
+                            <a href="#">Términos &amp; Condiciones</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    
+    
+    <script src="dt/jquery-3.7.1.js"></script>
+    
+    <script src="menu/bootstrap.bundle.min.js"></script>
+    
+    <script src="menu/scripts.js"></script>
+
+    
+    <script src="js/bd.js"></script>
+    <script src="js/roleMenuAccess.js"></script>
+    <script src="js/funcionesSistema.js"></script>
+    <script src="js/cerrarSesion.js"></script>
+
+    
+    <script src="dt/datatables.min.js"></script>
+    <script src="dt/jquery.dataTables.min.js"></script>
+    <script src="dt/dataTables.buttons.min.js"></script>
+    <script src="dt/buttons.html5.min.js"></script>
+    <script src="dt/buttons.print.min.js"></script>
+    <script src="dt/jszip.min.js"></script>
+    <script src="dt/pdfmake.min.js"></script>
+    <script src="dt/vfs_fonts.js"></script>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    
+    <script src="js/dashboard-config.js"></script>
+    <script src="js/dashboard-cards.js"></script>
+    <script src="js/dashboard-charts.js"></script>
+    <script src="js/graficos-manager.js"></script>
+
+    <script>
+        // Variables globales
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        let chartCostos, chartEstado, chartPagos, chartTiposPago;
+
+        // Verificar usuario
+        if (!currentUser) {
+            window.location.href = 'error.html';
+        }
+
+        // Función para formatear rol
+        function formatearRol(rol) {
+            const roles = {
+                'administrador': 'Administrador',
+                'jefe_obra': 'Jefe de Obra',
+                'gerente': 'Gerente',
+                'obrero': 'Obrero',
+                'contador': 'Contador/Financiero',
+                'codificador': 'Codificador'
+            };
+            return roles[rol] || rol;
+        }
+
+        // Función para mostrar información del usuario
+        function mostrarInfoUsuario() {
+            if (currentUser) {
+                document.getElementById('nomUsuario').textContent = `${currentUser.nombre} ${currentUser.apellido}`;
+                document.getElementById('rol').textContent = formatearRol(currentUser.rol);
+
+                // Mostrar información detallada en la tarjeta
+                document.getElementById('usuario-nombre').textContent = currentUser.nombre || '-';
+                document.getElementById('usuario-apellido').textContent = currentUser.apellido || '-';
+                document.getElementById('usuario-email').textContent = currentUser.email || '-';
+                document.getElementById('usuario-rol-detalle').textContent = formatearRol(currentUser.rol);
+                document.getElementById('ultimo-acceso').textContent = new Date().toLocaleString('es-PY');
+
+                // Configurar color del badge según el rol
+                const badgeElement = document.getElementById('usuario-rol-detalle');
+                const rolColors = {
+                    'administrador': 'bg-danger',
+                    'gerente': 'bg-warning',
+                    'jefe_obra': 'bg-info',
+                    'contador': 'bg-success',
+                    'obrero': 'bg-secondary',
+                    'codificador': 'bg-primary'
+                };
+                badgeElement.className = `badge ${rolColors[currentUser.rol] || 'bg-primary'}`;
+            }
+        }
+
+        // Función para verificar si las tablas necesitan reinicialización
+        function checkAndReinitializeTables() {
+            // Verificar si las tablas existen y tienen datos
+            const tables = ['#dataTable', '#obrasDetalleTable', '#clientesTable'];
+
+            tables.forEach(tableId => {
+                const table = document.querySelector(tableId);
+                if (table && table.querySelector('tbody').children.length > 0) {
+                    // Si la tabla tiene datos pero no está inicializada como DataTable
+                    if (typeof $ !== 'undefined' && !$.fn.DataTable.isDataTable(tableId)) {
+                        console.log(`🔄 Reinicializando tabla ${tableId}...`);
+                        setTimeout(() => {
+                            if (typeof initializeDashboardTables === 'function') {
+                                initializeDashboardTables();
+                            }
+                        }, 100);
+                    }
+                }
+            });
+        }
+
+        // Función para inicializar DataTables específicas del dashboard
+        function initializeDashboardTables() {
+            console.log('🔄 Inicializando tablas del dashboard...');
+
+            // Verificar que jQuery y DataTables estén disponibles
+            if (typeof $ === 'undefined' || typeof $.fn.DataTable === 'undefined') {
+                console.error('❌ jQuery o DataTables no están disponibles');
+                return;
+            }
+
+            // Configuración básica sin botones para evitar errores
+            const basicConfig = {
+                responsive: true,
+                pageLength: 5,
+                language: {
+                    "processing": "Procesando...",
+                    "lengthMenu": "Mostrar _MENU_ registros",
+                    "zeroRecords": "No se encontraron resultados",
+                    "emptyTable": "Ningún dato disponible en esta tabla",
+                    "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                },
+                columnDefs: [
+                    {
+                        targets: -1, // Última columna (Acciones)
+                        orderable: false
+                    }
+                ]
+            };
+
+            // Inicializar tabla de resumen de obras
+            if (document.getElementById('dataTable')) {
+                try {
+                    if ($.fn.DataTable.isDataTable('#dataTable')) {
+                        $('#dataTable').DataTable().destroy();
+                    }
+                    $('#dataTable').DataTable(basicConfig);
+                    console.log('✅ Tabla de resumen de obras inicializada');
+                } catch (error) {
+                    console.error('❌ Error inicializando tabla de resumen:', error);
+                }
+            }
+
+            // Inicializar tabla de detalle de obras
+            if (document.getElementById('obrasDetalleTable')) {
+                try {
+                    if ($.fn.DataTable.isDataTable('#obrasDetalleTable')) {
+                        $('#obrasDetalleTable').DataTable().destroy();
+                    }
+                    $('#obrasDetalleTable').DataTable(basicConfig);
+                    console.log('✅ Tabla de detalle de obras inicializada');
+                } catch (error) {
+                    console.error('❌ Error inicializando tabla de detalle:', error);
+                }
+            }
+
+            // Inicializar tabla de clientes
+            if (document.getElementById('clientesTable')) {
+                try {
+                    if ($.fn.DataTable.isDataTable('#clientesTable')) {
+                        $('#clientesTable').DataTable().destroy();
+                    }
+                    $('#clientesTable').DataTable(basicConfig);
+                    console.log('✅ Tabla de clientes inicializada');
+                } catch (error) {
+                    console.error('❌ Error inicializando tabla de clientes:', error);
+                }
+            }
+        }
+
+        // Función para cargar datos del dashboard
+        function cargarDatosDashboard() {
+            console.log('📊 Cargando datos del dashboard...');
+
+            // Asegurar que los datos estén inicializados
+            if (typeof datos === 'function') {
+                datos();
+            }
+
+            // Cargar datos desde localStorage
+            const usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
+            const clientes = JSON.parse(localStorage.getItem('clientes') || '[]');
+            const materiales = JSON.parse(localStorage.getItem('materiales') || '[]');
+            const proveedores = JSON.parse(localStorage.getItem('proveedores') || '[]');
+            const obras = JSON.parse(localStorage.getItem('obras') || '[]');
+            const comprascabecera = JSON.parse(localStorage.getItem('comprascabecera') || '[]');
+
+            // Actualizar tarjetas
+            document.getElementById('total-users').textContent = usuarios.length;
+            document.getElementById('total-materials').textContent = materiales.length;
+            document.getElementById('total-clients').textContent = clientes.length;
+            document.getElementById('total-providers').textContent = proveedores.length;
+            document.getElementById('total-projects').textContent = obras.length;
+            document.getElementById('total-purchases').textContent = comprascabecera.length;
+
+            // Calcular totales monetarios
+            const totalCompras = comprascabecera.reduce((sum, compra) => sum + (compra.totcompra || 0), 0);
+            const totalObras = obras.reduce((sum, obra) => sum + (obra.total || 0), 0);
+
+            document.getElementById('total-purchases-amount').textContent = totalCompras.toLocaleString();
+            document.getElementById('total-projects-amount').textContent = totalObras.toLocaleString();
+
+            // Crear gráficos
+            setTimeout(() => {
+                crearGraficos();
+                llenarTablaObras();
+                llenarTablaClientes();
+                llenarFiltros();
+                generarAlertas();
+
+                // Inicializar DataTables después de llenar los datos
+                setTimeout(() => {
+                    if (typeof initializeDashboardTables === 'function') {
+                        initializeDashboardTables();
+                    }
+                }, 500);
+            }, 100);
+        }
+
+        // Función para crear gráficos
+        function crearGraficos() {
+            console.log('📈 Creando gráficos...');
+
+            if (typeof Chart === 'undefined') {
+                console.error('❌ Chart.js no está disponible');
+                return;
+            }
+
+            // Destruir gráficos existentes
+            if (chartCostos) chartCostos.destroy();
+            if (chartEstado) chartEstado.destroy();
+            if (chartPagos) chartPagos.destroy();
+            if (chartTiposPago) chartTiposPago.destroy();
+
+            const obras = JSON.parse(localStorage.getItem('obras') || '[]');
+            const comprascabecera = JSON.parse(localStorage.getItem('comprascabecera') || '[]');
+
+            // Gráfico de costos por obra
+            const ctxCostos = document.getElementById('chartCostosPorObra');
+            if (ctxCostos) {
+                const obrasLimitadas = obras.slice(0, 10);
+                chartCostos = new Chart(ctxCostos, {
+                    type: 'bar',
+                    data: {
+                        labels: obrasLimitadas.map(obra => obra.nombre || `Obra ${obra.idObra}`),
+                        datasets: [{
+                            label: 'Costo Total (Gs.)',
+                            data: obrasLimitadas.map(obra => obra.total || 0),
+                            backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: function (value) {
+                                        return 'Gs. ' + value.toLocaleString();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Gráfico de estado de obras
+            const ctxEstado = document.getElementById('chartEstadoObras');
+            if (ctxEstado) {
+                const estadosObras = obras.reduce((acc, obra) => {
+                    const estado = obra.estado || 'activo';
+                    acc[estado] = (acc[estado] || 0) + 1;
+                    return acc;
+                }, {});
+
+                chartEstado = new Chart(ctxEstado, {
+                    type: 'doughnut',
+                    data: {
+                        labels: Object.keys(estadosObras).map(estado =>
+                            estado.charAt(0).toUpperCase() + estado.slice(1)
+                        ),
+                        datasets: [{
+                            data: Object.values(estadosObras),
+                            backgroundColor: ['#28a745', '#ffc107', '#dc3545', '#17a2b8'],
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Gráfico de compras por mes
+            const ctxPagos = document.getElementById('paymentsChart');
+            if (ctxPagos) {
+                const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio'];
+                const datosPagos = comprascabecera.reduce((acc, compra) => {
+                    const fecha = new Date(compra.feccompra);
+                    const mes = fecha.getMonth();
+                    if (mes < 6) {
+                        acc[mes] = (acc[mes] || 0) + (compra.totcompra || 0);
+                    }
+                    return acc;
+                }, {});
+
+                chartPagos = new Chart(ctxPagos, {
+                    type: 'line',
+                    data: {
+                        labels: meses,
+                        datasets: [{
+                            label: 'Compras por Mes (Gs.)',
+                            data: meses.map((_, index) => datosPagos[index] || 0),
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderWidth: 2,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: function (value) {
+                                        return 'Gs. ' + value.toLocaleString();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Gráfico de tipos de pago
+            const ctxTiposPago = document.getElementById('paymentTypesChart');
+            if (ctxTiposPago) {
+                const tiposPago = comprascabecera.reduce((acc, compra) => {
+                    const tipo = compra.condicion || 'CONTADO';
+                    acc[tipo] = (acc[tipo] || 0) + 1;
+                    return acc;
+                }, {});
+
+                chartTiposPago = new Chart(ctxTiposPago, {
+                    type: 'pie',
+                    data: {
+                        labels: Object.keys(tiposPago),
+                        datasets: [{
+                            data: Object.values(tiposPago),
+                            backgroundColor: ['#007bff', '#fd7e14', '#6610f2', '#e83e8c'],
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }
+                });
+            }
+
+            console.log('✅ Gráficos creados exitosamente');
+        }
+
+        // Función para llenar tabla de obras
+        function llenarTablaObras() {
+            const obras = JSON.parse(localStorage.getItem('obras') || '[]');
+            const clientes = JSON.parse(localStorage.getItem('clientes') || '[]');
+
+            // Llenar tabla resumida
+            const tbody = document.querySelector('#dataTable tbody');
+            if (tbody) {
+                tbody.innerHTML = '';
+                const obrasLimitadas = obras.slice(0, 5); // Solo las primeras 5 para la tabla resumida
+
+                obrasLimitadas.forEach(obra => {
+                    const cliente = clientes.find(c => c.idCliente === obra.idCliente);
+                    const row = tbody.insertRow();
+
+                    let badgeColor = 'success';
+                    if (obra.estado === 'pausado') badgeColor = 'warning';
+                    else if (obra.estado === 'finalizado') badgeColor = 'secondary';
+                    else if (obra.estado === 'cancelado') badgeColor = 'danger';
+
+                    row.innerHTML = `
+                        <td><strong>${obra.nombre || 'Obra ' + obra.idObra}</strong></td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-person-circle me-2" style="font-size: 1.2rem; color: #007bff;"></i>
+                                <div>
+                                    <div><strong>${cliente ? cliente.razonSocial || cliente.nombre || 'Sin cliente' : 'Sin cliente'}</strong></div>
+                                    <small class="text-muted">${cliente ? cliente.email || 'Sin email' : ''}</small>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="badge bg-${badgeColor}">${(obra.estado || 'activo').toUpperCase()}</span></td>
+                        <td><strong>Gs. ${(obra.total || 0).toLocaleString()}</strong></td>
+                        <td>
+                            <button class="btn btn-sm btn-primary" onclick="verDetalle(${obra.idObra})" title="Ver detalles">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </td>
+                    `;
+                });
+            }
+
+            // Llenar tabla detallada
+            const tbodyDetalle = document.querySelector('#obrasDetalleTable tbody');
+            if (tbodyDetalle) {
+                tbodyDetalle.innerHTML = '';
+
+                obras.forEach(obra => {
+                    const cliente = clientes.find(c => c.idCliente === obra.idCliente);
+                    const row = tbodyDetalle.insertRow();
+
+                    const costoEstimado = (obra.total || 0) * 0.7;
+                    const margen = (obra.total || 0) - costoEstimado;
+
+                    const fechaInicio = obra.fechaInicio ? new Date(obra.fechaInicio).toLocaleDateString('es-PY') : 'Sin fecha';
+                    const fechaFin = obra.fechaFin ? new Date(obra.fechaFin).toLocaleDateString('es-PY') : 'Sin fecha';
+
+                    let badgeColor = 'success';
+                    if (obra.estado === 'pausado') badgeColor = 'warning';
+                    else if (obra.estado === 'finalizado') badgeColor = 'secondary';
+                    else if (obra.estado === 'cancelado') badgeColor = 'danger';
+
+                    row.innerHTML = `
+                        <td><strong>${obra.idObra}</strong></td>
+                        <td><strong>${obra.nombre || 'Obra ' + obra.idObra}</strong></td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-person-circle me-2" style="font-size: 1.2rem; color: #007bff;"></i>
+                                <div>
+                                    <div><strong>${cliente ? cliente.razonSocial || cliente.nombre || 'Sin cliente' : 'Sin cliente'}</strong></div>
+                                    <small class="text-muted">${cliente ? cliente.telefono || cliente.celular || 'Sin teléfono' : ''}</small>
+                                </div>
+                            </div>
+                        </td>
+                        <td>${fechaInicio}</td>
+                        <td>${fechaFin}</td>
+                        <td><span class="badge bg-${badgeColor}">${(obra.estado || 'activo').toUpperCase()}</span></td>
+                        <td><strong>Gs. ${(obra.total || 0).toLocaleString()}</strong></td>
+                        <td>${obra.dimensiones || 0} m²</td>
+                        <td class="${margen >= 0 ? 'text-success' : 'text-danger'}">
+                            <strong>Gs. ${margen.toLocaleString()}</strong>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-primary" onclick="verDetalle(${obra.idObra})" title="Ver detalles">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                            <button class="btn btn-sm btn-success" onclick="verCliente(${obra.idCliente})" title="Ver cliente">
+                                <i class="bi bi-person"></i>
+                            </button>
+                        </td>
+                    `;
+                });
+            }
+        }
+
+        // Función para llenar tabla de clientes
+        function llenarTablaClientes() {
+            const clientes = JSON.parse(localStorage.getItem('clientes') || '[]');
+            const obras = JSON.parse(localStorage.getItem('obras') || '[]');
+            const tbody = document.querySelector('#clientesTable tbody');
+
+            if (!tbody) return;
+
+            tbody.innerHTML = '';
+            const clientesLimitadas = obras.slice(0, 5)
+
+            clientes.forEach(cliente => {
+                const obrasCliente = obras.filter(obra => obra.idCliente === cliente.idCliente);
+                const row = tbody.insertRow();
+
+                row.innerHTML = `
+                    <td><strong>${cliente.idCliente}</strong></td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-person-circle me-2" style="font-size: 1.5rem; color: #007bff;"></i>
+                            <div>
+                                <div><strong>${cliente.razonSocial || cliente.nombre || 'Sin nombre'}</strong></div>
+                                <small class="text-muted">${cliente.direccion || 'Sin dirección'}</small>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <i class="bi bi-telephone me-1"></i>
+                        ${cliente.telefono || cliente.celular || 'Sin teléfono'}
+                    </td>
+                    <td>
+                        <i class="bi bi-envelope me-1"></i>
+                        ${cliente.email || 'Sin email'}
+                    </td>
+                    <td>
+                        <span class="badge bg-info">${obrasCliente.length}</span>
+                        <small class="text-muted">obras</small>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-primary" onclick="verCliente(${cliente.idCliente})" title="Ver detalles">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                        <button class="btn btn-sm btn-success" onclick="verObrasCliente(${cliente.idCliente})" title="Ver obras">
+                            <i class="bi bi-building"></i>
+                        </button>
+                    </td>
+                `;
+            });
+        }
+
+        // Función para ver detalle de obra
+        function verDetalle(idObra) {
+            const obras = JSON.parse(localStorage.getItem('obras') || '[]');
+            const clientes = JSON.parse(localStorage.getItem('clientes') || '[]');
+            const obra = obras.find(o => o.idObra === idObra);
+
+            if (!obra) return;
+
+            const cliente = clientes.find(c => c.idCliente === obra.idCliente);
+            const costoEstimado = (obra.total || 0) * 0.7;
+            const margen = (obra.total || 0) - costoEstimado;
+
+            alertify.alert('Detalle de Obra', `
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="text-center mb-3">
+                            <i class="bi bi-building" style="font-size: 3rem; color: #007bff;"></i>
+                            <h4 class="mt-2">${obra.nombre || 'Obra ' + obra.idObra}</h4>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong><i class="bi bi-person-circle me-2"></i>Cliente:</strong> ${cliente ? cliente.razonSocial || cliente.nombre || 'Sin cliente' : 'Sin cliente'}</p>
+                                <p><strong><i class="bi bi-geo-alt me-2"></i>Dirección:</strong> ${obra.direccion || 'Sin dirección'}</p>
+                                <p><strong><i class="bi bi-rulers me-2"></i>Dimensiones:</strong> ${obra.dimensiones || 0} m²</p>
+                                <p><strong><i class="bi bi-info-circle me-2"></i>Estado:</strong> <span class="badge bg-${obra.estado === 'activo' ? 'success' : 'secondary'}">${(obra.estado || 'activo').toUpperCase()}</span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong><i class="bi bi-calendar-event me-2"></i>Fecha Inicio:</strong> ${obra.fechaInicio ? new Date(obra.fechaInicio).toLocaleDateString('es-PY') : 'Sin fecha'}</p>
+                                <p><strong><i class="bi bi-calendar-check me-2"></i>Fecha Fin:</strong> ${obra.fechaFin ? new Date(obra.fechaFin).toLocaleDateString('es-PY') : 'Sin fecha'}</p>
+                                <p><strong><i class="bi bi-currency-exchange me-2"></i>Total:</strong> <span class="text-success">Gs. ${(obra.total || 0).toLocaleString()}</span></p>
+                                <p><strong><i class="bi bi-graph-up me-2"></i>Margen Estimado:</strong> <span class="${margen >= 0 ? 'text-success' : 'text-danger'}">Gs. ${margen.toLocaleString()}</span></p>
+                            </div>
+                        </div>
+                        ${obra.observaciones ? `<div class="mt-3"><strong><i class="bi bi-chat-text me-2"></i>Observaciones:</strong><br><div class="bg-light p-2 rounded">${obra.observaciones}</div></div>` : ''}
+                    </div>
+                </div>
+            `);
+        }
+
+        // Función para ver detalle del cliente
+        function verCliente(idCliente) {
+            const clientes = JSON.parse(localStorage.getItem('clientes') || '[]');
+            const obras = JSON.parse(localStorage.getItem('obras') || '[]');
+            const cliente = clientes.find(c => c.idCliente === idCliente);
+
+            if (!cliente) return;
+
+            const obrasCliente = obras.filter(obra => obra.idCliente === idCliente);
+            const totalInvertido = obrasCliente.reduce((sum, obra) => sum + (obra.total || 0), 0);
+
+            alertify.alert('Detalle del Cliente', `
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="text-center mb-3">
+                            <i class="bi bi-person-circle" style="font-size: 3rem; color: #007bff;"></i>
+                            <h4 class="mt-2">${cliente.razonSocial || cliente.nombre || 'Sin nombre'}</h4>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong><i class="bi bi-card-text me-2"></i>ID Cliente:</strong> ${cliente.idCliente}</p>
+                                <p><strong><i class="bi bi-person me-2"></i>Razón Social:</strong> ${cliente.razonSocial || cliente.nombre || 'Sin nombre'}</p>
+                                <p><strong><i class="bi bi-card-text me-2"></i>RUC/CI:</strong> ${cliente.rucCi || 'Sin RUC/CI'}</p>
+                                <p><strong><i class="bi bi-telephone me-2"></i>Teléfono:</strong> ${cliente.telefono || cliente.celular || 'Sin teléfono'}</p>
+                                <p><strong><i class="bi bi-envelope me-2"></i>Email:</strong> ${cliente.email || 'Sin email'}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong><i class="bi bi-geo-alt me-2"></i>Dirección:</strong> ${cliente.direccion || 'Sin dirección'}</p>
+                                <p><strong><i class="bi bi-geo me-2"></i>Ciudad:</strong> ${cliente.ciudad || 'Sin ciudad'}</p>
+                                <p><strong><i class="bi bi-building me-2"></i>Obras:</strong> <span class="badge bg-info">${obrasCliente.length}</span></p>
+                                <p><strong><i class="bi bi-currency-exchange me-2"></i>Total Invertido:</strong> <span class="text-success">Gs. ${totalInvertido.toLocaleString()}</span></p>
+                            </div>
+                        </div>
+                        ${obrasCliente.length > 0 ? `
+                            <div class="mt-3">
+                                <h6><i class="bi bi-list-ul me-2"></i>Obras del Cliente:</h6>
+                                <div class="table-responsive">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Obra</th>
+                                                <th>Estado</th>
+                                                <th>Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            ${obrasCliente.map(obra => `
+                                                <tr>
+                                                    <td>${obra.nombre || 'Obra ' + obra.idObra}</td>
+                                                    <td><span class="badge bg-${obra.estado === 'activo' ? 'success' : 'secondary'}">${(obra.estado || 'activo').toUpperCase()}</span></td>
+                                                    <td>Gs. ${(obra.total || 0).toLocaleString()}</td>
+                                                </tr>
+                                            `).join('')}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
+            `);
+        }
+
+        // Función para ver obras de un cliente específico
+        function verObrasCliente(idCliente) {
+            const clientes = JSON.parse(localStorage.getItem('clientes') || '[]');
+            const obras = JSON.parse(localStorage.getItem('obras') || '[]');
+            const cliente = clientes.find(c => c.idCliente === idCliente);
+
+            if (!cliente) return;
+
+            const obrasCliente = obras.filter(obra => obra.idCliente === idCliente);
+
+            if (obrasCliente.length === 0) {
+                alertify.warning('Este cliente no tiene obras registradas');
+                return;
+            }
+
+            const totalInvertido = obrasCliente.reduce((sum, obra) => sum + (obra.total || 0), 0);
+
+            alertify.alert(`Obras de ${cliente.razonSocial || cliente.nombre || 'Cliente'}`, `
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="text-center mb-3">
+                            <i class="bi bi-building" style="font-size: 2rem; color: #007bff;"></i>
+                            <h5 class="mt-2">Obras de ${cliente.razonSocial || cliente.nombre || 'Cliente'}</h5>
+                            <p class="text-muted">Total invertido: <strong>Gs. ${totalInvertido.toLocaleString()}</strong></p>
+                        </div>
+                        <hr>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Obra</th>
+                                        <th>Estado</th>
+                                        <th>Inicio</th>
+                                        <th>Fin</th>
+                                        <th>Total</th>
+                                        <th>Dimensiones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${obrasCliente.map(obra => `
+                                        <tr>
+                                            <td><strong>${obra.nombre || 'Obra ' + obra.idObra}</strong></td>
+                                            <td><span class="badge bg-${obra.estado === 'activo' ? 'success' : 'secondary'}">${(obra.estado || 'activo').toUpperCase()}</span></td>
+                                            <td>${obra.fechaInicio ? new Date(obra.fechaInicio).toLocaleDateString('es-PY') : 'Sin fecha'}</td>
+                                            <td>${obra.fechaFin ? new Date(obra.fechaFin).toLocaleDateString('es-PY') : 'Sin fecha'}</td>
+                                            <td><strong>Gs. ${(obra.total || 0).toLocaleString()}</strong></td>
+                                            <td>${obra.dimensiones || 0} m²</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            `);
+        }
+
+        // Función para generar alertas
+        function generarAlertas() {
+            const obras = JSON.parse(localStorage.getItem('obras') || '[]');
+            const materiales = JSON.parse(localStorage.getItem('materiales') || '[]');
+            const alertasContainer = document.getElementById('alertasContainer');
+
+            if (!alertasContainer) return;
+
+            let alertasHtml = '';
+
+            // Verificar obras sin fecha de fin
+            const obrasSinFechaFin = obras.filter(obra => !obra.fechaFin);
+            if (obrasSinFechaFin.length > 0) {
+                alertasHtml += `
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <i class="bi bi-exclamation-triangle me-2"></i>
+                        <strong>Atención:</strong> Hay ${obrasSinFechaFin.length} obras sin fecha de finalización definida.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                `;
+            }
+
+            // Verificar materiales con stock bajo
+            const materialesBajoStock = materiales.filter(material =>
+                material.stock && material.stock < 10
+            );
+            if (materialesBajoStock.length > 0) {
+                alertasHtml += `
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="bi bi-exclamation-circle me-2"></i>
+                        <strong>Crítico:</strong> ${materialesBajoStock.length} materiales con stock bajo (menos de 10 unidades).
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                `;
+            }
+
+            // Verificar obras activas
+            const obrasActivas = obras.filter(obra =>
+                !obra.estado || obra.estado.toLowerCase() === 'activo'
+            );
+            if (obrasActivas.length > 0) {
+                alertasHtml += `
+                    <div class="alert alert-info alert-dismissible fade show" role="alert">
+                        <i class="bi bi-info-circle me-2"></i>
+                        <strong>Información:</strong> Hay ${obrasActivas.length} obras activas en progreso.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                `;
+            }
+
+            // Si no hay alertas, mostrar mensaje positivo
+            if (alertasHtml === '') {
+                alertasHtml = `
+                    <div class="alert alert-success" role="alert">
+                        <i class="bi bi-check-circle me-2"></i>
+                        <strong>¡Excelente!</strong> No hay alertas críticas en el sistema.
+                    </div>
+                `;
+            }
+
+            alertasContainer.innerHTML = alertasHtml;
+        }
+
+        // Función para llenar filtros
+        function llenarFiltros() {
+            const clientes = JSON.parse(localStorage.getItem('clientes') || '[]');
+            const selectCliente = document.getElementById('filtroCliente');
+
+            if (selectCliente) {
+                selectCliente.innerHTML = '<option value="">Todos</option>';
+                clientes.forEach(cliente => {
+                    const option = document.createElement('option');
+                    option.value = cliente.idCliente;
+                    option.textContent = cliente.razonSocial || cliente.nombre || 'Sin nombre';
+                    selectCliente.appendChild(option);
+                });
+            }
+        }
+
+        // Función para aplicar filtros
+        function aplicarFiltros() {
+            const filtros = {
+                cliente: document.getElementById('filtroCliente').value,
+                estado: document.getElementById('filtroEstado').value,
+                fechaDesde: document.getElementById('filtroFechaDesde').value,
+                fechaHasta: document.getElementById('filtroFechaHasta').value
+            };
+
+            const obras = JSON.parse(localStorage.getItem('obras') || '[]');
+            let obrasFiltradas = obras;
+
+            if (filtros.cliente) {
+                obrasFiltradas = obrasFiltradas.filter(obra => obra.idCliente == filtros.cliente);
+            }
+
+            if (filtros.estado) {
+                obrasFiltradas = obrasFiltradas.filter(obra =>
+                    (obra.estado || 'activo').toLowerCase() === filtros.estado.toLowerCase()
+                );
+            }
+
+            if (filtros.fechaDesde) {
+                obrasFiltradas = obrasFiltradas.filter(obra =>
+                    obra.fechaInicio && new Date(obra.fechaInicio) >= new Date(filtros.fechaDesde)
+                );
+            }
+
+            if (filtros.fechaHasta) {
+                obrasFiltradas = obrasFiltradas.filter(obra =>
+                    obra.fechaInicio && new Date(obra.fechaInicio) <= new Date(filtros.fechaHasta)
+                );
+            }
+
+            // Actualizar tabla con datos filtrados
+            actualizarTablaConDatos(obrasFiltradas);
+
+            // Reinicializar DataTables después de actualizar datos
+            setTimeout(() => {
+                if (typeof initializeDashboardTables === 'function') {
+                    initializeDashboardTables();
+                }
+            }, 100);
+
+            alertify.success('Filtros aplicados correctamente');
+        }
+
+        // Función para actualizar tabla con datos filtrados
+        function actualizarTablaConDatos(obras) {
+            const clientes = JSON.parse(localStorage.getItem('clientes') || '[]');
+            const tbody = document.querySelector('#dataTable tbody');
+
+            if (!tbody) return;
+
+            tbody.innerHTML = '';
+
+            obras.forEach(obra => {
+                const cliente = clientes.find(c => c.idCliente === obra.idCliente);
+                const row = tbody.insertRow();
+
+                const costoEstimado = (obra.total || 0) * 0.7;
+                const margen = (obra.total || 0) - costoEstimado;
+
+                const fechaInicio = obra.fechaInicio ? new Date(obra.fechaInicio).toLocaleDateString('es-PY') : 'Sin fecha';
+                const fechaFin = obra.fechaFin ? new Date(obra.fechaFin).toLocaleDateString('es-PY') : 'Sin fecha';
+
+                let badgeColor = 'success';
+                if (obra.estado === 'pausado') badgeColor = 'warning';
+                else if (obra.estado === 'finalizado') badgeColor = 'secondary';
+                else if (obra.estado === 'cancelado') badgeColor = 'danger';
+
+                row.innerHTML = `
+                    <td><strong>${obra.nombre || 'Obra ' + obra.idObra}</strong></td>
+                    <td>${cliente ? cliente.razonSocial || cliente.nombre || 'Sin cliente' : 'Sin cliente'}</td>
+                    <td>${fechaInicio}</td>
+                    <td>${fechaFin}</td>
+                    <td><span class="badge bg-${badgeColor}">${(obra.estado || 'activo').toUpperCase()}</span></td>
+                    <td><strong>Gs. ${(obra.total || 0).toLocaleString()}</strong></td>
+                    <td>${obra.dimensiones || 0} m²</td>
+                    <td class="${margen >= 0 ? 'text-success' : 'text-danger'}">
+                        <strong>Gs. ${margen.toLocaleString()}</strong>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-primary" onclick="verDetalle(${obra.idObra})" title="Ver detalles">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                    </td>
+                `;
+            });
+
+            // Reinicializar DataTables después de actualizar datos
+            setTimeout(() => {
+                if (typeof initializeDashboardTables === 'function') {
+                    initializeDashboardTables();
+                }
+            }, 100);
+        }
+
+        // Función para limpiar filtros
+        function limpiarFiltros() {
+            document.getElementById('filtroCliente').value = '';
+            document.getElementById('filtroEstado').value = '';
+            document.getElementById('filtroFechaDesde').value = '';
+            document.getElementById('filtroFechaHasta').value = '';
+
+            llenarTablaObras();
+
+            // Reinicializar DataTables después de limpiar filtros
+            setTimeout(() => {
+                if (typeof initializeDashboardTables === 'function') {
+                    initializeDashboardTables();
+                }
+            }, 100);
+
+            alertify.success('Filtros limpiados');
+        }
+
+        // Inicializar cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('🚀 Iniciando Dashboard...');
+
+            // Mostrar información del usuario
+            mostrarInfoUsuario();
+
+            // Cargar datos del dashboard
+            cargarDatosDashboard();
+
+            // Configurar eventos
+            document.getElementById('btnAplicarFiltros')?.addEventListener('click', aplicarFiltros);
+            document.getElementById('btnLimpiarFiltros')?.addEventListener('click', limpiarFiltros);
+
+            // Auto-actualizar cada 5 minutos
+            setInterval(() => {
+                cargarDatosDashboard();
+            }, 300000);
+
+            // Verificar y reinicializar tablas cada 10 segundos si es necesario
+            setInterval(() => {
+                checkAndReinitializeTables();
+            }, 10000);
+
+            console.log('✅ Dashboard inicializado correctamente');
+        });
+    </script>
+
+</body>
+
+</html>

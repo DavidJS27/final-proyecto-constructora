@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error</title>
+    <link rel="icon" type="image/png" href="img/error_icon.png">
+
+    
+    
+    <link rel="stylesheet" href="bt/bootstrap.min.css">
+    <script src="bt/bootstrap.min.js"></script>
+    
+    <link rel="stylesheet" href="css/error-style.css">
+</head>
+
+<body>
+
+    <div class="error-container">
+        <p class="display-2 fw-bold text-danger">Acceso Denegado</p>
+        <p class="display-5 fw-bold">2AConstructora le niega el acceso a personas que no están registradas.</p>
+        <p id="mensaje" class="fw-bold">En 5 segundos serás redirigido.</p>
+        <a href="index.html" class="btn btn-primary">¡Ir al login!</a>
+    </div>
+
+    <script>
+        let segundos = 5;
+        const cronometro = document.getElementById("mensaje");
+
+        // Eliminar datos de sesión al cargar la página de error
+        localStorage.removeItem("nomUsuario");
+        localStorage.removeItem("currentUser");
+        sessionStorage.removeItem("nomUsuario");
+        sessionStorage.removeItem("currentUser");
+
+        // Eliminar datos de sesión al salir de la web
+        window.addEventListener("unload", function () {
+            localStorage.removeItem("nomUsuario");
+            localStorage.removeItem("currentUser");
+            sessionStorage.removeItem("nomUsuario");
+            sessionStorage.removeItem("currentUser");
+        });
+
+        const intervalo = setInterval(() => {
+            segundos--;
+            cronometro.textContent = "En " + segundos + " segundos serás redirigido";
+
+            if (segundos === 0) {
+                clearInterval(intervalo);
+                window.location.href = "index.html"; // Manda al login en caso de no tener acceso
+            }
+        }, 1000);
+    </script>
+
+</body>
+
+</html>

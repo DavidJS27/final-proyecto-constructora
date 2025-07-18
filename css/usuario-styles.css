@@ -1,0 +1,63 @@
+.card-header {
+    background-color: #5D5CDE;
+    color: white;
+}
+
+.dark .card {
+    background-color: #2d2d2d;
+    color: #ffffff;
+}
+
+.dark .card-header {
+    background-color: #3a3a3a;
+}
+
+.dark .table {
+    color: #e0e0e0;
+}
+
+.dark .modal-content {
+    background-color: #2d2d2d;
+    color: #ffffff;
+}
+
+.dark .form-control,
+.dark .form-select {
+    background-color: #3a3a3a;
+    color: #ffffff;
+    border-color: #4d4d4d;
+}
+
+.role-badge {
+    font-size: 0.8em;
+    padding: 0.3em 0.6em;
+}
+
+/* quita el spin del input tipo number */
+.no-spin::-webkit-outer-spin-button,
+.no-spin::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.floating-icon {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    font-size: 1.2rem;
+    color: #6f7e8c;
+    width: 35px;
+    height: 100%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.floating-icon:hover {
+    color: #495057;
+}

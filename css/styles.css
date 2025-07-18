@@ -1,0 +1,124 @@
+body {
+    background-color: #f8f9fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: sans-serif;
+    -webkit-font-smoothing: auto;
+    -moz-font-smoothing: auto;
+    -moz-osx-font-smoothing: grayscale;
+    /*font-smoothing: auto;*/
+    text-rendering: optimizeLegibility;
+    font-smooth: always;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+}
+
+.card {
+    border-radius: 1rem;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.9);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 1);
+}
+
+.card-header {
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    background-color: #2C3E50;
+    color: white;
+    padding: 1rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.btn {
+    transition: all 0.3s ease-in-out;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+}
+
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.modal-header {
+    background-color: #2C3E50;
+    color: white;
+}
+
+.modal-footer .btn {
+    border-radius: 10px;
+}
+
+body.dark {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+.navbar-dark.bg-dark {
+    background-color: #1a1a1a !important;
+}
+
+h1 {
+  font-size: 1.5rem;
+}
+/* Estilos para la tabla de materiales */
+#materiales-obra {
+    border: 1px solid #ddd; /* Borde gris claro */
+    border-radius: 8px; /* Bordes redondeados */
+}
+
+#materiales-obra th {
+    background-color: #343a40; /* Fondo oscuro para los encabezados */
+    color: white; /* Texto blanco */
+    text-align: center; /* Centrar texto en los encabezados */
+}
+
+#materiales-obra td {
+    text-align: center; /* Centrar texto en las celdas */
+    font-size: 14px; /* Fuente más pequeña para mejor visualización */
+}
+
+#materiales-obra tr:nth-child(even) {
+    background-color: #f2f2f2; /* Fila alternada gris claro */
+}
+
+#materiales-obra tr:hover {
+    background-color: #f1f1f1; /* Color de fila cuando pasa el cursor */
+    cursor: pointer; /* Mostrar cursor como mano */
+}
+
+/* Estilo para las barras de progreso */
+.progress {
+    height: 20px; /* Altura de la barra */
+}
+
+.progress-bar {
+    background-color: #28a745; /* Color verde para la barra de progreso */
+}

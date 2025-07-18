@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Historial de Movimientos Financieros</title>
+    <link rel="icon" href="img/2A_constructora_logo.png">
+    <link href="menu/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="bt-icons/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="dt/datatables.min.css">
+    <link rel="stylesheet" href="dt/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="dt/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="alert/alertify.min.css">
+    <link rel="stylesheet" href="alert/themes/default.min.css">
+    <script src="alert/alertify.min.js"></script>
+</head>
+
+<body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <a class="navbar-brand ps-3" href="menu.html">
+            <img src="img/2A_constructora_logo.png" alt="Logo" height="30" class="me-2">
+            2A Constructora
+        </a>
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle"><i
+                class="bi bi-list"></i></button>
+        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <div class="input-group">
+                <input class="form-control" type="text" placeholder="Buscar..." aria-label="Buscar..."
+                    aria-describedby="btnNavbarSearch" />
+                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="bi bi-search"></i></button>
+            </div>
+        </form>
+        <div class="me-3">
+            <button id="darkModeToggle" class="btn btn-link text-light"><i class="bi bi-moon-stars"></i></button>
+        </div>
+        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false"><i class="bi bi-person-fill"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="configuracion.html">Configuración</a></li>
+                    <li><a class="dropdown-item" href="#">Actividad</a></li>
+                    <li>
+                        <hr class="dropdown-divider" />
+                    </li>
+                    <li><a class="dropdown-item" href="#" onclick="cerrarSesion()">Cerrar sesión</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div id="principal" class="sb-sidenav-menu-heading">Principal</div>
+                        <a id="dashboard" class="nav-link" href="dashboard.html">
+                            <div class="sb-nav-link-icon"><i class="bi bi-speedometer"></i></div>
+                            Dashboard
+                        </a>
+                        <div id="modulos" class="sb-sidenav-menu-heading">Módulos</div>
+                        
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseFinanzas">
+                            <div class="sb-nav-link-icon"><i class="bi bi-currency-dollar"></i></div>
+                            Finanzas
+                            <div class="sb-sidenav-collapse-arrow"><i class="bi bi-chevron-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseFinanzas" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a id="facturas-proveedores" class="nav-link" href="facturas-proveedores.html">
+                                    Facturas de Proveedores
+                                </a>
+                                <a href="mantenimiento-facturas.html" class="nav-link">
+                                    <i class="bi bi-tools me-2"></i>Mantenimiento de Facturas
+                                </a>
+                                <a id="facturas-clientes" class="nav-link" href="facturas-clientes.html">
+                                    Facturas de Clientes
+                                </a>
+                                <a href="mantenimiento-facturas-clientes.html" class="nav-link">
+                                    <i class="bi bi-tools me-2"></i>Mantenimiento de Facturas Clientes
+                                </a>
+                                <a id="pagos-proveedores" class="nav-link" href="pagos-proveedores.html">
+                                    Pagos a Proveedores
+                                </a>
+                                <a id="historial-pagos" class="nav-link active" href="historial-movimientos.html">
+                                    Historial de Pagos
+                                </a>
+
+                                <a id="cobros-clientes" class="nav-link" href="cobros-clientes.html">
+                                    Cobros de Clientes
+                                </a>
+                                <a id="adelantos-anticipos" class="nav-link" href="adelantos-anticipos.html">
+                                    Adelantos y Anticipos
+                                </a>
+                                <a id="costos-obra" class="nav-link" href="costos-obra.html">
+                                    Costos por Obra
+                                </a>
+                                <a id="reportes-financieros" class="nav-link" href="reportes-financieros.html">
+                                    Reportes Financieros
+                                </a>
+                            </nav>
+                        </div>
+                        
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseObras">
+                            <div class="sb-nav-link-icon"><i class="bi bi-building"></i></div>
+                            Obras
+                            <div class="sb-sidenav-collapse-arrow"><i class="bi bi-chevron-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseObras" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a id="mantenimiento-obras" class="nav-link" href="mantenimiento-obras.html">
+                                    Mantenimiento de Obras
+                                </a>
+                                <a id="asignar-materiales" class="nav-link" href="asignar-materiales.html">
+                                    Asignar Materiales
+                                </a>
+                                <a id="control-existencias" class="nav-link" href="control-existencias.html">
+                                    Control de Existencias
+                                </a>
+                                <a id="movimientos-materiales" class="nav-link" href="movimientos-materiales.html">
+                                    Movimientos de Materiales
+                                </a>
+                                <a id="traslados-materiales" class="nav-link" href="traslado-materiales.html">
+                                    Traslados de Materiales
+                                </a>
+                                <a id="registro-perdidas" class="nav-link" href="registro-perdidas.html">
+                                    Registro de Pérdidas
+                                </a>
+                            </nav>
+                        </div>
+                        <div id="administracion" class="sb-sidenav-menu-heading">Administración</div>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseMantenimiento">
+                            <div class="sb-nav-link-icon"><i class="bi bi-gear"></i></div>
+                            Mantenimiento
+                            <div class="sb-sidenav-collapse-arrow"><i class="bi bi-chevron-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseMantenimiento" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a id="usuarios" class="nav-link" href="usuarios.html">
+                                    Usuarios
+                                </a>
+                                <a id="clientes" class="nav-link" href="clientes.html">
+                                    Clientes
+                                </a>
+                                <a id="proveedores" class="nav-link" href="proveedores.html">
+                                    Proveedores
+                                </a>
+                                <a id="materiales" class="nav-link" href="materiales.html">
+                                    Materiales
+                                </a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Iniciado por:</div>
+                    <div id="nomUsuario"></div>
+                    <div class="small">Rol:</div>
+                    <div id="rol"></div>
+                </div>
+            </nav>
+        </div>
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <div class="row mb-4 mt-4">
+                        <div class="col-md-12 d-flex justify-content-between align-items-center">
+                            <h2 class="mb-0"><i class="bi bi-list me-2"></i>Historial de Movimientos Financieros</h2>
+                            <div>
+                                <a href="pagos-proveedores.html" class="btn btn-primary me-2">
+                                    <i class="bi bi-cash me-1"></i> Nuevo Pago
+                                </a>
+                                <a href="cobros-clientes.html" class="btn btn-success me-2">
+                                    <i class="bi bi-cash-coin me-1"></i> Nuevo Cobro
+                                </a>
+                                <a href="adelantos-anticipos.html" class="btn btn-warning">
+                                    <i class="bi bi-cash-stack me-1"></i> Adelantos/Anticipos
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card shadow-sm fade-in">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="bi bi-table me-2"></i>Listado de Pagos Realizados</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="tablaHistorialPagos" class="display table table-striped table-hover w-100">
+                                    <thead>
+                                        <tr>
+                                            <th>ID Pago</th>
+                                            <th>Fecha</th>
+                                            <th>Proveedor</th>
+                                            <th>RUC</th>
+                                            <th>Monto Total</th>
+                                            <th>Forma de Pago</th>
+                                            <th>Referencia</th>
+                                            <th>Usuario</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="modal fade" id="modalDetallePago" tabindex="-1" aria-labelledby="modalDetallePagoLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header bg-info text-white">
+                                    <h5 class="modal-title" id="modalDetallePagoLabel">Detalle del Pago</h5>
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div id="detallePagoContenido">
+                                        
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Cerrar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="modal fade" id="modalDetalleCobro" tabindex="-1"
+                        aria-labelledby="modalDetalleCobroLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header bg-success text-white">
+                                    <h5 class="modal-title" id="modalDetalleCobroLabel">Detalle del Cobro</h5>
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div id="detalleCobroContenido">
+                                        
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Cerrar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card shadow-sm fade-in mt-4">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="bi bi-table me-2"></i>Historial de Cobros a Clientes</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="tablaHistorialCobros" class="display table table-striped table-hover w-100">
+                                    <thead>
+                                        <tr>
+                                            <th>ID Cobro</th>
+                                            <th>Fecha</th>
+                                            <th>Cliente</th>
+                                            <th>RUC</th>
+                                            <th>Monto Cobrado</th>
+                                            <th>Forma de Cobro</th>
+                                            <th>Referencia</th>
+                                            <th>Usuario</th>
+                                            <th>Acciones</th> 
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card shadow-sm fade-in mt-4">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="bi bi-cash-stack me-2"></i>Historial de Adelantos a Proveedores
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="tablaHistorialAdelantos"
+                                    class="display table table-striped table-hover w-100">
+                                    <thead>
+                                        <tr>
+                                            <th>ID Adelanto</th>
+                                            <th>Fecha</th>
+                                            <th>Proveedor</th>
+                                            <th>RUC</th>
+                                            <th>Monto</th>
+                                            <th>Concepto</th>
+                                            <th>Forma de Pago</th>
+                                            <th>Estado</th>
+                                            <th>Usuario</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card shadow-sm fade-in mt-4">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="bi bi-piggy-bank me-2"></i>Historial de Anticipos de Clientes
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="tablaHistorialAnticipos"
+                                    class="display table table-striped table-hover w-100">
+                                    <thead>
+                                        <tr>
+                                            <th>ID Anticipo</th>
+                                            <th>Fecha</th>
+                                            <th>Cliente</th>
+                                            <th>RUC</th>
+                                            <th>Monto</th>
+                                            <th>Concepto</th>
+                                            <th>Forma de Pago</th>
+                                            <th>Estado</th>
+                                            <th>Usuario</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            
+            <div class="modal fade" id="modalDetalleAdelanto" tabindex="-1" aria-labelledby="modalDetalleAdelantoLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header bg-warning text-dark">
+                            <h5 class="modal-title" id="modalDetalleAdelantoLabel">Detalle del Adelanto</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="detalleAdelantoContenido">
+                                
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="modal fade" id="modalDetalleAnticipo" tabindex="-1" aria-labelledby="modalDetalleAnticipoLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header bg-primary text-white">
+                            <h5 class="modal-title" id="modalDetalleAnticipoLabel">Detalle del Anticipo</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="detalleAnticipoContenido">
+                                
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; 2A Constructora 2025</div>
+                        <div>
+                            <a href="#">Política de Privacidad</a>
+                            &middot;
+                            <a href="#">Términos &amp; Condiciones</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    
+    <script src="js/bd.js"></script>
+    <script src="js/roleMenuAccess.js"></script>
+    <script src="js/funcionesSistema.js"></script>
+    <script src="menu/scripts.js"></script>
+    <script src="js/cerrarSesion.js"></script>
+    <script src="menu/bootstrap.bundle.min.js"></script>
+    <script src="dt/jquery-3.7.1.js"></script>
+    <script src="dt/datatables.min.js"></script>
+    <script src="dt/jquery.dataTables.min.js"></script>
+    <script src="dt/dataTables.buttons.min.js"></script>
+    <script src="dt/buttons.print.min.js"></script>
+    <script src="dt/buttons.html5.min.js"></script>
+    <script src="dt/jszip.min.js"></script>
+    <script src="dt/pdfmake.min.js"></script>
+    <script src="dt/vfs_fonts.js"></script>
+    <script src="dt/es-ES.js"></script>
+    <script src="alert/alertify.min.js"></script>
+    <script>
+        // --- Lógica de roles para acceso a la página ---
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+        // Si no hay usuario, crear uno de prueba
+        if (!currentUser) {
+            const usuarioPrueba = {
+                idusuario: 1,
+                nombre: "Admin",
+                apellido: "Prueba",
+                rol: "administrador",
+                estado: "activo"
+            };
+            localStorage.setItem('currentUser', JSON.stringify(usuarioPrueba));
+            window.location.reload();
+        }
+
+        // Control de seguridad del usuario current
+        document.addEventListener('DOMContentLoaded', function () {
+            try {
+                // Verificar si el usuario está autenticado
+                if (!currentUser) {
+                    alertify.error("Usuario no encontrado.");
+                    setTimeout(() => {
+                        window.location.href = "error.html";
+                    }, 2000);
+                    return;
+                } else {
+                    // Verificar si el usuario tiene permisos para esta página
+                    const rolesPermitidos = ['administrador', 'gerente', 'contador'];
+                    if (!rolesPermitidos.includes(currentUser.rol)) {
+                        alertify.error("No tienes permisos para acceder a esta página");
+                        setTimeout(() => {
+                            window.location.href = "menu.html";
+                        }, 2000);
+                        return;
+                    }
+                    // Mostrar el nombre del usuario y rol en el menú
+                    document.getElementById('nomUsuario').innerText = `${currentUser.nombre} ${currentUser.apellido}`;
+                    document.getElementById("rol").textContent = formatearRol(currentUser.rol);
+                }
+
+                // Cargar datos iniciales
+                datos(); // Cargar datos de bd.js
+
+                inicializarHistorialPagos();
+                inicializarHistorialCobros();
+                inicializarHistorialAdelantos();
+                inicializarHistorialAnticipos();
+
+            } catch (error) {
+                alertify.error("Error al inicializar la página: " + error.message);
+                console.error("Error completo:", error);
+            }
+        });
+
+        // Formatear el nombre del rol para mostrar
+        function formatearRol(rol) {
+            switch (rol) {
+                case 'administrador': return 'Administrador';
+                case 'jefe_obra': return 'Jefe de Obra';
+                case 'gerente': return 'Gerente';
+                case 'obrero': return 'Obrero';
+                case 'contador': return 'Contador/Financiero';
+                case 'codificador': return 'Codificador';
+                default: return rol;
+            }
+        }
+
+        function formatearFecha(fechaStr) {
+            if (!fechaStr) return "-";
+            const fecha = new Date(fechaStr);
+            if (isNaN(fecha.getTime())) return "-";
+            return fecha.toLocaleDateString('es-PY');
+        }
+
+        function inicializarHistorialPagos() {
+            // Inicializar tabla
+            const tabla = $('#tablaHistorialPagos').DataTable({
+                paging: true,
+                searching: true,
+                info: true,
+                ordering: true,
+                language: {
+                    "decimal": ",",
+                    "thousands": ".",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                    "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros en total)",
+                    "lengthMenu": "Mostrar _MENU_ registros",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "No se encontraron coincidencias",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                },
+                columnDefs: [
+                    { targets: 0, width: '7%' }, // ID Pago
+                    { targets: 1, width: '10%' }, // Fecha
+                    { targets: 2, width: '20%' }, // Proveedor
+                    { targets: 3, width: '10%' }, // RUC
+                    { targets: 4, width: '13%', className: 'text-end' }, // Monto
+                    { targets: 5, width: '10%' }, // Forma de Pago
+                    { targets: 6, width: '10%' }, // Referencia
+                    { targets: 7, width: '10%' }, // Usuario
+                    { targets: 8, width: '10%', className: 'text-center' } // Acciones
+                ],
+                dom: 'lfrtip',
+                lengthMenu: [10, 25, 50, 100],
+                pageLength: 10
+            });
+
+            cargarPagosEnTabla(tabla);
+
+            // Evento para ver detalle
+            $('#tablaHistorialPagos tbody').on('click', '.ver-detalle-pago', function () {
+                const data = tabla.row($(this).closest('tr')).data();
+                mostrarDetallePago(data[0]);
+            });
+        }
+
+        function cargarPagosEnTabla(tabla) {
+            try {
+                const pagos = JSON.parse(localStorage.getItem("pagosProveedores")) || [];
+                const pagoDetalles = JSON.parse(localStorage.getItem("pagoDetalles")) || [];
+                const proveedores = JSON.parse(localStorage.getItem("proveedores")) || [];
+                const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+
+                tabla.clear();
+
+                pagos.forEach(pago => {
+                    const proveedor = proveedores.find(p => p.idProveedor == pago.idproveedor);
+                    const nombreProveedor = proveedor ? proveedor.razonsocial : "Desconocido";
+                    const ruc = proveedor ? proveedor.ruc : "-";
+                    const usuario = usuarios.find(u => u.idusuario == pago.idusuario);
+                    const nombreUsuario = usuario ? (usuario.nombre + " " + usuario.apellido) : (pago.usuario || "-");
+                    const fecha = new Date(pago.fechapago).toLocaleDateString('es-PY');
+                    const formaPago = obtenerNombreFormaPago(pago.formapago);
+                    const referencia = pago.referencia || "-";
+
+                    const acciones = `
+                        <button class="btn btn-sm btn-info ver-detalle-pago" title="Ver Detalle">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                    `;
+
+                    tabla.row.add([
+                        pago.idpago,
+                        fecha,
+                        nombreProveedor,
+                        ruc,
+                        '₲ ' + formatoNumero(pago.montopago),
+                        formaPago,
+                        referencia,
+                        nombreUsuario,
+                        acciones
+                    ]);
+                });
+
+                tabla.draw();
+            } catch (error) {
+                alertify.error("Error al cargar historial de pagos: " + error.message);
+            }
+        }
+
+        function mostrarDetallePago(idPago) {
+            try {
+                const pagos = JSON.parse(localStorage.getItem("pagosProveedores")) || [];
+                const pagoDetalles = JSON.parse(localStorage.getItem("pagoDetalles")) || [];
+                const proveedores = JSON.parse(localStorage.getItem("proveedores")) || [];
+                const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+
+                const pago = pagos.find(p => p.idpago == idPago);
+                if (!pago) {
+                    alertify.error("No se encontró el pago.");
+                    return;
+                }
+
+                const proveedor = proveedores.find(p => p.idProveedor == pago.idproveedor);
+                const nombreProveedor = proveedor ? proveedor.razonsocial : "Desconocido";
+                const ruc = proveedor ? proveedor.ruc : "-";
+                const usuario = usuarios.find(u => u.idusuario == pago.idusuario);
+                const nombreUsuario = usuario ? (usuario.nombre + " " + usuario.apellido) : (pago.usuario || "-");
+                const fecha = new Date(pago.fechapago).toLocaleDateString('es-PY');
+                const formaPago = obtenerNombreFormaPago(pago.formapago);
+                const referencia = pago.referencia || "-";
+                const observaciones = pago.observaciones || "-";
+
+                // Detalles
+                const detalles = pagoDetalles.filter(d => d.idpago == idPago);
+
+                let html = `
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <p><strong>Proveedor:</strong> ${nombreProveedor}</p>
+                            <p><strong>RUC:</strong> ${ruc}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Fecha:</strong> ${fecha}</p>
+                            <p><strong>Usuario:</strong> ${nombreUsuario}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Forma de Pago:</strong> ${formaPago}</p>
+                            <p><strong>Referencia:</strong> ${referencia}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Observaciones:</strong> ${observaciones}</p>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>N° Factura</th>
+                                    <th>Monto Pagado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+                let total = 0;
+                detalles.forEach((det, idx) => {
+                    html += `
+                        <tr>
+                            <td>${idx + 1}</td>
+                            <td>${det.numfactura}</td>
+                            <td class="text-end">₲ ${formatoNumero(det.montopagado)}</td>
+                        </tr>
+                    `;
+                    total += det.montopagado;
+                });
+                html += `
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="2" class="text-end">Total Pagado:</th>
+                                    <th class="text-end">₲ ${formatoNumero(total)}</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                `;
+
+                document.getElementById('detallePagoContenido').innerHTML = html;
+                const modal = new bootstrap.Modal(document.getElementById('modalDetallePago'));
+                modal.show();
+            } catch (error) {
+                alertify.error("Error al mostrar detalle: " + error.message);
+            }
+        }
+
+        function obtenerNombreFormaPago(formaPago) {
+            switch (formaPago) {
+                case 'efectivo': return 'Efectivo';
+                case 'transferencia': return 'Transferencia Bancaria';
+                case 'cheque': return 'Cheque';
+                case 'deposito': return 'Depósito Bancario';
+                default: return formaPago;
+            }
+        }
+
+        function formatoNumero(numero) {
+            return new Intl.NumberFormat('es-PY', {
+                maximumFractionDigits: 0
+            }).format(numero);
+        }
+
+        function inicializarHistorialCobros() {
+            // Inicializar tabla
+            const tabla = $('#tablaHistorialCobros').DataTable({
+                paging: true,
+                searching: true,
+                info: true,
+                ordering: true,
+                language: {
+                    "decimal": ",",
+                    "thousands": ".",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                    "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros en total)",
+                    "lengthMenu": "Mostrar _MENU_ registros",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "No se encontraron coincidencias",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                },
+                columnDefs: [
+                    { targets: 0, width: '7%' }, // ID Cobro
+                    { targets: 1, width: '10%' }, // Fecha
+                    { targets: 2, width: '20%' }, // Cliente
+                    { targets: 3, width: '10%' }, // RUC
+                    { targets: 4, width: '13%', className: 'text-end' }, // Monto
+                    { targets: 5, width: '10%' }, // Forma de Cobro
+                    { targets: 6, width: '10%' }, // Referencia
+                    { targets: 7, width: '10%' }, // Usuario
+                    { targets: 8, width: '10%', className: 'text-center' } // Acciones
+                ],
+                dom: 'lfrtip',
+                lengthMenu: [10, 25, 50, 100],
+                pageLength: 10
+            });
+
+            cargarCobrosEnTabla(tabla);
+        }
+
+        function cargarCobrosEnTabla(tabla) {
+            try {
+                const cobros = JSON.parse(localStorage.getItem("cobrosClientes")) || [];
+                const clientes = JSON.parse(localStorage.getItem("clientes")) || [];
+                const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+
+                tabla.clear();
+
+                cobros.forEach(cobro => {
+                    const cliente = clientes.find(c => String(c.idCliente) === String(cobro.idcliente));
+                    const nombreCliente = cliente ? (cliente.razonSocial || cliente.razonsocial) : "Desconocido";
+                    const ruc = cliente ? (cliente.rucCi || cliente.ruc) : "-";
+                    const usuario = usuarios.find(u => u.idusuario == cobro.idusuario);
+                    const nombreUsuario = usuario ? (usuario.nombre + " " + usuario.apellido) : (cobro.usuario || "-");
+                    const fecha = formatearFecha(cobro.fechacobro);
+                    const formaCobro = obtenerNombreFormaPago(cobro.formacobro);
+                    const referencia = cobro.referencia || "-";
+
+                    const acciones = `
+                        <button class="btn btn-sm btn-info ver-detalle-cobro" title="Ver Detalle">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                    `;
+
+                    tabla.row.add([
+                        cobro.idcobro,
+                        fecha,
+                        nombreCliente,
+                        ruc,
+                        '₲ ' + formatoNumero(cobro.montocobro),
+                        formaCobro,
+                        referencia,
+                        nombreUsuario,
+                        acciones // NUEVO
+                    ]);
+                });
+
+                tabla.draw();
+            } catch (error) {
+                alertify.error("Error al cargar historial de cobros: " + error.message);
+            }
+        }
+
+        // Evento para ver detalle de cobro
+        $('#tablaHistorialCobros tbody').on('click', '.ver-detalle-cobro', function () {
+            const data = $('#tablaHistorialCobros').DataTable().row($(this).closest('tr')).data();
+            mostrarDetalleCobro(data[0]);
+        });
+
+        function mostrarDetalleCobro(idCobro) {
+            try {
+                const cobros = JSON.parse(localStorage.getItem("cobrosClientes")) || [];
+                const cobroDetalles = JSON.parse(localStorage.getItem("cobroDetalles")) || [];
+                const clientes = JSON.parse(localStorage.getItem("clientes")) || [];
+                const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+
+                const cobro = cobros.find(c => c.idcobro == idCobro);
+                if (!cobro) {
+                    alertify.error("No se encontró el cobro.");
+                    return;
+                }
+
+                const cliente = clientes.find(c => String(c.idCliente) === String(cobro.idcliente));
+                const nombreCliente = cliente ? (cliente.razonSocial || cliente.razonsocial) : "Desconocido";
+                const ruc = cliente ? (cliente.rucCi || cliente.ruc) : "-";
+                const usuario = usuarios.find(u => u.idusuario == cobro.idusuario);
+                const nombreUsuario = usuario ? (usuario.nombre + " " + usuario.apellido) : (cobro.usuario || "-");
+                const fecha = formatearFecha(cobro.fechacobro);
+                const formaCobro = obtenerNombreFormaPago(cobro.formacobro);
+                const referencia = cobro.referencia || "-";
+                const observaciones = cobro.observaciones || "-";
+
+                // Detalles
+                const detalles = cobroDetalles.filter(d => d.idcobro == idCobro);
+
+                let html = `
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <p><strong>Cliente:</strong> ${nombreCliente}</p>
+                            <p><strong>RUC:</strong> ${ruc}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Fecha:</strong> ${fecha}</p>
+                            <p><strong>Usuario:</strong> ${nombreUsuario}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Forma de Cobro:</strong> ${formaCobro}</p>
+                            <p><strong>Referencia:</strong> ${referencia}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Observaciones:</strong> ${observaciones}</p>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>N° Factura</th>
+                                    <th>Monto Cobrado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+                let total = 0;
+                detalles.forEach((det, idx) => {
+                    html += `
+                        <tr>
+                            <td>${idx + 1}</td>
+                            <td>${det.numfactura}</td>
+                            <td class="text-end">₲ ${formatoNumero(det.montocobrado)}</td>
+                        </tr>
+                    `;
+                    total += det.montocobrado;
+                });
+                html += `
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="2" class="text-end">Total Cobrado:</th>
+                                    <th class="text-end">₲ ${formatoNumero(total)}</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                `;
+
+                document.getElementById('detalleCobroContenido').innerHTML = html;
+                const modal = new bootstrap.Modal(document.getElementById('modalDetalleCobro'));
+                modal.show();
+            } catch (error) {
+                alertify.error("Error al mostrar detalle: " + error.message);
+            }
+        }
+
+        // Guardar cobro en localStorage y actualizar saldo de factura
+        function registrarNuevoCobro(nuevoCobro) {
+            let cobros = JSON.parse(localStorage.getItem("cobrosClientes")) || [];
+            cobros.push(nuevoCobro);
+            localStorage.setItem("cobrosClientes", JSON.stringify(cobros));
+
+            // Actualizar saldo de la factura
+            const facturas = JSON.parse(localStorage.getItem("facturasclientes")) || [];
+            const index = facturas.findIndex(f => String(f.idfactura) === String(nuevoCobro.idfactura));
+            if (index !== -1) {
+                facturas[index].saldo = Math.max(0, Number(facturas[index].saldo) - Number(nuevoCobro.montocobro));
+                localStorage.setItem("facturasclientes", JSON.stringify(facturas));
+            }
+
+            alertify.success("Cobro registrado correctamente");
+            // Recarga la tabla solo si ya existe la instancia
+            if ($.fn.DataTable.isDataTable('#tablaHistorialCobros')) {
+                const tabla = $('#tablaHistorialCobros').DataTable();
+                cargarCobrosEnTabla(tabla);
+            }
+        }
+
+        function registrarCobro(idFactura, montoCobrado) {
+            const facturas = JSON.parse(localStorage.getItem("facturasclientes")) || [];
+            const index = facturas.findIndex(f => String(f.idfactura) === String(idFactura));
+            if (index === -1) {
+                alertify.error("Factura no encontrada");
+                return;
+            }
+            // Restar el monto cobrado al saldo
+            facturas[index].saldo = Math.max(0, Number(facturas[index].saldo) - Number(montoCobrado));
+            localStorage.setItem("facturasclientes", JSON.stringify(facturas));
+            alertify.success("Cobro registrado correctamente");
+        }
+
+        // ========== FUNCIONES PARA ADELANTOS ==========
+        function inicializarHistorialAdelantos() {
+            // Inicializar tabla
+            const tabla = $('#tablaHistorialAdelantos').DataTable({
+                paging: true,
+                searching: true,
+                info: true,
+                ordering: true,
+                language: {
+                    "decimal": ",",
+                    "thousands": ".",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                    "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros en total)",
+                    "lengthMenu": "Mostrar _MENU_ registros",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "No se encontraron coincidencias",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                },
+                columnDefs: [
+                    { targets: 9, width: '10%', className: 'text-center' } // Acciones
+                ],
+                dom: 'lfrtip',
+                lengthMenu: [10, 25, 50, 100],
+                pageLength: 10
+            });
+
+            cargarAdelantosEnTabla(tabla);
+
+            // Evento para ver detalle
+            $('#tablaHistorialAdelantos tbody').on('click', '.ver-detalle-adelanto', function () {
+                const data = tabla.row($(this).closest('tr')).data();
+                mostrarDetalleAdelanto(data[0]);
+            });
+        }
+
+        function cargarAdelantosEnTabla(tabla) {
+            try {
+                const adelantos = JSON.parse(localStorage.getItem("adelantosProveedores")) || [];
+                const proveedores = JSON.parse(localStorage.getItem("proveedores")) || [];
+                const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+
+                tabla.clear();
+
+                adelantos.forEach(adelanto => {
+                    const proveedor = proveedores.find(p => p.idProveedor == adelanto.idProveedor);
+                    const nombreProveedor = proveedor ? proveedor.razonsocial : "Desconocido";
+                    const ruc = proveedor ? proveedor.ruc : "-";
+                    const usuario = usuarios.find(u => u.idusuario == adelanto.idusuario);
+                    const nombreUsuario = usuario ? (usuario.nombre + " " + usuario.apellido) : "-";
+                    const fecha = formatearFecha(adelanto.fecha);
+                    const formaPago = obtenerNombreFormaPago(adelanto.formaPago);
+                    const estado = adelanto.estado === 'activo' ?
+                        '<span class="badge bg-success">Activo</span>' :
+                        '<span class="badge bg-secondary">Aplicado</span>';
+
+                    const acciones = `
+                        <button type="button" class="btn btn-sm btn-outline-info ver-detalle-adelanto" 
+                                title="Ver detalle">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                    `;
+
+                    tabla.row.add([
+                        adelanto.idAdelanto,
+                        fecha,
+                        nombreProveedor,
+                        ruc,
+                        '₲ ' + formatoNumero(adelanto.monto),
+                        adelanto.concepto,
+                        formaPago,
+                        estado,
+                        nombreUsuario,
+                        acciones
+                    ]);
+                });
+
+                tabla.draw();
+            } catch (error) {
+                alertify.error("Error al cargar historial de adelantos: " + error.message);
+            }
+        }
+        alertify.error("Error al cargar historial de adelantos: " + error.message);
+            
+        
+
+        function mostrarDetalleAdelanto(idAdelanto) {
+            try {
+                const adelantos = JSON.parse(localStorage.getItem("adelantosProveedores")) || [];
+                const proveedores = JSON.parse(localStorage.getItem("proveedores")) || [];
+                const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+
+                const adelanto = adelantos.find(a => a.idAdelanto == idAdelanto);
+                if (!adelanto) {
+                    alertify.error("No se encontró el adelanto.");
+                    return;
+                }
+
+                const proveedor = proveedores.find(p => p.idProveedor == adelanto.idProveedor);
+                const nombreProveedor = proveedor ? proveedor.razonsocial : "Desconocido";
+                const ruc = proveedor ? proveedor.ruc : "-";
+                const usuario = usuarios.find(u => u.idusuario == adelanto.idusuario);
+                const nombreUsuario = usuario ? (usuario.nombre + " " + usuario.apellido) : "-";
+                const fecha = formatearFecha(adelanto.fecha);
+                const formaPago = obtenerNombreFormaPago(adelanto.formaPago);
+                const observaciones = adelanto.observaciones || "-";
+                const referencia = adelanto.referencia || "-";
+
+                let html = `
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <h6><strong>Información del Adelanto</strong></h6>
+                            <p><strong>ID:</strong> ${adelanto.idAdelanto}</p>
+                            <p><strong>Fecha:</strong> ${fecha}</p>
+                            <p><strong>Monto:</strong> ₲ ${formatoNumero(adelanto.monto)}</p>
+                            <p><strong>Estado:</strong> ${adelanto.estado === 'activo' ? 'Activo' : 'Aplicado'}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6><strong>Información del Proveedor</strong></h6>
+                            <p><strong>Proveedor:</strong> ${nombreProveedor}</p>
+                            <p><strong>RUC:</strong> ${ruc}</p>
+                            <p><strong>Forma de Pago:</strong> ${formaPago}</p>
+                            <p><strong>Referencia:</strong> ${referencia}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <h6><strong>Detalles Adicionales</strong></h6>
+                            <p><strong>Concepto:</strong> ${adelanto.concepto}</p>
+                            <p><strong>Observaciones:</strong> ${observaciones}</p>
+                            <p><strong>Registrado por:</strong> ${nombreUsuario}</p>
+                            <p><strong>Fecha de Registro:</strong> ${formatearFecha(adelanto.fechaRegistro)}</p>
+                        </div>
+                    </div>
+                `;
+
+                document.getElementById('detalleAdelantoContenido').innerHTML = html;
+                const modal = new bootstrap.Modal(document.getElementById('modalDetalleAdelanto'));
+                modal.show();
+            } catch (error) {
+                alertify.error("Error al mostrar detalle: " + error.message);
+            }
+        }
+
+        // ========== FUNCIONES PARA ANTICIPOS ==========
+        function inicializarHistorialAnticipos() {
+            // Inicializar tabla
+            const tabla = $('#tablaHistorialAnticipos').DataTable({
+                paging: true,
+                searching: true,
+                info: true,
+                ordering: true,
+                language: {
+                    "decimal": ",",
+                    "thousands": ".",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                    "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros en total)",
+                    "lengthMenu": "Mostrar _MENU_ registros",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "No se encontraron coincidencias",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                },
+                columnDefs: [
+                    { targets: 9, width: '10%', className: 'text-center' } // Acciones
+                ],
+                dom: 'lfrtip',
+                lengthMenu: [10, 25, 50, 100],
+                pageLength: 10
+            });
+
+            cargarAnticiposEnTabla(tabla);
+
+            // Evento para ver detalle
+            $('#tablaHistorialAnticipos tbody').on('click', '.ver-detalle-anticipo', function () {
+                const data = tabla.row($(this).closest('tr')).data();
+                mostrarDetalleAnticipo(data[0]);
+            });
+        }
+
+        function cargarAnticiposEnTabla(tabla) {
+            try {
+                const anticipos = JSON.parse(localStorage.getItem("anticiposClientes")) || [];
+                const clientes = JSON.parse(localStorage.getItem("clientes")) || [];
+                const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+
+                tabla.clear();
+
+                anticipos.forEach(anticipo => {
+                    const cliente = clientes.find(c => String(c.idCliente) === String(anticipo.idCliente));
+                    const nombreCliente = cliente ? (cliente.razonSocial || cliente.razonsocial) : "Desconocido";
+                    const ruc = cliente ? (cliente.rucCi || cliente.ruc) : "-";
+                    const usuario = usuarios.find(u => u.idusuario == anticipo.idusuario);
+                    const nombreUsuario = usuario ? (usuario.nombre + " " + usuario.apellido) : "-";
+                    const fecha = formatearFecha(anticipo.fecha);
+                    const formaPago = obtenerNombreFormaPago(anticipo.formaPago);
+                    const estado = anticipo.estado === 'activo' ?
+                        '<span class="badge bg-success">Activo</span>' :
+                        '<span class="badge bg-secondary">Aplicado</span>';
+
+                    const acciones = `
+                        <button type="button" class="btn btn-sm btn-outline-info ver-detalle-anticipo" 
+                                title="Ver detalle">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                    `;
+
+                    tabla.row.add([
+                        anticipo.idAnticipo,
+                        fecha,
+                        nombreCliente,
+                        ruc,
+                        '₲ ' + formatoNumero(anticipo.monto),
+                        anticipo.concepto,
+                        formaPago,
+                        estado,
+                        nombreUsuario,
+                        acciones
+                    ]);
+                });
+
+                tabla.draw();
+            } catch (error) {
+                alertify.error("Error al cargar historial de anticipos: " + error.message);
+            }
+        }
+
+        function mostrarDetalleAnticipo(idAnticipo) {
+            try {
+                const anticipos = JSON.parse(localStorage.getItem("anticiposClientes")) || [];
+                const clientes = JSON.parse(localStorage.getItem("clientes")) || [];
+                const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+
+                const anticipo = anticipos.find(a => a.idAnticipo == idAnticipo);
+                if (!anticipo) {
+                    alertify.error("No se encontró el anticipo.");
+                    return;
+                }
+
+                const cliente = clientes.find(c => String(c.idCliente) === String(anticipo.idCliente));
+                const nombreCliente = cliente ? (cliente.razonSocial || cliente.razonsocial) : "Desconocido";
+                const ruc = cliente ? (cliente.rucCi || cliente.ruc) : "-";
+                const usuario = usuarios.find(u => u.idusuario == anticipo.idusuario);
+                const nombreUsuario = usuario ? (usuario.nombre + " " + usuario.apellido) : "-";
+                const fecha = formatearFecha(anticipo.fecha);
+                const formaPago = obtenerNombreFormaPago(anticipo.formaPago);
+                const observaciones = anticipo.observaciones || "-";
+                const referencia = anticipo.referencia || "-";
+
+                let html = `
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <h6><strong>Información del Anticipo</strong></h6>
+                            <p><strong>ID:</strong> ${anticipo.idAnticipo}</p>
+                            <p><strong>Fecha:</strong> ${fecha}</p>
+                            <p><strong>Monto:</strong> ₲ ${formatoNumero(anticipo.monto)}</p>
+                            <p><strong>Estado:</strong> ${anticipo.estado === 'activo' ? 'Activo' : 'Aplicado'}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6><strong>Información del Cliente</strong></h6>
+                            <p><strong>Cliente:</strong> ${nombreCliente}</p>
+                            <p><strong>RUC:</strong> ${ruc}</p>
+                            <p><strong>Forma de Pago:</strong> ${formaPago}</p>
+                            <p><strong>Referencia:</strong> ${referencia}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <h6><strong>Detalles Adicionales</strong></h6>
+                            <p><strong>Concepto:</strong> ${anticipo.concepto}</p>
+                            <p><strong>Observaciones:</strong> ${observaciones}</p>
+                            <p><strong>Registrado por:</strong> ${nombreUsuario}</p>
+                            <p><strong>Fecha de Registro:</strong> ${formatearFecha(anticipo.fechaRegistro)}</p>
+                        </div>
+                    </div>
+                `;
+
+                document.getElementById('detalleAnticipoContenido').innerHTML = html;
+                const modal = new bootstrap.Modal(document.getElementById('modalDetalleAnticipo'));
+                modal.show();
+            } catch (error) {
+                alertify.error("Error al mostrar detalle: " + error.message);
+            }
+        }
+    </script>
+</body>
+
+</html>

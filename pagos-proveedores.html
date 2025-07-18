@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <title>Pagos a Proveedores</title>
+    <link rel="icon" href="img/2A_constructora_logo.png">
+    
+    
+    <link href="menu/styles.css" rel="stylesheet" />
+    
+    
+    
+    <link rel="stylesheet" href="bt-icons/bootstrap-icons.min.css">
+    
+    <link rel="stylesheet" href="dt/datatables.min.css">
+    <link rel="stylesheet" href="dt/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="dt/buttons.dataTables.min.css">
+    
+    <link rel="stylesheet" href="alert/alertify.min.css">
+    <link rel="stylesheet" href="alert/themes/default.min.css">
+    <script src="alert/alertify.min.js"></script>
+</head>
+<body class="sb-nav-fixed">
+    
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <a class="navbar-brand ps-3" href="menu.html" onclick="cargarPagina('menu')">
+            <img src="img/2A_constructora_logo.png" alt="Logo" height="30" class="me-2">
+            2A Constructora
+        </a>
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#"><i class="bi bi-list"></i></button>
+        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <div class="input-group">
+                <input class="form-control" type="text" placeholder="Buscar..." aria-label="Buscar..." aria-describedby="btnNavbarSearch" />
+                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="bi bi-search"></i></button>
+            </div>
+        </form>
+        <div class="me-3">
+            <button id="darkModeToggle" class="btn btn-link text-light"><i class="bi bi-moon-stars"></i></button>
+        </div>
+        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-fill"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="configuracion.html">Configuración</a></li>
+                    <li><a class="dropdown-item" href="#">Actividad</a></li>
+                    <li><hr class="dropdown-divider" /></li>
+                    <li><a class="dropdown-item" href="#" onclick="cerrarSesion()">Cerrar sesión</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div id="principal" class="sb-sidenav-menu-heading">Principal</div>
+                        <a id="dashboard" class="nav-link" href="dashboard.html" onclick="cargarPagina('menu')">
+                            <div class="sb-nav-link-icon"><i class="bi bi-speedometer"></i></div>
+                            Dashboard
+                        </a>
+
+                        <div id="modulos" class="sb-sidenav-menu-heading">Módulos</div>
+
+                        
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseFinanzas">
+                            <div class="sb-nav-link-icon"><i class="bi bi-currency-dollar"></i></div>
+                            Finanzas
+                            <div class="sb-sidenav-collapse-arrow"><i class="bi bi-chevron-down"></i></div>
+                        </a>
+                        <div class="collapse show" id="collapseFinanzas" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a id="facturas-proveedores" class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseProveedores">
+                                    Facturas de Proveedores
+                                    <div class="sb-sidenav-collapse-arrow"><i class="bi bi-chevron-down"></i></div>
+                                </a>
+                                <div class="collapse" id="collapseProveedores" data-bs-parent="#collapseFinanzas">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        <a href="facturas-proveedores.html" class="nav-link">
+                                            <i class="bi bi-file-earmark-text me-2"></i>Registrar Compras
+                                        </a>
+                                        <a href="mantenimiento-facturas.html" class="nav-link">
+                                            <i class="bi bi-tools me-2"></i>Mantenimiento de Facturas
+                                        </a>
+                                    </nav>
+                                </div>
+                                
+                                <a id="facturas-clientes" class="nav-link" href="facturas-clientes.html">Facturas de Clientes</a>
+                                <a id="pagos-proveedores" class="nav-link active" href="pagos-proveedores.html">Pagos a Proveedores</a>
+                                <a id="cobros-clientes" class="nav-link" href="cobros-clientes.html">Cobros de Clientes</a>
+                                <a id="adelantos-anticipos" class="nav-link" href="adelantos-anticipos.html">Adelantos y Anticipos</a>
+                                <a id="costos-obra" class="nav-link" href="costos-obra.html">Costos por Obra</a>
+                                <a id="reportes-financieros" class="nav-link" href="reportes-financieros.html">Reportes Financieros</a>
+                            </nav>
+                        </div>
+
+                        
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseObras">
+                            <div class="sb-nav-link-icon"><i class="bi bi-building"></i></div>
+                            Obras
+                            <div class="sb-sidenav-collapse-arrow"><i class="bi bi-chevron-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseObras" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a id="mantenimiento-obras" class="nav-link" href="mantenimiento-obras.html">Mantenimiento de Obras</a>
+                                <a id="asignar-materiales" class="nav-link" href="asignar-materiales.html">Asignar Materiales</a>
+                                <a id="control-existencias" class="nav-link" href="control-existencias.html">Control de Existencias</a>
+                                <a id="movimientos-materiales" class="nav-link" href="movimientos-materiales.html">Movimientos de Materiales</a>
+                                <a id="traslados-materiales" class="nav-link" href="traslado-materiales.html">Traslados de Materiales</a>
+                                <a id="registro-perdidas" class="nav-link" href="registro-perdidas.html">Registro de Pérdidas</a>
+                            </nav>
+                        </div>
+
+                        <div id="administracion" class="sb-sidenav-menu-heading">Administración</div>
+
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseMantenimiento">
+                            <div class="sb-nav-link-icon"><i class="bi bi-gear"></i></div>
+                            Mantenimiento
+                            <div class="sb-sidenav-collapse-arrow"><i class="bi bi-chevron-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseMantenimiento" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a id="usuarios" class="nav-link" href="usuarios.html">Usuarios</a>
+                                <a id="clientes" class="nav-link" href="clientes.html">Clientes</a>
+                                <a id="proveedores" class="nav-link" href="proveedores.html">Proveedores</a>
+                                <a id="materiales" class="nav-link" href="materiales.html">Materiales</a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Iniciado por:</div>
+                    <div id="nomUsuario"></div>
+                    <div class="small">Rol:</div>
+                    <div id="rol"></div>
+                </div>
+            </nav>
+        </div>
+
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <div class="row mb-4 mt-4">
+                        <div class="col-md-12 d-flex justify-content-between align-items-center">
+                            <h2 class="mb-0"><i class="bi bi-credit-card-2-front me-2"></i>Pagos a Proveedores</h2>
+                            <a href="historial-movimientos.html" class="btn btn-primary">
+                                <i class="bi bi-list me-1"></i> Ver Historial de Pagos
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            
+                            <div class="card shadow-sm fade-in">
+                                <div class="card-header bg-primary text-white">
+                                    <h5 class="mb-0"><i class="bi bi-search me-2"></i>Seleccionar Proveedor</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row g-3">
+                                        <div class="col-md-12">
+                                            <label class="form-label fw-bold">Proveedor:</label>
+                                            <select id="selectProveedor" class="form-select">
+                                                <option value="">Seleccione un proveedor</option>
+                                                
+                                            </select>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label class="form-label fw-bold">RUC:</label>
+                                            <input type="text" id="rucProveedor" class="form-control" readonly>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="d-grid">
+                                                <button id="btnBuscarFacturas" class="btn btn-primary" disabled>
+                                                    <i class="bi bi-search me-1"></i> Buscar Facturas Pendientes
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            
+                            <div id="panelPago" class="card shadow-sm fade-in mt-4" style="display: none;">
+                                <div class="card-header bg-success text-white">
+                                    <h5 class="mb-0"><i class="bi bi-cash-coin me-2"></i>Datos del Pago</h5>
+                                </div>
+                                <div class="card-body">
+                                    <form id="formPago" class="needs-validation" novalidate>
+                                        <div class="row g-3">
+                                            <div class="col-md-6">
+                                                <label class="form-label fw-bold">Fecha:</label>
+                                                <input type="date" id="fechaPago" class="form-control" required>
+                                                <div class="invalid-feedback">Ingrese la fecha de pago</div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label fw-bold">Monto Total:</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text">₲</span>
+                                                    <input type="text" id="montoPago" class="form-control" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label class="form-label fw-bold">Forma de Pago:</label>
+                                                <select id="formaPago" class="form-select" required>
+                                                    <option value="">Seleccione una forma de pago</option>
+                                                    <option value="efectivo">Efectivo</option>
+                                                    <option value="transferencia">Transferencia Bancaria</option>
+                                                    <option value="cheque">Cheque</option>
+                                                    <option value="deposito">Depósito Bancario</option>
+                                                </select>
+                                                <div class="invalid-feedback">Seleccione una forma de pago</div>
+                                            </div>
+                                            <div class="col-md-12" id="contenedorReferencia" style="display: none;">
+                                                <label class="form-label fw-bold">Número de Referencia:</label>
+                                                <input type="text" id="numeroReferencia" class="form-control">
+                                                <div class="invalid-feedback">Ingrese el número de referencia</div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label class="form-label fw-bold">Observaciones:</label>
+                                                <textarea id="observacionesPago" class="form-control" rows="2"></textarea>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="d-grid">
+                                                    <button type="submit" id="btnProcesarPago" class="btn btn-success">
+                                                        <i class="bi bi-check-circle me-1"></i> Procesar Pago
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-8 mb-4">
+                            
+                            <div id="panelFacturas" class="card shadow-sm fade-in" style="display: none;">
+                                <div class="card-header bg-info text-white">
+                                    <h5 class="mb-0"><i class="bi bi-file-earmark-text me-2"></i>Facturas Pendientes</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="tablaFacturasPendientes" class="display table table-striped table-hover w-100">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Fecha</th>
+                                                    <th>N° Factura</th>
+                                                    <th>Total</th>
+                                                    <th>Saldo</th>
+                                                    <th>Vencimiento</th>
+                                                    <th>Pagar</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            
+                            <div id="panelFacturasSeleccionadas" class="card shadow-sm fade-in mt-4" style="display: none;">
+                                <div class="card-header bg-warning">
+                                    <h5 class="mb-0"><i class="bi bi-check-square me-2"></i>Facturas Seleccionadas para Pago</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="tablaFacturasSeleccionadas" class="display table table-striped table-hover w-100">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>N° Factura</th>
+                                                    <th>Saldo</th>
+                                                    <th>Monto a Pagar</th>
+                                                    <th>Acción</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th colspan="3" class="text-end">Total a Pagar:</th>
+                                                    <th id="totalPagar" class="text-end">₲ 0</th>
+                                                    <th></th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; 2A Constructora 2025</div>
+                        <div>
+                            <a href="#">Política de Privacidad</a>
+                            &middot;
+                            <a href="#">Términos &amp; Condiciones</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    
+    <div class="modal fade" id="modalMontoPago" tabindex="-1" aria-labelledby="modalMontoPagoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="modalMontoPagoLabel">Ingresar Monto a Pagar</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formMontoPago" class="needs-validation" novalidate>
+                        <input type="hidden" id="idFacturaMonto">
+                        <input type="hidden" id="numFacturaMonto">
+                        <input type="hidden" id="saldoFacturaMonto">
+                        
+                        <div class="row g-3">
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">N° de Factura:</label>
+                                <p id="labelNumFactura" class="form-control-plaintext"></p>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">Saldo Pendiente:</label>
+                                <p id="labelSaldoPendiente" class="form-control-plaintext"></p>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="montoAPagar" class="form-label fw-bold">Monto a Pagar:</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">₲</span>
+                                    <input type="text" id="montoAPagar" class="form-control" required>
+                                    <div class="invalid-feedback">Ingrese un monto válido</div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="pagoCompleto">
+                                    <label class="form-check-label" for="pagoCompleto">
+                                        Pagar saldo completo
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" id="btnConfirmarMontoPago" class="btn btn-primary">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="modal fade" id="modalConfirmacionPago" tabindex="-1" aria-labelledby="modalConfirmacionPagoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title" id="modalConfirmacionPagoLabel">Confirmar Pago</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Está a punto de procesar un pago con los siguientes detalles:</p>
+                    
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p class="mb-1"><strong>Proveedor:</strong></p>
+                                    <p id="confirmProveedor"></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="mb-1"><strong>RUC:</strong></p>
+                                    <p id="confirmRuc"></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p class="mb-1"><strong>Fecha:</strong></p>
+                                    <p id="confirmFecha"></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="mb-1"><strong>Forma de Pago:</strong></p>
+                                    <p id="confirmFormaPago"></p>
+                                </div>
+                            </div>
+                            <div class="row" id="rowReferencia" style="display: none;">
+                                <div class="col-md-12">
+                                    <p class="mb-1"><strong>N° de Referencia:</strong></p>
+                                    <p id="confirmReferencia"></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p class="mb-1"><strong>Monto Total:</strong></p>
+                                    <p id="confirmMonto" class="text-success fw-bold"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p>¿Desea confirmar este pago?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" id="btnConfirmarPago" class="btn btn-success">
+                        <i class="bi bi-check2-circle me-1"></i> Confirmar Pago
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <script src="js/roleMenuAccess.js"></script>
+    <script src="js/funcionesSistema.js"></script>
+    <script src="menu/scripts.js"></script>
+    <script src="js/cerrarSesion.js"></script>
+    
+    <script src="menu/bootstrap.bundle.min.js"></script>
+    
+    <script src="dt/jquery-3.7.1.js"></script>
+    <script src="dt/datatables.min.js"></script>
+    <script src="dt/jquery.dataTables.min.js"></script>
+    
+    <script src="dt/dataTables.buttons.min.js"></script>
+    <script src="dt/buttons.print.min.js"></script>
+    <script src="dt/buttons.html5.min.js"></script>
+    
+    <script src="dt/jszip.min.js"></script>
+    <script src="dt/pdfmake.min.js"></script>
+    <script src="dt/vfs_fonts.js"></script>
+    
+    <script src="dt/es-ES.js"></script>
+    
+    <script>
+        // Variables globales
+        let proveedorSeleccionado = null;
+        let facturasParaPago = [];
+        let idPagoActual = null;
+
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+        if(!currentUser) {
+            window.location.href = 'error.html';
+        }
+
+        // Control de seguridad del usuario actual
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                // Verificar si el usuario está autenticado
+                if (!currentUser) {
+                    alertify.error("Usuario no encontrado.");
+                    setTimeout(() => {
+                        window.location.href = "error.html";
+                    }, 2000);
+                    return;
+                } else {
+                    // Verificar si el usuario tiene permisos para esta página
+                    const rolesPermitidos = ['administrador', 'gerente', 'contador'];
+                    if (!rolesPermitidos.includes(currentUser.rol)) {
+                        alertify.error("No tienes permisos para acceder a esta página");
+                        setTimeout(() => {
+                            window.location.href = "menu.html";
+                        }, 2000);
+                        return;
+                    }
+                    
+                    // Mostrar el nombre del usuario y rol en el menú
+                    document.getElementById('nomUsuario').innerText =  `${currentUser.nombre} ${currentUser.apellido}`;
+                    document.getElementById("rol").textContent = formatearRol(currentUser.rol);
+                }
+                
+                // Configurar tema oscuro
+                configurarTemaOscuro();
+
+                // Inicializar la fecha con la fecha actual
+                document.getElementById('fechaPago').valueAsDate = new Date();
+                
+                // Inicializar eventos
+                inicializarEventos();
+                
+                // Inicializar las tablas
+                inicializarTablas();
+                
+                // Cargar proveedores
+                cargarProveedores();
+                
+                // Generar ID de pago
+                actualizarIdPagoActual();
+                
+            } catch (error) {
+                alertify.error("Error al inicializar la página: " + error.message);
+                console.error("Error completo:", error);
+            }
+        });
+
+        // Función para dark mode
+        function configurarTemaOscuro() {
+            // Verificar preferencia inicial
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.classList.add('dark');
+                document.getElementById('darkModeToggle').innerHTML = '<i class="bi bi-sun"></i>';
+            }
+
+            // Toggle modo oscuro
+            document.getElementById('darkModeToggle').addEventListener('click', function() {
+                const html = document.documentElement;
+                html.classList.toggle('dark');
+                this.innerHTML = html.classList.contains('dark') ? 
+                    '<i class="bi bi-sun"></i>' : 
+                    '<i class="bi bi-moon-stars"></i>';
+            });
+
+            // Escuchar cambios en preferencias del sistema
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                const html = document.documentElement;
+                if (e.matches) {
+                    html.classList.add('dark');
+                    document.getElementById('darkModeToggle').innerHTML = '<i class="bi bi-sun"></i>';
+                } else {
+                    html.classList.remove('dark');
+                    document.getElementById('darkModeToggle').innerHTML = '<i class="bi bi-moon-stars"></i>';
+                }
+            });
+        }
+
+        // Formatear el nombre del rol para mostrar
+        function formatearRol(rol) {
+            switch(rol) {
+                case 'administrador': return 'Administrador';
+                case 'jefe_obra': return 'Jefe de Obra';
+                case 'gerente': return 'Gerente';
+                case 'obrero': return 'Obrero';
+                case 'contador': return 'Contador/Financiero';
+                case 'codificador': return 'Codificador';
+                default: return rol;
+            }
+        }
+        
+        // Obtener el último ID de pago y asignar el siguiente
+        function actualizarIdPagoActual() {
+            try {
+                const pagos = JSON.parse(localStorage.getItem("pagosProveedores")) || [];
+                if (pagos.length > 0) {
+                    // Encontrar el máximo idpago
+                    const maxId = Math.max(...pagos.map(pago => pago.idpago));
+                    idPagoActual = maxId + 1;
+                } else {
+                    idPagoActual = 1;
+                }
+                console.log("Nuevo ID de pago asignado:", idPagoActual);
+            } catch (error) {
+                console.error("Error al obtener último ID de pago:", error);
+                idPagoActual = 1; // Valor por defecto
+            }
+        }
+        
+        // Cargar proveedores en el select
+        function cargarProveedores() {
+            try {
+                const proveedores = JSON.parse(localStorage.getItem("proveedores")) || [];
+                const selectProveedor = document.getElementById('selectProveedor');
+                
+                // Limpiar opciones existentes excepto la primera
+                while (selectProveedor.options.length > 1) {
+                    selectProveedor.remove(1);
+                }
+                
+                // Filtrar proveedores activos con facturas pendientes
+                const comprascabecera = JSON.parse(localStorage.getItem("comprascabecera")) || [];
+                const proveedoresConFacturas = new Set();
+                
+                comprascabecera.forEach(factura => {
+                    if (factura.anulado !== "SI" && factura.saldo > 0) {
+                        proveedoresConFacturas.add(factura.idproveedor);
+                    }
+                });
+                
+                // Agregar proveedores que tienen facturas pendientes al select
+                let hayProveedoresActivos = false;
+                proveedores.forEach(proveedor => {
+                    if (proveedor.estado && proveedoresConFacturas.has(proveedor.idProveedor)) {
+                        const option = document.createElement('option');
+                        option.value = proveedor.idProveedor;
+                        option.textContent = proveedor.razonsocial;
+                        option.dataset.ruc = proveedor.ruc;
+                        selectProveedor.appendChild(option);
+                        hayProveedoresActivos = true;
+                    }
+                });
+                
+                if (!hayProveedoresActivos) {
+                    alertify.warning("No hay proveedores con facturas pendientes");
+                }
+                
+            } catch (error) {
+                console.error("Error al cargar proveedores:", error);
+                alertify.error("Error al cargar proveedores: " + error.message);
+            }
+        }
+
+        // Inicializar las tablas
+        function inicializarTablas() {
+            // Tabla de facturas pendientes
+            $('#tablaFacturasPendientes').DataTable({
+                paging: true,
+                searching: true,
+                info: true,
+                ordering: true,
+                language: spanish || {
+                    "decimal": ",",
+                    "thousands": ".",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                    "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros en total)",
+                    "infoPostFix": "",
+                    "lengthMenu": "Mostrar _MENU_ registros",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "No se encontraron coincidencias",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    },
+                    "aria": {
+                        "sortAscending": ": activar para ordenar la columna ascendentemente",
+                        "sortDescending": ": activar para ordenar la columna descendentemente"
+                    }
+                },
+                columnDefs: [
+                    { targets: 0, visible: false }, // ID (oculto)
+                    { targets: 1, width: '15%' },   // Fecha
+                    { targets: 2, width: '25%' },   // N° Factura
+                    { targets: 3, width: '15%', className: 'text-end' }, // Total
+                    { targets: 4, width: '15%', className: 'text-end' }, // Saldo
+                    { targets: 5, width: '15%' },   // Vencimiento
+                    { targets: 6, width: '15%', className: 'text-center' } // Pagar
+                ],
+                dom: 'lfrtip',
+                lengthMenu: [5, 10, 25, 50],
+                pageLength: 5
+            });
+            
+            // Tabla de facturas seleccionadas para pago
+            $('#tablaFacturasSeleccionadas').DataTable({
+                paging: false,
+                searching: false,
+                info: false,
+                ordering: false,
+                language: spanish || {
+                    "emptyTable": "No hay facturas seleccionadas para pago"
+                },
+                columnDefs: [
+                    { targets: 0, visible: false }, // ID (oculto)
+                    { targets: 1, width: '40%' },   // N° Factura
+                    { targets: 2, width: '20%', className: 'text-end' }, // Saldo
+                    { targets: 3, width: '20%', className: 'text-end' }, // Monto a Pagar
+                    { targets: 4, width: '20%', className: 'text-center' } // Acción
+                ]
+            });
+            
+            // Evento para pagar factura
+            $('#tablaFacturasPendientes tbody').on('click', '.pagar-factura', function() {
+                const tablaFacturas = $('#tablaFacturasPendientes').DataTable();
+                const fila = $(this).closest('tr');
+                const data = tablaFacturas.row(fila).data();
+                abrirModalMontoPago(data[0], data[2], data[4]); // ID, N° Factura, Saldo
+            });
+            
+            // Evento para quitar factura de seleccionadas
+            $('#tablaFacturasSeleccionadas tbody').on('click', '.quitar-factura', function() {
+                const tablaSeleccionadas = $('#tablaFacturasSeleccionadas').DataTable();
+                const fila = $(this).closest('tr');
+                const data = tablaSeleccionadas.row(fila).data();
+                quitarFacturaDePago(data[0]); // ID
+            });
+        }
+        
+        // Inicializar todos los eventos de la página
+        function inicializarEventos() {
+            // Evento al seleccionar proveedor
+            document.getElementById('selectProveedor').addEventListener('change', function() {
+                const idProveedor = this.value;
+                const rucProveedor = this.options[this.selectedIndex].dataset.ruc || '';
+                
+                document.getElementById('rucProveedor').value = rucProveedor;
+                
+                // Habilitar/deshabilitar botón de búsqueda
+                const btnBuscar = document.getElementById('btnBuscarFacturas');
+                btnBuscar.disabled = !idProveedor;
+                
+                // Si se cambia el proveedor, resetear facturas seleccionadas
+                if (proveedorSeleccionado !== idProveedor) {
+                    resetearFacturasSeleccionadas();
+                }
+                
+                proveedorSeleccionado = idProveedor;
+            });
+            
+            // Evento al hacer clic en buscar facturas pendientes
+            document.getElementById('btnBuscarFacturas').addEventListener('click', cargarFacturasPendientes);
+            
+            // Evento al cambiar forma de pago
+            document.getElementById('formaPago').addEventListener('change', function() {
+                const formaPago = this.value;
+                const contenedorReferencia = document.getElementById('contenedorReferencia');
+                
+                // Mostrar campo de referencia para formas de pago que lo requieran
+                if (formaPago === 'transferencia' || formaPago === 'cheque' || formaPago === 'deposito') {
+                    contenedorReferencia.style.display = 'block';
+                    document.getElementById('numeroReferencia').setAttribute('required', '');
+                } else {
+                    contenedorReferencia.style.display = 'none';
+                    document.getElementById('numeroReferencia').removeAttribute('required');
+                }
+            });
+            
+            // Evento al marcar pago completo en el modal
+            document.getElementById('pagoCompleto').addEventListener('change', function() {
+                const montoAPagar = document.getElementById('montoAPagar');
+                const saldoFactura = document.getElementById('saldoFacturaMonto').value;
+                
+                if (this.checked) {
+                    // Establecer monto a pagar igual al saldo
+                    montoAPagar.value = formatoNumero(saldoFactura);
+                    montoAPagar.readOnly = true;
+                } else {
+                    montoAPagar.readOnly = false;
+                    montoAPagar.value = '';
+                    montoAPagar.focus();
+                }
+            });
+            
+            // Formatear monto a pagar como moneda
+            const montoAPagarInput = document.getElementById('montoAPagar');
+            montoAPagarInput.addEventListener('input', function(e) {
+                // Eliminar caracteres no numéricos
+                let value = this.value.replace(/[^0-9]/g, '');
+                
+                // Formatear como número
+                if (value) {
+                    this.value = formatoNumero(parseInt(value));
+                } else {
+                    this.value = '';
+                }
+            });
+            
+            // Evento al confirmar monto de pago en modal
+            document.getElementById('btnConfirmarMontoPago').addEventListener('click', function() {
+                const form = document.getElementById('formMontoPago');
+                
+                if (!form.checkValidity()) {
+                    form.classList.add('was-validated');
+                    return;
+                }
+                
+                const idFactura = document.getElementById('idFacturaMonto').value;
+                const numFactura = document.getElementById('numFacturaMonto').value;
+                const saldoFactura = parseInt(document.getElementById('saldoFacturaMonto').value);
+                let montoPagar = document.getElementById('montoAPagar').value;
+                
+                // Convertir monto a número
+                montoPagar = montoPagar.replace(/\./g, '');
+                montoPagar = parseInt(montoPagar);
+                
+                // Validar monto
+                if (isNaN(montoPagar) || montoPagar <= 0) {
+                    alertify.error('Ingrese un monto válido mayor a cero');
+                    return;
+                }
+                
+                if (montoPagar > saldoFactura) {
+                    alertify.error('El monto a pagar no puede ser mayor al saldo pendiente');
+                    return;
+                }
+                
+                // Agregar factura a lista de pagos
+                agregarFacturaAPago(idFactura, numFactura, saldoFactura, montoPagar);
+                
+                // Cerrar modal
+                bootstrap.Modal.getInstance(document.getElementById('modalMontoPago')).hide();
+            });
+            
+            // Evento para procesar pago
+            document.getElementById('formPago').addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                if (!facturasParaPago.length) {
+                    alertify.error('Debe seleccionar al menos una factura para pagar');
+                    return;
+                }
+                
+                if (!this.checkValidity()) {
+                    this.classList.add('was-validated');
+                    return;
+                }
+                
+                // Mostrar modal de confirmación
+                mostrarConfirmacionPago();
+            });
+            
+            // Evento para confirmar pago final
+            document.getElementById('btnConfirmarPago').addEventListener('click', procesarPago);
+        }
+        
+        // Cargar facturas pendientes del proveedor seleccionado
+        function cargarFacturasPendientes() {
+            try {
+                if (!proveedorSeleccionado) {
+                    alertify.error('Debe seleccionar un proveedor');
+                    return;
+                }
+                
+                const comprascabecera = JSON.parse(localStorage.getItem("comprascabecera")) || [];
+                
+                // Filtrar facturas pendientes del proveedor
+                const facturasPendientes = comprascabecera.filter(factura => {
+                    return factura.idproveedor == proveedorSeleccionado && 
+                           factura.anulado !== "SI" && 
+                           factura.saldo > 0;
+                });
+                
+                // Limpiar y cargar tabla
+                const tablaFacturas = $('#tablaFacturasPendientes').DataTable();
+                tablaFacturas.clear();
+                
+                if (facturasPendientes.length === 0) {
+                    alertify.warning('No hay facturas pendientes para este proveedor');
+                    document.getElementById('panelFacturas').style.display = 'none';
+                    return;
+                }
+                
+                // Ordenar por fecha de vencimiento (las más próximas primero)
+                facturasPendientes.sort((a, b) => {
+                    if (a.fecvencimiento && b.fecvencimiento) {
+                        return new Date(a.fecvencimiento) - new Date(b.fecvencimiento);
+                    } else if (a.fecvencimiento) {
+                        return -1; // a tiene fecha de vencimiento, b no
+                    } else if (b.fecvencimiento) {
+                        return 1; // b tiene fecha de vencimiento, a no
+                    } else {
+                        return new Date(a.feccompra) - new Date(b.feccompra);
+                    }
+                });
+                
+                // Agregar facturas a la tabla
+                facturasPendientes.forEach(factura => {
+                    // Formatear fecha
+                    const fecha = new Date(factura.feccompra);
+                    const fechaFormateada = fecha.toLocaleDateString('es-PY');
+                    
+                    // Formatear fecha de vencimiento
+                    let vencimiento = '-';
+                    if (factura.fecvencimiento) {
+                        const fechaVenc = new Date(factura.fecvencimiento);
+                        vencimiento = fechaVenc.toLocaleDateString('es-PY');
+                        
+                        // Marcar vencidas
+                        if (fechaVenc < new Date()) {
+                            vencimiento = `<span class="text-danger">${vencimiento} (Vencida)</span>`;
+                        }
+                    }
+                    
+                    // Verificar si ya está seleccionada para pago
+                    const yaSeleccionada = facturasParaPago.some(f => f.idFactura == factura.idcompra);
+                    
+                    // Botón de pagar
+                    const btnPagar = `
+                        <button class="btn btn-sm ${yaSeleccionada ? 'btn-success disabled' : 'btn-primary'} pagar-factura">
+                            <i class="bi ${yaSeleccionada ? 'bi-check-circle' : 'bi-cash'}"></i> ${yaSeleccionada ? 'Seleccionada' : 'Pagar'}
+                        </button>
+                    `;
+                    
+                    tablaFacturas.row.add([
+                        factura.idcompra,
+                        fechaFormateada,
+                        factura.numfactura,
+                        '₲ ' + formatoNumero(factura.totcompra),
+                        '₲ ' + formatoNumero(factura.saldo),
+                        vencimiento,
+                        btnPagar
+                    ]).draw(false);
+                });
+                
+                // Mostrar panel de facturas
+                document.getElementById('panelFacturas').style.display = 'block';
+                
+                // Si hay facturas seleccionadas, mostrar panel
+                actualizarPanelFacturasSeleccionadas();
+                
+                alertify.success(`Se encontraron ${facturasPendientes.length} facturas pendientes`);
+                
+            } catch (error) {
+                console.error("Error al cargar facturas pendientes:", error);
+                alertify.error("Error al cargar facturas pendientes: " + error.message);
+            }
+        }
+        
+        // Abrir modal para ingresar monto de pago
+        function abrirModalMontoPago(idFactura, numFactura, saldo) {
+            // Quitar formato de moneda del saldo
+            saldo = saldo.replace('₲', '').replace(/\./g, '').trim();
+            
+            // Llenar campos del modal
+            document.getElementById('idFacturaMonto').value = idFactura;
+            document.getElementById('numFacturaMonto').value = numFactura;
+            document.getElementById('saldoFacturaMonto').value = saldo;
+            document.getElementById('labelNumFactura').textContent = numFactura;
+            document.getElementById('labelSaldoPendiente').textContent = '₲ ' + formatoNumero(saldo);
+            
+            // Resetear campos
+            document.getElementById('montoAPagar').value = '';
+            document.getElementById('montoAPagar').readOnly = false;
+            document.getElementById('pagoCompleto').checked = false;
+            document.getElementById('formMontoPago').classList.remove('was-validated');
+            
+            // Mostrar modal
+            const modal = new bootstrap.Modal(document.getElementById('modalMontoPago'));
+            modal.show();
+            
+            // Enfocar en campo de monto
+            setTimeout(() => {
+                document.getElementById('montoAPagar').focus();
+            }, 500);
+        }
+        
+        // Agregar factura a la lista de pagos
+        function agregarFacturaAPago(idFactura, numFactura, saldo, montoPagar) {
+            // Verificar si ya existe
+            const facturaExistente = facturasParaPago.findIndex(f => f.idFactura == idFactura);
+            
+            if (facturaExistente !== -1) {
+                // Actualizar monto si ya existe
+                facturasParaPago[facturaExistente].montoPagar = montoPagar;
+            } else {
+                // Agregar nueva factura
+                facturasParaPago.push({
+                    idFactura: idFactura,
+                    numFactura: numFactura,
+                    saldo: saldo,
+                    montoPagar: montoPagar
+                });
+            }
+            
+            // Actualizar panel de facturas seleccionadas
+            actualizarPanelFacturasSeleccionadas();
+            
+            // Actualizar botones en tabla de facturas pendientes
+            actualizarBotonesFacturasPendientes();
+            
+            alertify.success(`Factura ${numFactura} agregada para pago`);
+        }
+        
+        // Quitar factura de la lista de pagos
+        function quitarFacturaDePago(idFactura) {
+            facturasParaPago = facturasParaPago.filter(f => f.idFactura != idFactura);
+            
+            // Actualizar panel de facturas seleccionadas
+            actualizarPanelFacturasSeleccionadas();
+            
+            // Actualizar botones en tabla de facturas pendientes
+            actualizarBotonesFacturasPendientes();
+            
+            alertify.success('Factura quitada de la lista de pagos');
+        }
+        
+        // Resetear facturas seleccionadas
+        function resetearFacturasSeleccionadas() {
+            facturasParaPago = [];
+            document.getElementById('panelFacturasSeleccionadas').style.display = 'none';
+            document.getElementById('panelPago').style.display = 'none';
+            
+            // Resetear monto total
+            document.getElementById('montoPago').value = '';
+        }
+        
+        // Actualizar panel de facturas seleccionadas
+        function actualizarPanelFacturasSeleccionadas() {
+            const panelFacturasSeleccionadas = document.getElementById('panelFacturasSeleccionadas');
+            const panelPago = document.getElementById('panelPago');
+            
+            if (facturasParaPago.length === 0) {
+                panelFacturasSeleccionadas.style.display = 'none';
+                panelPago.style.display = 'none';
+                return;
+            }
+            
+            // Cargar tabla de facturas seleccionadas
+            const tablaSeleccionadas = $('#tablaFacturasSeleccionadas').DataTable();
+            tablaSeleccionadas.clear();
+            
+            let totalPagar = 0;
+            
+            facturasParaPago.forEach(factura => {
+                // Crear botón para quitar
+                const btnQuitar = `
+                    <button class="btn btn-sm btn-danger quitar-factura" title="Quitar de la lista">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                `;
+                
+                tablaSeleccionadas.row.add([
+                    factura.idFactura,
+                    factura.numFactura,
+                    '₲ ' + formatoNumero(factura.saldo),
+                    '₲ ' + formatoNumero(factura.montoPagar),
+                    btnQuitar
+                ]).draw(false);
+                
+                totalPagar += factura.montoPagar;
+            });
+            
+            // Actualizar total a pagar
+            document.getElementById('totalPagar').textContent = '₲ ' + formatoNumero(totalPagar);
+            document.getElementById('montoPago').value = '₲ ' + formatoNumero(totalPagar);
+            
+            // Mostrar paneles
+            panelFacturasSeleccionadas.style.display = 'block';
+            panelPago.style.display = 'block';
+        }
+        
+        // Actualizar botones en tabla de facturas pendientes
+        function actualizarBotonesFacturasPendientes() {
+            const tablaFacturas = $('#tablaFacturasPendientes').DataTable();
+            
+            // Recorrer todas las filas y actualizar botones
+            tablaFacturas.rows().every(function() {
+                const data = this.data();
+                const idFactura = data[0];
+                
+                // Verificar si está seleccionada para pago
+                const yaSeleccionada = facturasParaPago.some(f => f.idFactura == idFactura);
+                
+                // Actualizar botón
+                data[6] = `
+                    <button class="btn btn-sm ${yaSeleccionada ? 'btn-success disabled' : 'btn-primary'} pagar-factura">
+                        <i class="bi ${yaSeleccionada ? 'bi-check-circle' : 'bi-cash'}"></i> ${yaSeleccionada ? 'Seleccionada' : 'Pagar'}
+                    </button>
+                `;
+                
+                this.data(data);
+            });
+        }
+        
+        // Mostrar modal de confirmación de pago
+        function mostrarConfirmacionPago() {
+            try {
+                // Obtener datos del pago
+                const proveedor = document.getElementById('selectProveedor').options[document.getElementById('selectProveedor').selectedIndex].text;
+                const ruc = document.getElementById('rucProveedor').value;
+                const fecha = new Date(document.getElementById('fechaPago').value).toLocaleDateString('es-PY');
+                const formaPago = document.getElementById('formaPago').value;
+                const referencia = document.getElementById('numeroReferencia').value;
+                
+                // Calcular monto total
+                let montoTotal = 0;
+                facturasParaPago.forEach(factura => {
+                    montoTotal += factura.montoPagar;
+                });
+                
+                // Llenar campos del modal
+                document.getElementById('confirmProveedor').textContent = proveedor;
+                document.getElementById('confirmRuc').textContent = ruc;
+                document.getElementById('confirmFecha').textContent = fecha;
+                document.getElementById('confirmFormaPago').textContent = obtenerNombreFormaPago(formaPago);
+                document.getElementById('confirmMonto').textContent = '₲ ' + formatoNumero(montoTotal);
+                
+                // Mostrar/ocultar referencia
+                const rowReferencia = document.getElementById('rowReferencia');
+                if (formaPago === 'transferencia' || formaPago === 'cheque' || formaPago === 'deposito') {
+                    rowReferencia.style.display = 'flex';
+                    document.getElementById('confirmReferencia').textContent = referencia;
+                } else {
+                    rowReferencia.style.display = 'none';
+                }
+                
+                // Mostrar modal
+                const modal = new bootstrap.Modal(document.getElementById('modalConfirmacionPago'));
+                modal.show();
+                
+            } catch (error) {
+                console.error("Error al mostrar confirmación de pago:", error);
+                alertify.error("Error al preparar confirmación: " + error.message);
+            }
+        }
+        
+        // Obtener nombre legible de forma de pago
+        function obtenerNombreFormaPago(formaPago) {
+            switch(formaPago) {
+                case 'efectivo': return 'Efectivo';
+                case 'transferencia': return 'Transferencia Bancaria';
+                case 'cheque': return 'Cheque';
+                case 'deposito': return 'Depósito Bancario';
+                default: return formaPago;
+            }
+        }
+        
+        // Procesar pago final
+        function procesarPago() {
+            try {
+                // Generar datos del pago
+                const fechaPago = document.getElementById('fechaPago').value;
+                const formaPago = document.getElementById('formaPago').value;
+                const referencia = document.getElementById('numeroReferencia').value || null;
+                const observaciones = document.getElementById('observacionesPago').value || null;
+                
+                // Calcular monto total
+                let montoTotal = 0;
+                facturasParaPago.forEach(factura => {
+                    montoTotal += factura.montoPagar;
+                });
+                
+                // Crear objeto de pago
+                const pago = {
+                    idpago: idPagoActual,
+                    idproveedor: parseInt(proveedorSeleccionado),
+                    fechapago: fechaPago,
+                    montopago: montoTotal,
+                    formapago: formaPago,
+                    referencia: referencia,
+                    observaciones: observaciones,
+                    idusuario: currentUser.idusuario,
+                    usuario: currentUser.usuario
+                };
+                
+                // Crear detalles de pago
+                const detallesPago = facturasParaPago.map((factura, index) => {
+                    return {
+                        idpagodet: idPagoActual + '_' + (index + 1),
+                        idpago: idPagoActual,
+                        idfactura: factura.idFactura,
+                        numfactura: factura.numFactura,
+                        montopagado: factura.montoPagar
+                    };
+                });
+                
+                // Actualizar saldos de facturas
+                const comprascabecera = JSON.parse(localStorage.getItem("comprascabecera")) || [];
+                
+                facturasParaPago.forEach(factura => {
+                    const index = comprascabecera.findIndex(c => c.idcompra == factura.idFactura);
+                    if (index !== -1) {
+                        // Actualizar saldo
+                        comprascabecera[index].saldo -= factura.montoPagar;
+                    }
+                });
+                
+                // Guardar cambios
+                const pagosProveedores = JSON.parse(localStorage.getItem("pagosProveedores")) || [];
+                const pagoDetalles = JSON.parse(localStorage.getItem("pagoDetalles")) || [];
+                
+                pagosProveedores.push(pago);
+                detallesPago.forEach(detalle => pagoDetalles.push(detalle));
+                
+                localStorage.setItem("comprascabecera", JSON.stringify(comprascabecera));
+                localStorage.setItem("pagosProveedores", JSON.stringify(pagosProveedores));
+                localStorage.setItem("pagoDetalles", JSON.stringify(pagoDetalles));
+                
+                // Cerrar modal de confirmación
+                bootstrap.Modal.getInstance(document.getElementById('modalConfirmacionPago')).hide();
+                
+                // Mostrar mensaje de éxito
+                alertify.success(`Pago procesado correctamente (ID: ${idPagoActual})`);
+                
+                // Resetear formulario
+                resetearFormulario();
+                
+            } catch (error) {
+                console.error("Error al procesar pago:", error);
+                alertify.error("Error al procesar pago: " + error.message);
+            }
+        }
+        
+        // Resetear formulario completo
+        function resetearFormulario() {
+            // Resetear selección de proveedor
+            document.getElementById('selectProveedor').value = '';
+            document.getElementById('rucProveedor').value = '';
+            document.getElementById('btnBuscarFacturas').disabled = true;
+            
+            // Resetear facturas seleccionadas
+            resetearFacturasSeleccionadas();
+            
+            // Ocultar paneles
+            document.getElementById('panelFacturas').style.display = 'none';
+            
+            // Resetear formulario de pago
+            document.getElementById('formPago').reset();
+            document.getElementById('fechaPago').valueAsDate = new Date();
+            document.getElementById('contenedorReferencia').style.display = 'none';
+            document.getElementById('formPago').classList.remove('was-validated');
+            
+            // Generar nuevo ID de pago
+            actualizarIdPagoActual();
+            
+            // Resetear proveedor seleccionado
+            proveedorSeleccionado = null;
+        }
+        
+        // Formatear número
+        function formatoNumero(numero) {
+            return new Intl.NumberFormat('es-PY', {
+                maximumFractionDigits: 0
+            }).format(numero);
+        }
+    </script>
+</body>
+</html>

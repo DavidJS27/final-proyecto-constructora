@@ -1,0 +1,272 @@
+.dark {
+    color-scheme: dark;
+}
+
+.dark .card {
+    background-color: #2d3748;
+    color: #e2e8f0;
+}
+
+.dark .card-header {
+    background-color: #1a202c;
+    color: #e2e8f0;
+}
+
+.dark .table {
+    color: #e2e8f0;
+}
+
+.dark .table-striped>tbody>tr:nth-of-type(odd) {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.dark .table-hover>tbody>tr:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark .modal-content {
+    background-color: #2d3748;
+    color: #e2e8f0;
+}
+
+.dark .form-control, .dark .form-select {
+    background-color: #4a5568;
+    color: #e2e8f0;
+    border-color: #718096;
+}
+
+.dark .form-control::placeholder {
+    color: #a0aec0;
+}
+
+.dark .input-group-text {
+    background-color: #4a5568;
+    color: #e2e8f0;
+    border-color: #718096;
+}
+
+.dark .bg-light {
+    background-color: #1a202c !important;
+    color: #e2e8f0;
+}
+
+.dark footer, .dark footer a {
+    color: #e2e8f0;
+}
+
+/* Estilos de mejora generales */
+.btn-action {
+    transition: all 0.3s;
+}
+
+.btn-action:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.category-badge {
+    padding: 0.35em 0.65em;
+    font-size: 0.75em;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25rem;
+}
+
+/* Colores para las categorías */
+.bg-cemento { background-color: #718096; }
+.bg-arena { background-color: #D69E2E; }
+.bg-hierro { background-color: #4A5568; }
+.bg-madera { background-color: #8B4513; }
+.bg-herramientas { background-color: #3182CE; }
+.bg-pintura { background-color: #ED64A6; }
+.bg-plomeria { background-color: #48BB78; }
+.bg-electricidad { background-color: #F56565; }
+.bg-ceramica { background-color: #9F7AEA; }
+.bg-techo { background-color: #2D3748; }
+.bg-otro { background-color: #CBD5E0; color: #1A202C; }
+
+/* Animación de carga */
+.loading {
+    position: relative;
+}
+
+.loading:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.dark .loading:after {
+    background-color: rgba(26, 32, 44, 0.7);
+}
+
+/* Loading Overlay */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.3s;
+}
+
+.loading-overlay.show {
+    visibility: visible;
+    opacity: 1;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #5D5CDE;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Efectos para tarjetas de materiales */
+.material-card {
+    transition: all 0.3s;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 100%;
+}
+
+.material-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.material-card .card-img-top {
+    height: 180px;
+    object-fit: cover;
+}
+
+.material-price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #5D5CDE;
+}
+
+.dark .material-price {
+    color: #A5B4FC;
+}
+
+/* Estilo para tooltips */
+.tooltip-inner {
+    background-color: #5D5CDE;
+    max-width: 250px;
+    padding: 8px 12px;
+}
+
+.bs-tooltip-auto[data-popper-placement^=top] .tooltip-arrow::before, 
+.bs-tooltip-top .tooltip-arrow::before {
+    border-top-color: #5D5CDE;
+}
+
+/* Mejoras para vista de detalles del material */
+.material-detail-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.material-icon {
+    font-size: 2.5rem;
+    color: #5D5CDE;
+    background: rgba(93, 92, 222, 0.1);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.dark .material-icon {
+    background: rgba(93, 92, 222, 0.2);
+}
+
+.material-category-icon {
+    font-size: 1.8rem;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+/* Mejoras para barras de stock */
+.stock-bar {
+    height: 8px;
+    border-radius: 4px;
+    background-color: #e9ecef;
+    margin-top: 8px;
+    overflow: hidden;
+}
+
+.stock-progress {
+    height: 100%;
+    background-color: #5D5CDE;
+    border-radius: 4px;
+}
+
+.stock-low .stock-progress {
+    background-color: #DC2626;
+}
+
+.stock-medium .stock-progress {
+    background-color: #F59E0B;
+}
+
+.stock-high .stock-progress {
+    background-color: #10B981;
+}
+
+/* Mejoras para inputs */
+.form-control:focus, .form-select:focus {
+    border-color: #5D5CDE;
+    box-shadow: 0 0 0 0.25rem rgba(93, 92, 222, 0.25);
+}
+
+/* Animación para filas de tabla */
+@keyframes highlightRow {
+    0% { background-color: rgba(93, 92, 222, 0.2); }
+    100% { background-color: transparent; }
+}
+
+.highlight-row {
+    animation: highlightRow 2s ease-out;
+}

@@ -1,0 +1,1901 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <title>Adelantos y Anticipos</title>
+    <link rel="icon" href="img/2A_constructora_logo.png">
+
+    
+    <link href="menu/styles.css" rel="stylesheet" />
+
+    
+    
+    <link rel="stylesheet" href="bt-icons/bootstrap-icons.min.css">
+    
+    <link rel="stylesheet" href="dt/datatables.min.css">
+    <link rel="stylesheet" href="dt/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="dt/buttons.dataTables.min.css">
+    
+    <link rel="stylesheet" href="alert/alertify.min.css">
+    <link rel="stylesheet" href="alert/themes/default.min.css">
+</head>
+
+<body class="sb-nav-fixed">
+    
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <a class="navbar-brand ps-3" href="menu.html">
+            <img src="img/2A_constructora_logo.png" alt="Logo" height="30" class="me-2">
+            2A Constructora
+        </a>
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle"><i
+                class="bi bi-list"></i></button>
+        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <div class="input-group">
+                <input class="form-control" type="text" placeholder="Buscar..." aria-label="Buscar..."
+                    aria-describedby="btnNavbarSearch" />
+                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="bi bi-search"></i></button>
+            </div>
+        </form>
+        <div class="me-3">
+            <button id="darkModeToggle" class="btn btn-link text-light"><i class="bi bi-moon-stars"></i></button>
+        </div>
+        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false"><i class="bi bi-person-fill"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="configuracion.html">Configuración</a></li>
+                    <li><a class="dropdown-item" href="#">Actividad</a></li>
+                    <li>
+                        <hr class="dropdown-divider" />
+                    </li>
+                    <li><a class="dropdown-item" href="#" onclick="cerrarSesion()">Cerrar sesión</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div id="principal" class="sb-sidenav-menu-heading">Principal</div>
+                        <a id="dashboard" class="nav-link" href="dashboard.html">
+                            <div class="sb-nav-link-icon"><i class="bi bi-speedometer"></i></div>
+                            Dashboard
+                        </a>
+
+                        <div id="modulos" class="sb-sidenav-menu-heading">Módulos</div>
+
+                        
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseFinanzas">
+                            <div class="sb-nav-link-icon"><i class="bi bi-currency-dollar"></i></div>
+                            Finanzas
+                            <div class="sb-sidenav-collapse-arrow"><i class="bi bi-chevron-down"></i></div>
+                        </a>
+                        <div class="collapse show" id="collapseFinanzas" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a id="facturas-proveedores" class="nav-link collapsed" href="facturas-proveedores.html"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseProveedores">
+                                    Facturas de Proveedores
+                                    <div class="sb-sidenav-collapse-arrow"><i class="bi bi-chevron-down"></i></div>
+                                </a>
+                                <div class="collapse" id="collapseProveedores" data-bs-parent="#collapseFinanzas">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        <a href="facturas-proveedores.html" class="nav-link">
+                                            <i class="bi bi-file-earmark-text me-2"></i>Registrar Compras
+                                        </a>
+                                        <a href="mantenimiento-facturas.html" class="nav-link">
+                                            <i class="bi bi-tools me-2"></i>Mantenimiento de Facturas
+                                        </a>
+                                    </nav>
+                                </div>
+
+                                <a id="facturas-clientes" class="nav-link" href="facturas-clientes.html">Facturas de
+                                    Clientes</a>
+                                <a href="mantenimiento-facturas-clientes.html" class="nav-link">
+                                    <i class="bi bi-tools me-2"></i>Mantenimiento de Facturas
+                                </a>
+                                <a id="pagos-proveedores" class="nav-link" href="pagos-proveedores.html">Pagos a
+                                    Proveedores</a>
+                                <a id="cobros-clientes" class="nav-link" href="cobros-clientes.html">Cobros de
+                                    Clientes</a>
+                                <a id="adelantos-anticipos" class="nav-link active"
+                                    href="adelantos-anticipos.html">Adelantos y Anticipos</a>
+                                <a id="costos-obra" class="nav-link" href="costos-obra.html">Costos por Obra</a>
+                                <a id="reportes-financieros" class="nav-link" href="reportes-financieros.html">Reportes
+                                    Financieros</a>
+                                <a id="historial-movimientos" class="nav-link"
+                                    href="historial-movimientos.html">Historial de Movimientos</a>
+                            </nav>
+                        </div>
+
+                        
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseObras">
+                            <div class="sb-nav-link-icon"><i class="bi bi-building"></i></div>
+                            Obras
+                            <div class="sb-sidenav-collapse-arrow"><i class="bi bi-chevron-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseObras" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a id="mantenimiento-obras" class="nav-link"
+                                    href="mantenimiento-obras.html">Mantenimiento de Obras</a>
+                                <a id="asignar-materiales" class="nav-link" href="asignar-materiales.html">Asignar
+                                    Materiales</a>
+                                <a id="control-existencias" class="nav-link" href="control-existencias.html">Control de
+                                    Existencias</a>
+                                <a id="movimientos-materiales" class="nav-link"
+                                    href="movimientos-materiales.html">Movimientos de Materiales</a>
+                                <a id="traslados-materiales" class="nav-link" href="traslado-materiales.html">Traslados
+                                    de Materiales</a>
+                                <a id="registro-perdidas" class="nav-link" href="registro-perdidas.html">Registro de
+                                    Pérdidas</a>
+                            </nav>
+                        </div>
+
+                        <div id="administracion" class="sb-sidenav-menu-heading">Administración</div>
+
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseMantenimiento">
+                            <div class="sb-nav-link-icon"><i class="bi bi-gear"></i></div>
+                            Mantenimiento
+                            <div class="sb-sidenav-collapse-arrow"><i class="bi bi-chevron-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseMantenimiento" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a id="usuarios" class="nav-link" href="usuarios.html">Usuarios</a>
+                                <a id="clientes" class="nav-link" href="clientes.html">Clientes</a>
+                                <a id="proveedores" class="nav-link" href="proveedores.html">Proveedores</a>
+                                <a id="materiales" class="nav-link" href="materiales.html">Materiales</a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Iniciado por:</div>
+                    <div id="nomUsuario"></div>
+                    <div class="small">Rol:</div>
+                    <div id="rol"></div>
+                </div>
+            </nav>
+        </div>
+
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <div class="row mb-4 mt-4">
+                        <div class="col-md-12 d-flex justify-content-between align-items-center">
+                            <h2 class="mb-0"><i class="bi bi-wallet2 me-2"></i>Adelantos y Anticipos</h2>
+                            <a href="historial-movimientos.html" class="btn btn-primary">
+                                <i class="bi bi-list me-1"></i> Ver Historial de Movimientos
+                            </a>
+                        </div>
+                    </div>
+
+                    
+                    <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="adelantos-tab" data-bs-toggle="tab"
+                                data-bs-target="#adelantos" type="button" role="tab" aria-controls="adelantos"
+                                aria-selected="true">
+                                <i class="bi bi-building-check me-2"></i>Adelantos a Proveedores
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="anticipos-tab" data-bs-toggle="tab" data-bs-target="#anticipos"
+                                type="button" role="tab" aria-controls="anticipos" aria-selected="false">
+                                <i class="bi bi-person-check me-2"></i>Anticipos de Clientes
+                            </button>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content" id="myTabContent">
+                        
+                        <div class="tab-pane fade show active" id="adelantos" role="tabpanel"
+                            aria-labelledby="adelantos-tab">
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    
+                                    <div class="card shadow-sm fade-in">
+                                        <div class="card-header bg-primary text-white">
+                                            <h5 class="mb-0"><i class="bi bi-building-plus me-2"></i>Registrar Adelanto
+                                            </h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <form id="formAdelanto" class="needs-validation" novalidate>
+                                                <div class="row g-3">
+                                                    <div class="col-md-12">
+                                                        <label class="form-label fw-bold">Proveedor:</label>
+                                                        <select id="selectProveedor" class="form-select" required>
+                                                            <option value="">Seleccione un proveedor</option>
+                                                            
+                                                        </select>
+                                                        <div class="invalid-feedback">Seleccione un proveedor</div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <label class="form-label fw-bold">RUC:</label>
+                                                        <input type="text" id="rucProveedor" class="form-control"
+                                                            readonly>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="form-label fw-bold">Fecha:</label>
+                                                        <input type="date" id="fechaAdelanto" class="form-control"
+                                                            required>
+                                                        <div class="invalid-feedback">Ingrese la fecha del adelanto
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="form-label fw-bold">Monto:</label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-text">₲</span>
+                                                            <input type="text" id="montoAdelanto" class="form-control"
+                                                                required>
+                                                            <div class="invalid-feedback">Ingrese el monto del adelanto
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <label class="form-label fw-bold">Concepto:</label>
+                                                        <select id="conceptoAdelanto" class="form-select" required>
+                                                            <option value="">Seleccione un concepto</option>
+                                                            <option value="adelanto_compra">Adelanto por Compra</option>
+                                                            <option value="anticipo_servicio">Anticipo de Servicio
+                                                            </option>
+                                                            <option value="garantia">Garantía</option>
+                                                            <option value="otros">Otros</option>
+                                                        </select>
+                                                        <div class="invalid-feedback">Seleccione un concepto</div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <label class="form-label fw-bold">Forma de Pago:</label>
+                                                        <select id="formaPagoAdelanto" class="form-select" required>
+                                                            <option value="">Seleccione una forma de pago</option>
+                                                            <option value="efectivo">Efectivo</option>
+                                                            <option value="transferencia">Transferencia Bancaria
+                                                            </option>
+                                                            <option value="cheque">Cheque</option>
+                                                            <option value="deposito">Depósito Bancario</option>
+                                                        </select>
+                                                        <div class="invalid-feedback">Seleccione una forma de pago</div>
+                                                    </div>
+                                                    <div class="col-md-12" id="contenedorReferenciaAdelanto"
+                                                        style="display: none;">
+                                                        <label class="form-label fw-bold">Número de Referencia:</label>
+                                                        <input type="text" id="referenciaAdelanto" class="form-control">
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <label class="form-label fw-bold">Observaciones:</label>
+                                                        <textarea id="observacionesAdelanto" class="form-control"
+                                                            rows="2"></textarea>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="d-grid">
+                                                            <button type="submit" class="btn btn-success">
+                                                                <i class="bi bi-check-circle me-1"></i> Registrar
+                                                                Adelanto
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-8 mb-4">
+                                    
+                                    <div class="card shadow-sm fade-in">
+                                        <div class="card-header bg-info text-white">
+                                            <h5 class="mb-0"><i class="bi bi-clock-history me-2"></i>Historial de
+                                                Adelantos</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table id="tablaAdelantos"
+                                                    class="display table table-striped table-hover w-100">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>ID</th>
+                                                            <th>Fecha</th>
+                                                            <th>Proveedor</th>
+                                                            <th>Concepto</th>
+                                                            <th>Monto</th>
+                                                            <th>Estado</th>
+                                                            <th>Acciones</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                        <div class="tab-pane fade" id="anticipos" role="tabpanel" aria-labelledby="anticipos-tab">
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    
+                                    <div class="card shadow-sm fade-in">
+                                        <div class="card-header bg-success text-white">
+                                            <h5 class="mb-0"><i class="bi bi-person-add me-2"></i>Registrar Anticipo
+                                            </h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <form id="formAnticipo" class="needs-validation" novalidate>
+                                                <div class="row g-3">
+                                                    <div class="col-md-12">
+                                                        <label class="form-label fw-bold">Cliente:</label>
+                                                        <select id="selectClienteAnticipo" class="form-select" required>
+                                                            <option value="">Seleccione un cliente</option>
+                                                            
+                                                        </select>
+                                                        <div class="invalid-feedback">Seleccione un cliente</div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <label class="form-label fw-bold">RUC:</label>
+                                                        <input type="text" id="rucClienteAnticipo" class="form-control"
+                                                            readonly>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <label class="form-label fw-bold">Obra/Proyecto:</label>
+                                                        <select id="selectObra" class="form-select" required>
+                                                            <option value="">Seleccione una obra</option>
+                                                            
+                                                        </select>
+                                                        <div class="invalid-feedback">Seleccione una obra</div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="form-label fw-bold">Fecha:</label>
+                                                        <input type="date" id="fechaAnticipo" class="form-control"
+                                                            required>
+                                                        <div class="invalid-feedback">Ingrese la fecha del anticipo
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="form-label fw-bold">Monto:</label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-text">₲</span>
+                                                            <input type="text" id="montoAnticipo" class="form-control"
+                                                                required>
+                                                            <div class="invalid-feedback">Ingrese el monto del anticipo
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <label class="form-label fw-bold">Concepto:</label>
+                                                        <select id="conceptoAnticipo" class="form-select" required>
+                                                            <option value="">Seleccione un concepto</option>
+                                                            <option value="anticipo_obra">Anticipo de Obra</option>
+                                                            <option value="seña">Seña</option>
+                                                            <option value="pago_inicial">Pago Inicial</option>
+                                                            <option value="otros">Otros</option>
+                                                        </select>
+                                                        <div class="invalid-feedback">Seleccione un concepto</div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <label class="form-label fw-bold">Forma de Pago:</label>
+                                                        <select id="formaPagoAnticipo" class="form-select" required>
+                                                            <option value="">Seleccione una forma de pago</option>
+                                                            <option value="efectivo">Efectivo</option>
+                                                            <option value="transferencia">Transferencia Bancaria
+                                                            </option>
+                                                            <option value="cheque">Cheque</option>
+                                                            <option value="deposito">Depósito Bancario</option>
+                                                        </select>
+                                                        <div class="invalid-feedback">Seleccione una forma de pago</div>
+                                                    </div>
+                                                    <div class="col-md-12" id="contenedorReferenciaAnticipo"
+                                                        style="display: none;">
+                                                        <label class="form-label fw-bold">Número de Referencia:</label>
+                                                        <input type="text" id="referenciaAnticipo" class="form-control">
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <label class="form-label fw-bold">Observaciones:</label>
+                                                        <textarea id="observacionesAnticipo" class="form-control"
+                                                            rows="2"></textarea>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="d-grid">
+                                                            <button type="submit" class="btn btn-success">
+                                                                <i class="bi bi-check-circle me-1"></i> Registrar
+                                                                Anticipo
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-8 mb-4">
+                                    
+                                    <div class="card shadow-sm fade-in">
+                                        <div class="card-header bg-warning">
+                                            <h5 class="mb-0"><i class="bi bi-clock-history me-2"></i>Historial de
+                                                Anticipos</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table id="tablaAnticipos"
+                                                    class="display table table-striped table-hover w-100">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>ID</th>
+                                                            <th>Fecha</th>
+                                                            <th>Cliente</th>
+                                                            <th>Obra</th>
+                                                            <th>Concepto</th>
+                                                            <th>Monto</th>
+                                                            <th>Acciones</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; 2A Constructora 2025</div>
+                        <div>
+                            <a href="#">Política de Privacidad</a>
+                            &middot;
+                            <a href="#">Términos &amp; Condiciones</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    
+    <div class="modal fade" id="modalDetalleAdelanto" tabindex="-1" aria-labelledby="modalDetalleAdelantoLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="modalDetalleAdelantoLabel">Detalle del Adelanto</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="detalleAdelantoContenido">
+                        
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="modal fade" id="modalDetalleAnticipo" tabindex="-1" aria-labelledby="modalDetalleAnticipoLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title" id="modalDetalleAnticipoLabel">Detalle del Anticipo</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="detalleAnticipoContenido">
+                        
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <script src="js/roleMenuAccess.js"></script>
+    <script src="js/funcionesSistema.js"></script>
+    <script src="js/finanzas-integracion.js"></script>
+    <script src="menu/scripts.js"></script>
+    <script src="js/cerrarSesion.js"></script>
+    <script src="js/user-functions.js"></script>
+    
+    <script src="menu/bootstrap.bundle.min.js"></script>
+    
+    <script src="dt/jquery-3.7.1.js"></script>
+    <script src="dt/datatables.min.js"></script>
+    <script src="dt/jquery.dataTables.min.js"></script>
+    
+    <script src="dt/dataTables.buttons.min.js"></script>
+    <script src="dt/buttons.print.min.js"></script>
+    <script src="dt/buttons.html5.min.js"></script>
+    
+    <script src="dt/jszip.min.js"></script>
+    <script src="dt/pdfmake.min.js"></script>
+    <script src="dt/vfs_fonts.js"></script>
+    
+    <script src="dt/es-ES.js"></script>
+    
+    <script src="alert/alertify.min.js"></script>
+
+    <script>
+        // Variables globales
+        let idAdelantoActual = null;
+        let idAnticipoActual = null;
+
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+        if (!currentUser) {
+            window.location.href = 'error.html';
+        }
+
+        // Control de seguridad del usuario actual
+        document.addEventListener('DOMContentLoaded', function () {
+            try {
+                // Verificar si el usuario está autenticado
+                if (!currentUser) {
+                    alertify.error("Usuario no encontrado.");
+                    setTimeout(() => {
+                        window.location.href = "error.html";
+                    }, 2000);
+                    return;
+                } else {
+                    // Verificar si el usuario tiene permisos para esta página
+                    const rolesPermitidos = ['administrador', 'gerente', 'contador'];
+                    if (!rolesPermitidos.includes(currentUser.rol)) {
+                        alertify.error("No tienes permisos para acceder a esta página");
+                        setTimeout(() => {
+                            window.location.href = "menu.html";
+                        }, 2000);
+                        return;
+                    }
+
+                    // Mostrar el nombre del usuario y rol en el menú
+                    document.getElementById('nomUsuario').innerText = `${currentUser.nombre} ${currentUser.apellido}`;
+                    document.getElementById("rol").textContent = formatearRol(currentUser.rol);
+                }
+
+                // Configurar tema oscuro
+                configurarTemaOscuro();
+
+                // Inicializar fechas con la fecha actual
+                document.getElementById('fechaAdelanto').valueAsDate = new Date();
+                document.getElementById('fechaAnticipo').valueAsDate = new Date();
+
+                // Inicializar eventos
+                inicializarEventos();
+
+                // Inicializar las tablas
+                inicializarTablas();
+
+                // Cargar datos
+                cargarProveedores();
+                cargarClientes();
+                cargarObras();
+
+                // Generar IDs
+                actualizarIdAdelantoActual();
+                actualizarIdAnticipoActual();
+
+                // Inicializar datos de ejemplo si no existen
+                inicializarDatosEjemplo();
+
+            } catch (error) {
+                alertify.error("Error al inicializar la página: " + error.message);
+                console.error("Error completo:", error);
+            }
+        });
+
+        // Función para dark mode
+        function configurarTemaOscuro() {
+            // Verificar preferencia inicial
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.classList.add('dark');
+                document.getElementById('darkModeToggle').innerHTML = '<i class="bi bi-sun"></i>';
+            }
+
+            // Toggle modo oscuro
+            document.getElementById('darkModeToggle').addEventListener('click', function () {
+                const html = document.documentElement;
+                html.classList.toggle('dark');
+                this.innerHTML = html.classList.contains('dark') ?
+                    '<i class="bi bi-sun"></i>' :
+                    '<i class="bi bi-moon-stars"></i>';
+            });
+
+            // Escuchar cambios en preferencias del sistema
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                const html = document.documentElement;
+                if (e.matches) {
+                    html.classList.add('dark');
+                    document.getElementById('darkModeToggle').innerHTML = '<i class="bi bi-sun"></i>';
+                } else {
+                    html.classList.remove('dark');
+                    document.getElementById('darkModeToggle').innerHTML = '<i class="bi bi-moon-stars"></i>';
+                }
+            });
+        }
+
+        // Formatear el nombre del rol para mostrar
+        function formatearRol(rol) {
+            switch (rol) {
+                case 'administrador': return 'Administrador';
+                case 'jefe_obra': return 'Jefe de Obra';
+                case 'gerente': return 'Gerente';
+                case 'obrero': return 'Obrero';
+                case 'contador': return 'Contador/Financiero';
+                case 'codificador': return 'Codificador';
+                default: return rol;
+            }
+        }
+
+        // Inicializar datos de ejemplo
+        function inicializarDatosEjemplo() {
+            // Proveedores de ejemplo
+            if (!localStorage.getItem("proveedores")) {
+                const proveedoresEjemplo = [
+                    { idProveedor: 1, razonsocial: "Materiales González S.A.", ruc: "80012345-6", estado: true, telefono: "021-123456", direccion: "Av. España 123" },
+                    { idProveedor: 2, razonsocial: "Ferreterias del Este", ruc: "80023456-7", estado: true, telefono: "021-234567", direccion: "Ruta 2 Km 15" },
+                    { idProveedor: 3, razonsocial: "Distribuidora Central", ruc: "80034567-8", estado: true, telefono: "021-345678", direccion: "Cap. Miranda 456" },
+                    { idProveedor: 4, razonsocial: "Construcciones del Sur", ruc: "80045678-9", estado: true, telefono: "021-456789", direccion: "Mcal. López 789" }
+                ];
+                localStorage.setItem("proveedores", JSON.stringify(proveedoresEjemplo));
+            }
+
+            // Clientes de ejemplo si no existen
+            if (!localStorage.getItem("clientes")) {
+                const clientesEjemplo = [
+                    { idCliente: 1, razonSocial: "Familia Gómez", ruc: "1234567-8", telefono: "0981-123456", direccion: "Asunción" },
+                    { idCliente: 2, razonSocial: "Empresa Comercial S.A.", ruc: "80987654-3", telefono: "021-654321", direccion: "Fernando de la Mora" },
+                    { idCliente: 3, razonSocial: "Oficinas del Centro", ruc: "80111222-3", telefono: "021-111222", direccion: "San Lorenzo" }
+                ];
+                localStorage.setItem("clientes", JSON.stringify(clientesEjemplo));
+            }
+
+            // Obras de ejemplo si no existen
+            if (!localStorage.getItem("obras")) {
+                const obrasEjemplo = [
+                    { idObra: 1, nombre: "Casa Residencial - Familia Gómez", cliente: "1", total: 150000000, estado: "En Progreso" },
+                    { idObra: 2, nombre: "Edificio Comercial - Centro", cliente: "2", total: 800000000, estado: "En Progreso" },
+                    { idObra: 3, nombre: "Remodelación Oficinas", cliente: "3", total: 50000000, estado: "Planificación" }
+                ];
+                localStorage.setItem("obras", JSON.stringify(obrasEjemplo));
+            }
+        }
+
+        // Obtener el último ID de adelanto y asignar el siguiente
+        function actualizarIdAdelantoActual() {
+            try {
+                const adelantos = JSON.parse(localStorage.getItem("adelantosProveedores")) || [];
+                if (adelantos.length > 0) {
+                    const maxId = Math.max(...adelantos.map(adelanto => adelanto.idAdelanto));
+                    idAdelantoActual = maxId + 1;
+                } else {
+                    idAdelantoActual = 1;
+                }
+            } catch (error) {
+                console.error("Error al obtener último ID de adelanto:", error);
+                idAdelantoActual = 1;
+            }
+        }
+
+        // Obtener el último ID de anticipo y asignar el siguiente
+        function actualizarIdAnticipoActual() {
+            try {
+                const anticipos = JSON.parse(localStorage.getItem("anticiposClientes")) || [];
+                if (anticipos.length > 0) {
+                    const maxId = Math.max(...anticipos.map(anticipo => anticipo.idAnticipo));
+                    idAnticipoActual = maxId + 1;
+                } else {
+                    idAnticipoActual = 1;
+                }
+            } catch (error) {
+                console.error("Error al obtener último ID de anticipo:", error);
+                idAnticipoActual = 1;
+            }
+        }
+
+        // Cargar proveedores en el select
+        function cargarProveedores() {
+            try {
+                const proveedores = JSON.parse(localStorage.getItem("proveedores")) || [];
+                const selectProveedor = document.getElementById('selectProveedor');
+
+                // Limpiar opciones existentes excepto la primera
+                while (selectProveedor.options.length > 1) {
+                    selectProveedor.remove(1);
+                }
+
+                // Agregar proveedores activos al select
+                proveedores.forEach(proveedor => {
+                    if (proveedor.estado) {
+                        const option = document.createElement('option');
+                        option.value = proveedor.idProveedor;
+                        option.textContent = proveedor.razonsocial;
+                        option.dataset.ruc = proveedor.ruc;
+                        selectProveedor.appendChild(option);
+                    }
+                });
+
+            } catch (error) {
+                console.error("Error al cargar proveedores:", error);
+                alertify.error("Error al cargar proveedores: " + error.message);
+            }
+        }
+
+        // Cargar clientes en el select
+        function cargarClientes() {
+            try {
+                const clientes = JSON.parse(localStorage.getItem("clientes")) || [];
+                const selectCliente = document.getElementById('selectClienteAnticipo');
+
+                // Limpiar opciones existentes excepto la primera
+                while (selectCliente.options.length > 1) {
+                    selectCliente.remove(1);
+                }
+
+                // Agregar clientes al select
+                clientes.forEach(cliente => {
+                    const option = document.createElement('option');
+                    option.value = cliente.idCliente;
+                    option.textContent = cliente.razonSocial || cliente.razonsocial;
+                    option.dataset.ruc = cliente.rucCi || cliente.ruc;
+                    selectCliente.appendChild(option);
+                });
+
+            } catch (error) {
+                console.error("Error al cargar clientes:", error);
+                alertify.error("Error al cargar clientes: " + error.message);
+            }
+        }
+
+        // Cargar obras en el select
+        function cargarObras() {
+            try {
+                const obras = JSON.parse(localStorage.getItem("obras")) || [];
+                const selectObra = document.getElementById('selectObra');
+
+                // Limpiar opciones existentes excepto la primera
+                while (selectObra.options.length > 1) {
+                    selectObra.remove(1);
+                }
+
+                // Agregar obras al select
+                obras.forEach(obra => {
+                    const option = document.createElement('option');
+                    option.value = obra.idObra;
+                    option.textContent = obra.nombre;
+                    option.dataset.cliente = obra.cliente;
+                    selectObra.appendChild(option);
+                });
+
+            } catch (error) {
+                console.error("Error al cargar obras:", error);
+                alertify.error("Error al cargar obras: " + error.message);
+            }
+        }
+
+        // Inicializar las tablas
+        function inicializarTablas() {
+            // Tabla de adelantos
+            $('#tablaAdelantos').DataTable({
+                paging: true,
+                searching: true,
+                info: true,
+                ordering: true,
+                buttons: [
+                    {
+                        extend: 'excel',
+                        text: '<i class="bi bi-file-earmark-excel"></i> Excel',
+                        className: 'btn btn-success btn-sm',
+                        title: 'Adelantos a Proveedores'
+                    },
+                    {
+                        extend: 'pdf',
+                        text: '<i class="bi bi-file-earmark-pdf"></i> PDF',
+                        className: 'btn btn-danger btn-sm',
+                        title: 'Adelantos a Proveedores'
+                    },
+                    {
+                        extend: 'print',
+                        text: '<i class="bi bi-printer"></i> Imprimir',
+                        className: 'btn btn-info btn-sm',
+                        title: 'Adelantos a Proveedores'
+                    }
+                ],
+                language: {
+                    "decimal": ",",
+                    "thousands": ".",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                    "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros en total)",
+                    "lengthMenu": "Mostrar _MENU_ registros",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "No se encontraron coincidencias",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                },
+                columnDefs: [
+                    { targets: 0, width: '8%' },   // ID
+                    { targets: 1, width: '12%' },  // Fecha
+                    { targets: 2, width: '25%' },  // Proveedor
+                    { targets: 3, width: '15%' },  // Concepto
+                    { targets: 4, width: '15%', className: 'text-end' }, // Monto
+                    { targets: 5, width: '10%' },  // Estado
+                    { targets: 6, width: '15%', className: 'text-center' } // Acciones
+                ],
+                dom: 'Blfrtip',
+                lengthMenu: [10, 25, 50, 100],
+                pageLength: 10
+            });
+
+            // Tabla de anticipos
+            $('#tablaAnticipos').DataTable({
+                paging: true,
+                searching: true,
+                info: true,
+                ordering: true,
+                buttons: [
+                    {
+                        extend: 'excel',
+                        text: '<i class="bi bi-file-earmark-excel"></i> Excel',
+                        className: 'btn btn-success btn-sm',
+                        title: 'Anticipos de Clientes'
+                    },
+                    {
+                        extend: 'pdf',
+                        text: '<i class="bi bi-file-earmark-pdf"></i> PDF',
+                        className: 'btn btn-danger btn-sm',
+                        title: 'Anticipos de Clientes'
+                    },
+                    {
+                        extend: 'print',
+                        text: '<i class="bi bi-printer"></i> Imprimir',
+                        className: 'btn btn-info btn-sm',
+                        title: 'Anticipos de Clientes'
+                    }
+                ],
+                language: {
+                    "decimal": ",",
+                    "thousands": ".",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                    "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros en total)",
+                    "lengthMenu": "Mostrar _MENU_ registros",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "No se encontraron coincidencias",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                },
+                columnDefs: [
+                    { targets: 0, width: '8%' },   // ID
+                    { targets: 1, width: '12%' },  // Fecha
+                    { targets: 2, width: '20%' },  // Cliente
+                    { targets: 3, width: '20%' },  // Obra
+                    { targets: 4, width: '15%' },  // Concepto
+                    { targets: 5, width: '15%', className: 'text-end' }, // Monto
+                    { targets: 6, width: '10%', className: 'text-center' } // Acciones
+                ],
+                dom: 'Blfrtip',
+                lengthMenu: [10, 25, 50, 100],
+                pageLength: 10
+            });
+
+            // Cargar datos en las tablas
+            cargarAdelantosEnTabla();
+            cargarAnticiposEnTabla();
+
+            // Eventos para ver detalles
+            $('#tablaAdelantos tbody').on('click', '.ver-detalle-adelanto', function () {
+                const data = $('#tablaAdelantos').DataTable().row($(this).closest('tr')).data();
+                mostrarDetalleAdelanto(data[0]);
+            });
+
+            $('#tablaAnticipos tbody').on('click', '.ver-detalle-anticipo', function () {
+                const data = $('#tablaAnticipos').DataTable().row($(this).closest('tr')).data();
+                mostrarDetalleAnticipo(data[0]);
+            });
+        }
+
+        // Inicializar todos los eventos de la página
+        function inicializarEventos() {
+            // Evento al seleccionar proveedor
+            document.getElementById('selectProveedor').addEventListener('change', function () {
+                const ruc = this.options[this.selectedIndex].dataset.ruc || '';
+                document.getElementById('rucProveedor').value = ruc;
+            });
+
+            // Evento al seleccionar cliente en anticipos
+            document.getElementById('selectClienteAnticipo').addEventListener('change', function () {
+                const ruc = this.options[this.selectedIndex].dataset.ruc || '';
+                document.getElementById('rucClienteAnticipo').value = ruc;
+
+                // Filtrar obras por cliente
+                filtrarObrasPorCliente(this.value);
+            });
+
+            // Evento al cambiar forma de pago para adelantos
+            document.getElementById('formaPagoAdelanto').addEventListener('change', function () {
+                const formaPago = this.value;
+                const contenedorReferencia = document.getElementById('contenedorReferenciaAdelanto');
+
+                if (formaPago === 'transferencia' || formaPago === 'cheque' || formaPago === 'deposito') {
+                    contenedorReferencia.style.display = 'block';
+                    document.getElementById('referenciaAdelanto').setAttribute('required', '');
+                } else {
+                    contenedorReferencia.style.display = 'none';
+                    document.getElementById('referenciaAdelanto').removeAttribute('required');
+                }
+            });
+
+            // Evento al cambiar forma de pago para anticipos
+            document.getElementById('formaPagoAnticipo').addEventListener('change', function () {
+                const formaPago = this.value;
+                const contenedorReferencia = document.getElementById('contenedorReferenciaAnticipo');
+
+                if (formaPago === 'transferencia' || formaPago === 'cheque' || formaPago === 'deposito') {
+                    contenedorReferencia.style.display = 'block';
+                    document.getElementById('referenciaAnticipo').setAttribute('required', '');
+                } else {
+                    contenedorReferencia.style.display = 'none';
+                    document.getElementById('referenciaAnticipo').removeAttribute('required');
+                }
+            });
+
+            // Formatear montos como moneda
+            const montoAdelantoInput = document.getElementById('montoAdelanto');
+            montoAdelantoInput.addEventListener('input', function (e) {
+                let value = this.value.replace(/[^0-9]/g, '');
+                if (value) {
+                    this.value = formatoNumero(parseInt(value));
+                } else {
+                    this.value = '';
+                }
+            });
+
+            const montoAnticipoInput = document.getElementById('montoAnticipo');
+            montoAnticipoInput.addEventListener('input', function (e) {
+                let value = this.value.replace(/[^0-9]/g, '');
+                if (value) {
+                    this.value = formatoNumero(parseInt(value));
+                } else {
+                    this.value = '';
+                }
+            });
+
+            // Evento para registrar adelanto
+            document.getElementById('formAdelanto').addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                if (!this.checkValidity()) {
+                    this.classList.add('was-validated');
+                    return;
+                }
+
+                procesarAdelanto();
+            });
+
+            // Evento para registrar anticipo
+            document.getElementById('formAnticipo').addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                if (!this.checkValidity()) {
+                    this.classList.add('was-validated');
+                    return;
+                }
+
+                procesarAnticipo();
+            });
+        }
+
+        // Filtrar obras por cliente
+        function filtrarObrasPorCliente(idCliente) {
+            try {
+                const obras = JSON.parse(localStorage.getItem("obras")) || [];
+                const selectObra = document.getElementById('selectObra');
+
+                // Limpiar opciones existentes excepto la primera
+                while (selectObra.options.length > 1) {
+                    selectObra.remove(1);
+                }
+
+                // Agregar solo las obras del cliente seleccionado
+                const obrasCliente = obras.filter(obra => obra.cliente == idCliente);
+
+                obrasCliente.forEach(obra => {
+                    const option = document.createElement('option');
+                    option.value = obra.idObra;
+                    option.textContent = obra.nombre;
+                    selectObra.appendChild(option);
+                });
+
+                if (obrasCliente.length === 0) {
+                    const option = document.createElement('option');
+                    option.value = '';
+                    option.textContent = 'No hay obras para este cliente';
+                    option.disabled = true;
+                    selectObra.appendChild(option);
+                }
+
+            } catch (error) {
+                console.error("Error al filtrar obras:", error);
+            }
+        }
+
+        // Procesar adelanto
+        function procesarAdelanto() {
+            try {
+                const idProveedor = document.getElementById('selectProveedor').value;
+                const fechaAdelanto = document.getElementById('fechaAdelanto').value;
+                let montoAdelanto = document.getElementById('montoAdelanto').value;
+                const conceptoAdelanto = document.getElementById('conceptoAdelanto').value;
+                const formaPagoAdelanto = document.getElementById('formaPagoAdelanto').value;
+                const referenciaAdelanto = document.getElementById('referenciaAdelanto').value || null;
+                const observacionesAdelanto = document.getElementById('observacionesAdelanto').value || null;
+
+                // Validaciones adicionales
+                if (!idProveedor) {
+                    alertify.error('Debe seleccionar un proveedor');
+                    document.getElementById('selectProveedor').focus();
+                    return;
+                }
+
+                if (!fechaAdelanto) {
+                    alertify.error('Debe ingresar la fecha del adelanto');
+                    document.getElementById('fechaAdelanto').focus();
+                    return;
+                }
+
+                // Validar que la fecha no sea futura
+                const hoy = new Date();
+                const fechaIngresada = new Date(fechaAdelanto);
+                if (fechaIngresada > hoy) {
+                    alertify.error('La fecha del adelanto no puede ser futura');
+                    document.getElementById('fechaAdelanto').focus();
+                    return;
+                }
+
+                // Convertir monto a número
+                montoAdelanto = montoAdelanto.replace(/\./g, '');
+                montoAdelanto = parseInt(montoAdelanto);
+
+                // Validar monto
+                if (isNaN(montoAdelanto) || montoAdelanto <= 0) {
+                    alertify.error('Ingrese un monto válido mayor a cero');
+                    document.getElementById('montoAdelanto').focus();
+                    return;
+                }
+
+                // Validar monto máximo (ejemplo: 100 millones)
+                if (montoAdelanto > 100000000) {
+                    alertify.error('El monto del adelanto no puede exceder ₲ 100.000.000');
+                    document.getElementById('montoAdelanto').focus();
+                    return;
+                }
+
+                // Validar referencia si es requerida
+                if (['transferencia', 'cheque', 'deposito'].includes(formaPagoAdelanto) && !referenciaAdelanto) {
+                    alertify.error('Debe ingresar el número de referencia para este tipo de pago');
+                    document.getElementById('referenciaAdelanto').focus();
+                    return;
+                }
+
+                // Obtener nombre del proveedor para confirmación
+                const nombreProveedor = document.getElementById('selectProveedor').options[document.getElementById('selectProveedor').selectedIndex].text;
+
+                // Mostrar confirmación
+                alertify.confirm(
+                    'Confirmar Adelanto',
+                    `¿Confirma el registro del adelanto por ₲ ${formatoNumero(montoAdelanto)} para ${nombreProveedor}?`,
+                    function () {
+                        // Crear objeto de adelanto
+                        const adelanto = {
+                            idAdelanto: idAdelantoActual,
+                            idProveedor: parseInt(idProveedor),
+                            fechaAdelanto: fechaAdelanto,
+                            montoAdelanto: montoAdelanto,
+                            montoOriginal: montoAdelanto, // Para historial
+                            conceptoAdelanto: conceptoAdelanto,
+                            formaPagoAdelanto: formaPagoAdelanto,
+                            referenciaAdelanto: referenciaAdelanto,
+                            observacionesAdelanto: observacionesAdelanto,
+                            estadoAdelanto: 'pendiente',
+                            fechaRegistro: new Date().toISOString(),
+                            idusuario: currentUser.idusuario,
+                            usuario: currentUser.nombre + " " + currentUser.apellido
+                        };
+
+                        // Guardar adelanto
+                        const adelantos = JSON.parse(localStorage.getItem("adelantosProveedores")) || [];
+                        adelantos.push(adelanto);
+                        localStorage.setItem("adelantosProveedores", JSON.stringify(adelantos));
+
+                        // Registrar en historial de movimientos financieros
+                        registrarMovimientoFinanciero({
+                            tipo: 'adelanto_proveedor',
+                            idProveedor: parseInt(idProveedor),
+                            monto: montoAdelanto,
+                            fecha: fechaAdelanto,
+                            descripcion: `Adelanto registrado a ${nombreProveedor}`,
+                            concepto: conceptoAdelanto,
+                            formaPago: formaPagoAdelanto,
+                            referencia: referenciaAdelanto
+                        });
+
+                        // Mostrar mensaje de éxito
+                        alertify.success(`Adelanto registrado correctamente (ID: ${idAdelantoActual})`);
+
+                        // Resetear formulario
+                        resetearFormularioAdelanto();
+
+                        // Actualizar tabla
+                        cargarAdelantosEnTabla();
+
+                        // Generar nuevo ID
+                        actualizarIdAdelantoActual();
+                    },
+                    function () {
+                        // Cancelar
+                        alertify.message('Registro de adelanto cancelado');
+                    }
+                );
+
+            } catch (error) {
+                console.error("Error al procesar adelanto:", error);
+                alertify.error("Error al procesar adelanto: " + error.message);
+            }
+        }
+
+        // Procesar anticipo
+        function procesarAnticipo() {
+            try {
+                const idCliente = document.getElementById('selectClienteAnticipo').value;
+                const idObra = document.getElementById('selectObra').value;
+                const fechaAnticipo = document.getElementById('fechaAnticipo').value;
+                let montoAnticipo = document.getElementById('montoAnticipo').value;
+                const conceptoAnticipo = document.getElementById('conceptoAnticipo').value;
+                const formaPagoAnticipo = document.getElementById('formaPagoAnticipo').value;
+                const referenciaAnticipo = document.getElementById('referenciaAnticipo').value || null;
+                const observacionesAnticipo = document.getElementById('observacionesAnticipo').value || null;
+
+                // Validaciones adicionales
+                if (!idCliente) {
+                    alertify.error('Debe seleccionar un cliente');
+                    document.getElementById('selectClienteAnticipo').focus();
+                    return;
+                }
+
+                if (!idObra) {
+                    alertify.error('Debe seleccionar una obra');
+                    document.getElementById('selectObra').focus();
+                    return;
+                }
+
+                if (!fechaAnticipo) {
+                    alertify.error('Debe ingresar la fecha del anticipo');
+                    document.getElementById('fechaAnticipo').focus();
+                    return;
+                }
+
+                // Validar que la fecha no sea futura
+                const hoy = new Date();
+                const fechaIngresada = new Date(fechaAnticipo);
+                if (fechaIngresada > hoy) {
+                    alertify.error('La fecha del anticipo no puede ser futura');
+                    document.getElementById('fechaAnticipo').focus();
+                    return;
+                }
+
+                // Convertir monto a número
+                montoAnticipo = montoAnticipo.replace(/\./g, '');
+                montoAnticipo = parseInt(montoAnticipo);
+
+                // Validar monto
+                if (isNaN(montoAnticipo) || montoAnticipo <= 0) {
+                    alertify.error('Ingrese un monto válido mayor a cero');
+                    document.getElementById('montoAnticipo').focus();
+                    return;
+                }
+
+                // Validar monto máximo (ejemplo: 500 millones)
+                if (montoAnticipo > 500000000) {
+                    alertify.error('El monto del anticipo no puede exceder ₲ 500.000.000');
+                    document.getElementById('montoAnticipo').focus();
+                    return;
+                }
+
+                // Validar referencia si es requerida
+                if (['transferencia', 'cheque', 'deposito'].includes(formaPagoAnticipo) && !referenciaAnticipo) {
+                    alertify.error('Debe ingresar el número de referencia para este tipo de pago');
+                    document.getElementById('referenciaAnticipo').focus();
+                    return;
+                }
+
+                // Obtener nombres para confirmación
+                const nombreCliente = document.getElementById('selectClienteAnticipo').options[document.getElementById('selectClienteAnticipo').selectedIndex].text;
+                const nombreObra = document.getElementById('selectObra').options[document.getElementById('selectObra').selectedIndex].text;
+
+                // Mostrar confirmación
+                alertify.confirm(
+                    'Confirmar Anticipo',
+                    `¿Confirma el registro del anticipo por ₲ ${formatoNumero(montoAnticipo)} de ${nombreCliente} para la obra "${nombreObra}"?`,
+                    function () {
+                        // Crear objeto de anticipo
+                        const anticipo = {
+                            idAnticipo: idAnticipoActual,
+                            idCliente: parseInt(idCliente),
+                            idObra: parseInt(idObra),
+                            fechaAnticipo: fechaAnticipo,
+                            montoAnticipo: montoAnticipo,
+                            montoOriginal: montoAnticipo, // Para historial
+                            conceptoAnticipo: conceptoAnticipo,
+                            formaPagoAnticipo: formaPagoAnticipo,
+                            referenciaAnticipo: referenciaAnticipo,
+                            observacionesAnticipo: observacionesAnticipo,
+                            fechaRegistro: new Date().toISOString(),
+                            idusuario: currentUser.idusuario,
+                            usuario: currentUser.nombre + " " + currentUser.apellido
+                        };
+
+                        // Guardar anticipo
+                        const anticipos = JSON.parse(localStorage.getItem("anticiposClientes")) || [];
+                        anticipos.push(anticipo);
+                        localStorage.setItem("anticiposClientes", JSON.stringify(anticipos));
+
+                        // Registrar en historial de movimientos financieros
+                        registrarMovimientoFinanciero({
+                            tipo: 'anticipo_cliente',
+                            idCliente: parseInt(idCliente),
+                            idObra: parseInt(idObra),
+                            monto: montoAnticipo,
+                            fecha: fechaAnticipo,
+                            descripcion: `Anticipo recibido de ${nombreCliente} para obra "${nombreObra}"`,
+                            concepto: conceptoAnticipo,
+                            formaPago: formaPagoAnticipo,
+                            referencia: referenciaAnticipo
+                        });
+
+                        // Mostrar mensaje de éxito
+                        alertify.success(`Anticipo registrado correctamente (ID: ${idAnticipoActual})`);
+
+                        // Resetear formulario
+                        resetearFormularioAnticipo();
+
+                        // Actualizar tabla
+                        cargarAnticiposEnTabla();
+
+                        // Generar nuevo ID
+                        actualizarIdAnticipoActual();
+                    },
+                    function () {
+                        // Cancelar
+                        alertify.message('Registro de anticipo cancelado');
+                    }
+                );
+
+            } catch (error) {
+                console.error("Error al procesar anticipo:", error);
+                alertify.error("Error al procesar anticipo: " + error.message);
+            }
+        }
+
+        // Cargar adelantos en tabla
+        function cargarAdelantosEnTabla() {
+            try {
+                const adelantos = JSON.parse(localStorage.getItem("adelantosProveedores")) || [];
+                const proveedores = JSON.parse(localStorage.getItem("proveedores")) || [];
+
+                const tabla = $('#tablaAdelantos').DataTable();
+                tabla.clear();
+
+                adelantos.forEach(adelanto => {
+                    const proveedor = proveedores.find(p => p.idProveedor == adelanto.idProveedor);
+                    const nombreProveedor = proveedor ? proveedor.razonsocial : "Proveedor desconocido";
+
+                    // Manejar diferentes formatos de fecha
+                    let fecha;
+                    const fechaAdelanto = adelanto.fechaAdelanto || adelanto.fecha;
+                    if (fechaAdelanto) {
+                        fecha = new Date(fechaAdelanto).toLocaleDateString('es-PY');
+                    } else {
+                        fecha = "Sin fecha";
+                    }
+
+                    // Manejar diferentes formatos de concepto
+                    const concepto = obtenerNombreConcepto(adelanto.conceptoAdelanto || adelanto.concepto);
+
+                    // Manejar diferentes formatos de monto
+                    const monto = adelanto.montoAdelanto || adelanto.monto || 0;
+
+                    // Manejar diferentes formatos de estado
+                    const estado = adelanto.estadoAdelanto || adelanto.estado || 'pendiente';
+                    const estadoBadge = estado === 'pendiente' || estado === 'activo'
+                        ? '<span class="badge bg-warning">Pendiente</span>'
+                        : '<span class="badge bg-success">Descontado</span>';
+
+                    const acciones = `
+                        <button class="btn btn-sm btn-info ver-detalle-adelanto" title="Ver Detalle">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                        ${currentUser.rol === 'administrador' ? `
+                            <button class="btn btn-sm btn-danger ms-1" onclick="eliminarAdelanto(${adelanto.idAdelanto})" title="Eliminar">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        ` : ''}
+                    `;
+
+                    tabla.row.add([
+                        adelanto.idAdelanto,
+                        fecha,
+                        nombreProveedor,
+                        concepto,
+                        '₲ ' + formatoNumero(monto),
+                        estadoBadge,
+                        acciones
+                    ]);
+                });
+
+                tabla.draw();
+            } catch (error) {
+                console.error("Error al cargar adelantos en tabla:", error);
+                alertify.error("Error al cargar historial de adelantos: " + error.message);
+            }
+        }
+
+        // Cargar anticipos en tabla
+        function cargarAnticiposEnTabla() {
+            try {
+                const anticipos = JSON.parse(localStorage.getItem("anticiposClientes")) || [];
+                const clientes = JSON.parse(localStorage.getItem("clientes")) || [];
+                const obras = JSON.parse(localStorage.getItem("obras")) || [];
+
+                const tabla = $('#tablaAnticipos').DataTable();
+                tabla.clear();
+
+                anticipos.forEach(anticipo => {
+                    const cliente = clientes.find(c => c.idCliente == anticipo.idCliente);
+                    const nombreCliente = cliente ? (cliente.razonSocial || cliente.razonsocial) : "Cliente desconocido";
+
+                    // Manejar diferentes formatos de obra
+                    let nombreObra = "Sin obra asignada";
+                    if (anticipo.idObra) {
+                        const obra = obras.find(o => o.idObra == anticipo.idObra);
+                        nombreObra = obra ? obra.nombre : "Obra desconocida";
+                    }
+
+                    // Manejar diferentes formatos de fecha
+                    let fecha;
+                    const fechaAnticipo = anticipo.fechaAnticipo || anticipo.fecha;
+                    if (fechaAnticipo) {
+                        fecha = new Date(fechaAnticipo).toLocaleDateString('es-PY');
+                    } else {
+                        fecha = "Sin fecha";
+                    }
+
+                    // Manejar diferentes formatos de concepto
+                    const concepto = obtenerNombreConcepto(anticipo.conceptoAnticipo || anticipo.concepto);
+
+                    // Manejar diferentes formatos de monto
+                    const monto = anticipo.montoAnticipo || anticipo.monto || 0;
+
+                    const acciones = `
+                        <button class="btn btn-sm btn-info ver-detalle-anticipo" title="Ver Detalle">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                        ${currentUser.rol === 'administrador' ? `
+                            <button class="btn btn-sm btn-danger ms-1" onclick="eliminarAnticipo(${anticipo.idAnticipo})" title="Eliminar">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        ` : ''}
+                    `;
+
+                    tabla.row.add([
+                        anticipo.idAnticipo,
+                        fecha,
+                        nombreCliente,
+                        nombreObra,
+                        concepto,
+                        '₲ ' + formatoNumero(monto),
+                        acciones
+                    ]);
+                });
+
+                tabla.draw();
+            } catch (error) {
+                console.error("Error al cargar anticipos en tabla:", error);
+                alertify.error("Error al cargar historial de anticipos: " + error.message);
+            }
+        }
+
+        // Mostrar detalle de adelanto
+        function mostrarDetalleAdelanto(idAdelanto) {
+            try {
+                const adelantos = JSON.parse(localStorage.getItem("adelantosProveedores")) || [];
+                const proveedores = JSON.parse(localStorage.getItem("proveedores")) || [];
+
+                const adelanto = adelantos.find(a => a.idAdelanto == idAdelanto);
+                if (!adelanto) {
+                    alertify.error("No se encontró el adelanto.");
+                    return;
+                }
+
+                const proveedor = proveedores.find(p => p.idProveedor == adelanto.idProveedor);
+                const nombreProveedor = proveedor ? proveedor.razonsocial : "Proveedor desconocido";
+                const ruc = proveedor ? proveedor.ruc : "-";
+
+                // Manejar diferentes formatos de fecha
+                const fechaAdelanto = adelanto.fechaAdelanto || adelanto.fecha;
+                const fecha = fechaAdelanto ? new Date(fechaAdelanto).toLocaleDateString('es-PY') : "Sin fecha";
+
+                // Manejar diferentes formatos de forma de pago
+                const formaPagoAdelanto = adelanto.formaPagoAdelanto || adelanto.formaPago;
+                const formaPago = obtenerNombreFormaPago(formaPagoAdelanto);
+
+                // Manejar diferentes formatos de concepto
+                const conceptoAdelanto = adelanto.conceptoAdelanto || adelanto.concepto;
+                const concepto = obtenerNombreConcepto(conceptoAdelanto);
+
+                // Manejar diferentes formatos de referencia y observaciones
+                const referencia = adelanto.referenciaAdelanto || adelanto.referencia || "-";
+                const observaciones = adelanto.observacionesAdelanto || adelanto.observaciones || "-";
+
+                // Manejar diferentes formatos de monto y estado
+                const monto = adelanto.montoAdelanto || adelanto.monto || 0;
+                const estado = adelanto.estadoAdelanto || adelanto.estado || 'pendiente';
+
+                let html = `
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <p><strong>Proveedor:</strong> ${nombreProveedor}</p>
+                            <p><strong>RUC:</strong> ${ruc}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Fecha:</strong> ${fecha}</p>
+                            <p><strong>Usuario:</strong> ${adelanto.usuario || "-"}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Concepto:</strong> ${concepto}</p>
+                            <p><strong>Forma de Pago:</strong> ${formaPago}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Monto:</strong> ₲ ${formatoNumero(monto)}</p>
+                            <p><strong>Estado:</strong> ${estado === 'pendiente' || estado === 'activo' ? 'Pendiente' : 'Descontado'}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Referencia:</strong> ${referencia}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Observaciones:</strong> ${observaciones}</p>
+                        </div>
+                    </div>
+                `;
+
+                document.getElementById('detalleAdelantoContenido').innerHTML = html;
+                const modal = new bootstrap.Modal(document.getElementById('modalDetalleAdelanto'));
+                modal.show();
+            } catch (error) {
+                alertify.error("Error al mostrar detalle: " + error.message);
+            }
+        }
+
+        // Mostrar detalle de anticipo
+        function mostrarDetalleAnticipo(idAnticipo) {
+            try {
+                const anticipos = JSON.parse(localStorage.getItem("anticiposClientes")) || [];
+                const clientes = JSON.parse(localStorage.getItem("clientes")) || [];
+                const obras = JSON.parse(localStorage.getItem("obras")) || [];
+
+                const anticipo = anticipos.find(a => a.idAnticipo == idAnticipo);
+                if (!anticipo) {
+                    alertify.error("No se encontró el anticipo.");
+                    return;
+                }
+
+                const cliente = clientes.find(c => c.idCliente == anticipo.idCliente);
+                const nombreCliente = cliente ? (cliente.razonSocial || cliente.razonsocial) : "Cliente desconocido";
+                const ruc = cliente ? (cliente.rucCi || cliente.ruc) : "-";
+
+                // Manejar obra (puede no tener obra asignada)
+                let nombreObra = "Sin obra asignada";
+                if (anticipo.idObra) {
+                    const obra = obras.find(o => o.idObra == anticipo.idObra);
+                    nombreObra = obra ? obra.nombre : "Obra desconocida";
+                }
+
+                // Manejar diferentes formatos de fecha
+                const fechaAnticipo = anticipo.fechaAnticipo || anticipo.fecha;
+                const fecha = fechaAnticipo ? new Date(fechaAnticipo).toLocaleDateString('es-PY') : "Sin fecha";
+
+                // Manejar diferentes formatos de forma de pago
+                const formaPagoAnticipo = anticipo.formaPagoAnticipo || anticipo.formaPago;
+                const formaPago = obtenerNombreFormaPago(formaPagoAnticipo);
+
+                // Manejar diferentes formatos de concepto
+                const conceptoAnticipo = anticipo.conceptoAnticipo || anticipo.concepto;
+                const concepto = obtenerNombreConcepto(conceptoAnticipo);
+
+                // Manejar diferentes formatos de referencia y observaciones
+                const referencia = anticipo.referenciaAnticipo || anticipo.referencia || "-";
+                const observaciones = anticipo.observacionesAnticipo || anticipo.observaciones || "-";
+
+                // Manejar diferentes formatos de monto
+                const monto = anticipo.montoAnticipo || anticipo.monto || 0;
+
+                let html = `
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <p><strong>Cliente:</strong> ${nombreCliente}</p>
+                            <p><strong>RUC:</strong> ${ruc}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Fecha:</strong> ${fecha}</p>
+                            <p><strong>Usuario:</strong> ${anticipo.usuario || "-"}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Obra:</strong> ${nombreObra}</p>
+                            <p><strong>Concepto:</strong> ${concepto}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Monto:</strong> ₲ ${formatoNumero(monto)}</p>
+                            <p><strong>Forma de Pago:</strong> ${formaPago}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Referencia:</strong> ${referencia}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Observaciones:</strong> ${observaciones}</p>
+                        </div>
+                    </div>
+                `;
+
+                document.getElementById('detalleAnticipoContenido').innerHTML = html;
+                const modal = new bootstrap.Modal(document.getElementById('modalDetalleAnticipo'));
+                modal.show();
+            } catch (error) {
+                alertify.error("Error al mostrar detalle: " + error.message);
+            }
+        }
+
+        // Obtener nombre legible de concepto
+        function obtenerNombreConcepto(concepto) {
+            if (!concepto) return "Sin concepto";
+
+            switch (concepto) {
+                case 'adelanto_compra': return 'Adelanto por Compra';
+                case 'anticipo_servicio': return 'Anticipo de Servicio';
+                case 'garantia': return 'Garantía';
+                case 'anticipo_obra': return 'Anticipo de Obra';
+                case 'seña': return 'Seña';
+                case 'pago_inicial': return 'Pago Inicial';
+                case 'otros': return 'Otros';
+                // Manejar conceptos de bd.js que son textos descriptivos
+                default:
+                    if (concepto.includes('adelanto') || concepto.includes('Adelanto')) {
+                        return 'Adelanto por Compra';
+                    } else if (concepto.includes('anticipo') || concepto.includes('Anticipo')) {
+                        return 'Anticipo de Obra';
+                    } else {
+                        return concepto.charAt(0).toUpperCase() + concepto.slice(1);
+                    }
+            }
+        }
+
+        // Obtener nombre legible de forma de pago
+        function obtenerNombreFormaPago(formaPago) {
+            switch (formaPago) {
+                case 'efectivo': return 'Efectivo';
+                case 'transferencia': return 'Transferencia Bancaria';
+                case 'cheque': return 'Cheque';
+                case 'deposito': return 'Depósito Bancario';
+                default: return formaPago;
+            }
+        }
+
+        // Resetear formulario de adelanto
+        function resetearFormularioAdelanto() {
+            document.getElementById('formAdelanto').reset();
+            document.getElementById('fechaAdelanto').valueAsDate = new Date();
+            document.getElementById('rucProveedor').value = '';
+            document.getElementById('contenedorReferenciaAdelanto').style.display = 'none';
+            document.getElementById('formAdelanto').classList.remove('was-validated');
+        }
+
+        // Resetear formulario de anticipo
+        function resetearFormularioAnticipo() {
+            document.getElementById('formAnticipo').reset();
+            document.getElementById('fechaAnticipo').valueAsDate = new Date();
+            document.getElementById('rucClienteAnticipo').value = '';
+            document.getElementById('contenedorReferenciaAnticipo').style.display = 'none';
+            document.getElementById('formAnticipo').classList.remove('was-validated');
+        }
+
+        // Formatear número
+        function formatoNumero(numero) {
+            return new Intl.NumberFormat('es-PY', {
+                maximumFractionDigits: 0
+            }).format(numero);
+        }
+
+        function aplicarAdelantosAlPago(idProveedor, montoPago) {
+            try {
+                let adelantos = JSON.parse(localStorage.getItem("adelantosProveedores")) || [];
+                let adelantosPendientes = adelantos.filter(a =>
+                    a.idProveedor == idProveedor &&
+                    a.estadoAdelanto === 'pendiente' &&
+                    a.montoAdelanto > 0
+                );
+                let montoConAdelanto = 0;
+                let montoRestante = montoPago;
+
+                adelantosPendientes.forEach(adelanto => {
+                    if (montoRestante <= 0) return;
+                    let aplicar = Math.min(adelanto.montoAdelanto, montoRestante);
+                    adelanto.montoAdelanto -= aplicar;
+                    montoConAdelanto += aplicar;
+                    montoRestante -= aplicar;
+                    if (adelanto.montoAdelanto === 0) adelanto.estadoAdelanto = 'aplicado';
+                });
+
+                // Guardar los adelantos actualizados
+                localStorage.setItem("adelantosProveedores", JSON.stringify(adelantos));
+
+                // Registrar en historial de movimientos
+                registrarMovimientoFinanciero({
+                    tipo: 'aplicacion_adelanto',
+                    idProveedor: idProveedor,
+                    montoAplicado: montoConAdelanto,
+                    fecha: new Date().toISOString(),
+                    descripcion: `Aplicación de adelantos por ₲ ${formatoNumero(montoConAdelanto)}`
+                });
+
+                // Devuelve cuánto se pagó con adelanto y cuánto queda por pagar en efectivo
+                return {
+                    pagadoConAdelanto: montoConAdelanto,
+                    pagadoEnEfectivo: montoRestante
+                };
+            } catch (error) {
+                console.error("Error al aplicar adelantos al pago:", error);
+                return {
+                    pagadoConAdelanto: 0,
+                    pagadoEnEfectivo: montoPago
+                };
+            }
+        }
+
+        // Función para obtener anticipos disponibles de un cliente
+        function obtenerAnticiposCliente(idCliente) {
+            try {
+                const anticipos = JSON.parse(localStorage.getItem("anticiposClientes")) || [];
+                return anticipos.filter(a => a.idCliente == idCliente);
+            } catch (error) {
+                console.error("Error al obtener anticipos del cliente:", error);
+                return [];
+            }
+        }
+
+        // Función para aplicar anticipos a una factura
+        function aplicarAnticiposAFactura(idCliente, montoFactura) {
+            try {
+                let anticipos = JSON.parse(localStorage.getItem("anticiposClientes")) || [];
+                let anticiposDisponibles = anticipos.filter(a =>
+                    a.idCliente == idCliente &&
+                    a.montoAnticipo > 0
+                );
+
+                let montoConAnticipo = 0;
+                let montoRestante = montoFactura;
+
+                anticiposDisponibles.forEach(anticipo => {
+                    if (montoRestante <= 0) return;
+                    let aplicar = Math.min(anticipo.montoAnticipo, montoRestante);
+                    anticipo.montoAnticipo -= aplicar;
+                    montoConAnticipo += aplicar;
+                    montoRestante -= aplicar;
+                });
+
+                // Guardar los anticipos actualizados
+                localStorage.setItem("anticiposClientes", JSON.stringify(anticipos));
+
+                // Registrar en historial de movimientos
+                registrarMovimientoFinanciero({
+                    tipo: 'aplicacion_anticipo',
+                    idCliente: idCliente,
+                    montoAplicado: montoConAnticipo,
+                    fecha: new Date().toISOString(),
+                    descripcion: `Aplicación de anticipos por ₲ ${formatoNumero(montoConAnticipo)}`
+                });
+
+                return {
+                    aplicadoConAnticipo: montoConAnticipo,
+                    montoRestante: montoRestante
+                };
+            } catch (error) {
+                console.error("Error al aplicar anticipos a factura:", error);
+                return {
+                    aplicadoConAnticipo: 0,
+                    montoRestante: montoFactura
+                };
+            }
+        }
+
+        // Función para registrar movimientos financieros
+        function registrarMovimientoFinanciero(movimiento) {
+            try {
+                const movimientos = JSON.parse(localStorage.getItem("movimientosFinancieros")) || [];
+                movimiento.id = Date.now(); // ID único basado en timestamp
+                movimiento.usuario = currentUser.nombre + " " + currentUser.apellido;
+                movimientos.push(movimiento);
+                localStorage.setItem("movimientosFinancieros", JSON.stringify(movimientos));
+            } catch (error) {
+                console.error("Error al registrar movimiento financiero:", error);
+            }
+        }
+
+        // Función para obtener resumen financiero de adelantos y anticipos
+        function obtenerResumenFinanciero() {
+            try {
+                const adelantos = JSON.parse(localStorage.getItem("adelantosProveedores")) || [];
+                const anticipos = JSON.parse(localStorage.getItem("anticiposClientes")) || [];
+
+                const totalAdelantosPendientes = adelantos
+                    .filter(a => a.estadoAdelanto === 'pendiente')
+                    .reduce((sum, a) => sum + a.montoAdelanto, 0);
+
+                const totalAnticiposDisponibles = anticipos
+                    .reduce((sum, a) => sum + a.montoAnticipo, 0);
+
+                return {
+                    totalAdelantosPendientes,
+                    totalAnticiposDisponibles,
+                    cantidadAdelantos: adelantos.filter(a => a.estadoAdelanto === 'pendiente').length,
+                    cantidadAnticipos: anticipos.length
+                };
+            } catch (error) {
+                console.error("Error al obtener resumen financiero:", error);
+                return {
+                    totalAdelantosPendientes: 0,
+                    totalAnticiposDisponibles: 0,
+                    cantidadAdelantos: 0,
+                    cantidadAnticipos: 0
+                };
+            }
+        }
+
+        // Función para eliminar adelanto (solo administradores)
+        function eliminarAdelanto(idAdelanto) {
+            if (currentUser.rol !== 'administrador') {
+                alertify.error("No tienes permisos para eliminar adelantos");
+                return;
+            }
+
+            alertify.confirm('Eliminar Adelanto',
+                '¿Está seguro de que desea eliminar este adelanto? Esta acción no se puede deshacer.',
+                function () {
+                    try {
+                        let adelantos = JSON.parse(localStorage.getItem("adelantosProveedores")) || [];
+                        adelantos = adelantos.filter(a => a.idAdelanto != idAdelanto);
+                        localStorage.setItem("adelantosProveedores", JSON.stringify(adelantos));
+
+                        // Registrar movimiento
+                        registrarMovimientoFinanciero({
+                            tipo: 'eliminacion_adelanto',
+                            idAdelanto: idAdelanto,
+                            fecha: new Date().toISOString(),
+                            descripcion: `Adelanto ID ${idAdelanto} eliminado por ${currentUser.nombre}`
+                        });
+
+                        cargarAdelantosEnTabla();
+                        alertify.success("Adelanto eliminado correctamente");
+                    } catch (error) {
+                        console.error("Error al eliminar adelanto:", error);
+                        alertify.error("Error al eliminar adelanto: " + error.message);
+                    }
+                },
+                function () {
+                    // Cancelar
+                }
+            );
+        }
+
+        // Función para eliminar anticipo (solo administradores)
+        function eliminarAnticipo(idAnticipo) {
+            if (currentUser.rol !== 'administrador') {
+                alertify.error("No tienes permisos para eliminar anticipos");
+                return;
+            }
+
+            alertify.confirm('Eliminar Anticipo',
+                '¿Está seguro de que desea eliminar este anticipo? Esta acción no se puede deshacer.',
+                function () {
+                    try {
+                        let anticipos = JSON.parse(localStorage.getItem("anticiposClientes")) || [];
+                        anticipos = anticipos.filter(a => a.idAnticipo != idAnticipo);
+                        localStorage.setItem("anticiposClientes", JSON.stringify(anticipos));
+
+                        // Registrar movimiento
+                        registrarMovimientoFinanciero({
+                            tipo: 'eliminacion_anticipo',
+                            idAnticipo: idAnticipo,
+                            fecha: new Date().toISOString(),
+                            descripcion: `Anticipo ID ${idAnticipo} eliminado por ${currentUser.nombre}`
+                        });
+
+                        cargarAnticiposEnTabla();
+                        alertify.success("Anticipo eliminado correctamente");
+                    } catch (error) {
+                        console.error("Error al eliminar anticipo:", error);
+                        alertify.error("Error al eliminar anticipo: " + error.message);
+                    }
+                },
+                function () {
+                    // Cancelar
+                }
+            );
+        }
+
+        // Función para exportar datos a Excel (requiere las librerías ya incluidas)
+        function exportarAdelantos() {
+            try {
+                $('#tablaAdelantos').DataTable().button('0').trigger();
+            } catch (error) {
+                console.error("Error al exportar adelantos:", error);
+                alertify.error("Error al exportar datos");
+            }
+        }
+
+        function exportarAnticipos() {
+            try {
+                $('#tablaAnticipos').DataTable().button('0').trigger();
+            } catch (error) {
+                console.error("Error al exportar anticipos:", error);
+                alertify.error("Error al exportar datos");
+            }
+        }
+
+        // Exponer funciones globalmente para integración con otros módulos
+        window.AdelantosAnticipos = {
+            aplicarAdelantosAlPago,
+            obtenerAnticiposCliente,
+            aplicarAnticiposAFactura,
+            obtenerResumenFinanciero,
+            registrarMovimientoFinanciero
+        };
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GMTL²</title>
+    <link rel="icon" href="img/2A_constructora_logo.png">
+
+    <!-- Estilos -->
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="bt/bootstrap.min.css">
+    <script src="bt/bootstrap.min.js"></script>
+    <!-- Estilos propios -->
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/scripts.js"></script>
+
+    <!-- Frameworks -->
+    <!-- Boostrap Icons -->
+    <link rel="stylesheet" href="bt-icons/bootstrap-icons.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="dt/datatables.min.css">
+    <!-- AlertifyJS -->
+    <link rel="stylesheet" href="alert/alertify.min.css">
+    <link rel="stylesheet" href="alert/themes/default.min.css">
+    <script src="alert/alertify.min.js"></script>
+
+    <style>
+        body {
+            background-image: url('img/background_3.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* height: 100vh; */
+        }
+
+        @keyframes moveImage {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(20px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        img {
+            animation: moveImage 3s infinite ease-in-out;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card col-md-6 mx-auto mt-5">
+        <div class="card-header text-center">
+            <h5 class="card-title">Inicio de sesión</h5>
+        </div>
+
+        <div class="card-body">
+            <img src="img/user_icon.png" alt="login" class="mx-auto d-block mb-3" width="100">
+
+            <form class="row g-3 needs-validation mt-2" id="login" novalidate>
+                <div class="input-group col-md-8 mx-auto">
+                    <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+                    <input type="text" class="form-control" id="usuario" placeholder="Usuario" required>
+                    <div class="invalid-feedback">¡Ingresa su nombre de usuario!</div>
+                </div>
+                <div class="input-group col-md-8 mx-auto">
+                    <span class="input-group-text"><i class="bi bi-key-fill"></i></span>
+                    <input type="password" class="form-control" id="contrasena" placeholder="Contraseña" required>
+                    <button class="btn btn-outline-secondary" type="button" onclick="togglePassword()">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                    <div class="invalid-feedback">¡Ingresa la contraseña!</div>
+                </div>
+                <div class="col-12 d-flex justify-content-center">
+                    <button class="btn btn-success mx-2" type="submit">
+                        <i class="bi bi-unlock-fill"></i> Ingresar
+                    </button>
+                    <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#autor">
+                        <i class="bi bi-exclamation-circle"></i> Acerca del autor
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="card-footer text-center">
+            <label id="mensaje"></label>
+        </div>
+    </div>
+
+    <div class="text-center mt-5">
+        <button class="btn btn-success btn-sm mx-1" title="Ver la base de datos" data-bs-toggle="modal"
+            data-bs-target="#verBD" onclick="verBD()">
+            <i class="bi bi-eye"></i>
+        </button>
+        <br><br>
+        <button class="btn btn-primary btn-sm mx-1" title="Cargar la base de datos" onclick="cargarBD()">
+            <i class="bi bi-database-add"></i>
+        </button>
+        <br><br>
+        <button class="btn btn-danger btn-sm mx-1" title="Vaciar la base de datos" onclick="vaciarBD()">
+            <i class="bi bi-trash"></i>
+        </button>
+    </div>
+
+    <!-- Acerca del Autor -->
+    <div class="modal fade" id="autor" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Acerca del autor</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="h6">Elaborado por:</p>
+                    <ul>
+                        <li>Gustavo David Benítez Jara</li>
+                        <li>Nelson Mathías Paredes Martínez</li>
+                        <li>Luana Rosalía Shantal Acosta Alarcón</li>
+                        <li>Tania Ramona Sanabria Escobar</li>
+                        <li>María Lourdes Torres Gavilán</li>
+                    </ul>
+                    <p class="h6">Misión:</p>
+                    <p>Realizar actividades de construcción cumpliendo con los estándares de calidad más exigentes.</p>
+                    <p class="h6">Visión</p>
+                    <p>Ser reconocidos en el mercado por nuestra seriedad y responsabilidad en cada proyecto.</p>
+                    <p class="h6">Profesor:</p>
+                    <p>Juan Benito Torres.</p>
+                    <p class="h6">Asignatura:</p>
+                    <p>Programación III</p>
+                    <p class="h6">Año:</p>
+                    <p>2025</p>
+                    <p class="h6">Actualizado al:</p>
+                    <p>14/05/2025</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para ver la Base de Datos -->
+    <div class="modal fade" id="verBD" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 text-center">Ver la Base de Datos</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <p class="h6">Los datos que se visualizan se encuentran en el localStorage.</p>
+
+                    <!-- Tabla de Usuarios -->
+                    <div id="usuariosContainer" style="display: none;">
+                        <p class="fw-bold text-primary">Usuarios</p>
+                        <table id="tabla_usuarios" class="display compact" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Id Usuario</th>
+                                    <th>N° Cédula</th>
+                                    <th>Nombre</th>
+                                    <th>Apellido</th>
+                                    <th>Celular</th>
+                                    <th>Rol</th>
+                                    <th>Usuario</th>
+                                    <th>Contraseña</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+
+                    <!-- Tabla de clientes -->
+                    <div id="clientesContainer" style="display: none;">
+                        <p class="fw-bold text-primary">Clientes</p>
+                        <table id="tabla_clientes" class="display compact" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Id Cliente</th>
+                                    <th>RUC / CI</th>
+                                    <th>Razon Social</th>
+                                    <th>Direccion</th>
+                                    <th>Telefono</th>
+                                    <th>Celular</th>
+                                    <th>E-mail</th>
+                                    <th>Ciudad</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+
+                    <!-- Tabla de proveedores -->
+                    <div id="proveedoresContainer" style="display: none;">
+                        <p class="fw-bold text-primary">Proveedores</p>
+                        <table id="tabla_proveedores" class="display compact" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Id Proveedor</th>
+                                    <th>RUC</th>
+                                    <th>Razon Social</th>
+                                    <th>Direccion</th>
+                                    <th>Telefono</th>
+                                    <th>E-mail</th>
+                                    <th>Ciudad</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+
+                    <!-- Tabla de materiales -->
+                    <div id="materialesContainer" style="display: none;">
+                        <p class="fw-bold text-primary mt-4">Materiales</p>
+                        <table id="tabla_materiales" class="display compact text" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Id Material</th>
+                                    <th>Código de Barra</th>
+                                    <th>Descripción del Material</th>
+                                    <th>Precio</th>
+                                    <th>Stock</th>
+                                    <th>Unidad</th>
+                                    <th>Categoría</th>
+                                    <th>Observaciones</th>
+                                    <th>Stock Mínimo</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+
+                    <!-- Tabla de facturas de proveedores -->
+                    <div id="facturasProveedoresContainer" style="display: none;">
+                        <p class="fw-bold text-primary mt-4">Facturas de Proveedores</p>
+                        <table id="tabla_facturas_proveedores" class="display compact text" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>ID Factura</th>
+                                    <th>Fecha</th>
+                                    <th>ID Proveedor</th>
+                                    <th>Proveedor</th>
+                                    <th>Condición</th>
+                                    <th>Total</th>
+                                    <th>Saldo</th>
+                                    <th>Anulado</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+
+                    <!-- Tabla de detalle de factura de proveedores -->
+                    <div id="detalleFacturaProveedorContainer" style="display: none;">
+                        <p class="fw-bold text-primary mt-4">Detalle de Factura de Proveedores</p>
+                        <table id="tabla_detalle_factura_proveedor" class="display compact text" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>ID Detalle</th>
+                                    <th>ID Factura</th>
+                                    <th>Ítem</th>
+                                    <th>ID Material</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio Unitario</th>
+                                    <th>IVA (%)</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+
+                    <!-- Tabla de movimiento de materiales (cabecera) -->
+                    <div id="movimientoMaterialCabeceraContainer" style="display: none;">
+                        <p class="fw-bold text-primary mt-4">Movimiento de Materiales (Cabecera)</p>
+                        <table id="tabla_movimiento_material_cabecera" class="display compact text" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>ID Movimiento</th>
+                                    <th>Fecha</th>
+                                    <th>Tipo</th>
+                                    <th>Obra Origen</th>
+                                    <th>Obra Destino</th>
+                                    <th>Observaciones</th>
+                                    <th>Usuario</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+
+                    <!-- Tabla de movimiento de materiales (detalle) -->
+                    <div id="movimientoMaterialDetalleContainer" style="display: none;">
+                        <p class="fw-bold text-primary mt-4">Movimiento de Materiales (Detalle)</p>
+                        <table id="tabla_movimiento_material_detalle" class="display compact text" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>ID Detalle</th>
+                                    <th>ID Movimiento</th>
+                                    <th>ID Material</th>
+                                    <th>Cantidad</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+
+                    <!-- Tabla de obras -->
+                    <div id="obrasContainer" style="display: none;">
+                        <p class="fw-bold text-primary mt-4">Obras</p>
+                        <table id="tabla_obras" class="display compact text" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>ID Obra</th>
+                                    <th>Nombre</th>
+                                    <th>Dirección</th>
+                                    <th>Dimensiones</th>
+                                    <th>Fecha Inicio</th>
+                                    <th>Fecha Fin</th>
+                                    <th>Observaciones</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+
+                    <!-- Tabla de facturas de clientes -->
+                    <div id="facturasClientesContainer" style="display: none;">
+                        <p class="fw-bold text-primary mt-4">Facturas de Clientes</p>
+                        <table id="tabla_facturas_clientes" class="display compact text" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>ID Factura</th>
+                                    <th>Fecha</th>
+                                    <th>ID Cliente</th>
+                                    <th>Cliente</th>
+                                    <th>Condición</th>
+                                    <th>Total</th>
+                                    <th>Saldo</th>
+                                    <th>Anulado</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+
+                    <!-- Tabla de detalle de factura de clientes -->
+                    <div id="detalleFacturaClienteContainer" style="display: none;">
+                        <p class="fw-bold text-primary mt-4">Detalle de Facturas de Clientes</p>
+                        <table id="tabla_detalle_factura_cliente" class="display compact text" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>ID Detalle</th>
+                                    <th>ID Factura</th>
+                                    <th>Ítem</th>
+                                    <th>ID Material</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio Unitario</th>
+                                    <th>IVA (%)</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+
+                    <!-- Tabla de asignación de materiales (cabecera) -->
+                    <div id="asignacionMaterialCabeceraContainer" style="display: none;">
+                        <p class="fw-bold text-primary mt-4">Asignación de Materiales (Cabecera)</p>
+                        <table id="tabla_asignacion_material_cabecera" class="display compact text" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>ID Asignación</th>
+                                    <th>ID Obra</th>
+                                    <th>Fecha Asignación</th>
+                                    <th>Total Presupuesto</th>
+                                    <th>Usuario</th>
+                                    <th>Observaciones</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+
+                    <!-- Tabla de asignación de materiales (detalle) -->
+                    <div id="asignacionMaterialDetalleContainer" style="display: none;">
+                        <p class="fw-bold text-primary mt-4">Asignación de Materiales (Detalle)</p>
+                        <table id="tabla_asignacion_material_detalle" class="display compact text" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>ID Detalle</th>
+                                    <th>ID Asignación</th>
+                                    <th>ID Material</th>
+                                    <th>Cantidad</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+
+                    <div class="d-flex justify-content-center gap-2 mb-3 flex-wrap">
+                        <button class="btn btn-primary btn-sm" id="btnUsuarios">Ver Usuarios</button>
+                        <button class="btn btn-secondary btn-sm" id="btnClientes">Ver Clientes</button>
+                        <button class="btn btn-info btn-sm" id="btnMateriales">Ver Materiales</button>
+                        <button class="btn btn-warning btn-sm" id="btnProveedores">Ver Proveedores</button>
+                        <button class="btn btn-success btn-sm" id="btnFacturasProveedores">Ver Facturas
+                            Proveedores</button>
+                        <button class="btn btn-danger btn-sm" id="btnDetalleFacturaProveedor">Ver Detalle Factura
+                            Proveedor</button>
+                        <button class="btn btn-primary btn-sm" id="btnMovimientoMaterialCabecera">Ver Movimiento
+                            Material (Cabecera)</button>
+                        <button class="btn btn-secondary btn-sm" id="btnMovimientoMaterialDetalle">Ver Movimiento
+                            Material (Detalle)</button>
+                        <button class="btn btn-info btn-sm" id="btnObras">Ver Obras</button>
+                        <button class="btn btn-warning btn-sm" id="btnFacturasClientes">Ver Facturas Clientes</button>
+                        <button class="btn btn-success btn-sm" id="btnDetalleFacturaCliente">Ver Detalle Factura
+                            Cliente</button>
+                        <button class="btn btn-danger btn-sm" id="btnAsignacionMaterialCabecera">Ver Asignación Material
+                            (Cabecera)</button>
+                        <button class="btn btn-primary btn-sm" id="btnAsignacionMaterialDetalle">Ver Asignación Material
+                            (Detalle)</button>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex flex-column">
+                    <button type="button" class="btn btn-danger mb-2" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <!-- DataTables -->
+    <script src="dt/jquery-3.7.1.js"></script>
+    <script src="dt/datatables.min.js"></script>
+    <script src="dt/es-ES.js"></script>
+    <!-- Srcipts propios -->
+    <script src="js/bd.js"></script>
+
+    <script>
+        // Validación del Formulario
+        (() => {
+            'use strict'
+            const forms = document.querySelectorAll('.needs-validation')
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })();
+
+        function togglePassword() {
+            const contrasena = document.getElementById("contrasena");
+            contrasena.type = contrasena.type === "password" ? "text" : "password";
+        }
+
+        // Verificar usuario y contraseña.
+        document.getElementById("login").addEventListener("submit", function (e) {
+            e.preventDefault();
+            const usuarioIngresado = document.getElementById("usuario").value.trim();
+            const contrasenaIngresada = document.getElementById("contrasena").value.trim();
+
+            if (usuarioIngresado && contrasenaIngresada) {
+                const datosGuardados = localStorage.getItem("usuarios");
+                const usuarios = JSON.parse(datosGuardados) || [];
+                const usuarioEncontrado = usuarios.find(u => u.usuario === usuarioIngresado && u.contrasena === contrasenaIngresada);
+                const mensaje = document.getElementById("mensaje");
+
+                if (!usuarioEncontrado) {
+                    mensaje.textContent = "Usuario o contraseña incorrectos.";
+                    mensaje.style.color = 'red';
+                    document.getElementById("usuario").focus();
+                    setTimeout(() => { mensaje.textContent = ""; }, 2000);
+                } else {
+                    console.log(usuarioEncontrado)
+                    localStorage.setItem('currentUser', JSON.stringify(usuarioEncontrado));
+                    localStorage.setItem("idUsuarioActual", usuarioEncontrado.idusuario);
+                    localStorage.setItem("nomUsuario", usuarioEncontrado.nombre);
+                    window.location.href = "menu.html";
+                }
+            }
+        });
+
+        function cargarBD() {
+            datos();
+            alertify.success("Base de datos original cargada.");
+        }
+
+        function vaciarBD() {
+            alertify.confirm("¿Está seguro de que quiere eliminar la base de datos?",
+                function () {
+                    localStorage.clear();
+                    alertify.error("Base de datos eliminada exitosamente.");
+                },
+                function () {
+                    alertify.message("Eliminación cancelada.");
+                }
+            );
+        }
+
+        function verBD() {
+            cargarTabla('usuarios', '#tabla_usuarios', columnsUsuarios);
+            cargarTabla('clientes', '#tabla_clientes', columnsClientes);
+            cargarTabla('materiales', '#tabla_materiales', columnsMateriales);
+            cargarTabla('proveedores', '#tabla_proveedores', columnsProveedores);
+            cargarTabla('comprascabecera', '#tabla_facturas_proveedores', columnsFacturasProveedores);
+            cargarTabla('comprasdetalle', '#tabla_detalle_factura_proveedor', columnsDetalleFacturaProveedor);
+            cargarTabla('movimientoMaterialCabecera', '#tabla_movimiento_material_cabecera', columnsMovimientoMaterialCabecera);
+            cargarTabla('movimientoMaterialDetalle', '#tabla_movimiento_material_detalle', columnsMovimientoMaterialDetalle);
+            cargarTabla('obras', '#tabla_obras', columnsObras);
+            cargarTabla('facturasclientes', '#tabla_facturas_clientes', columnsFacturasClientes);
+            cargarTabla('detallefacturacliente', '#tabla_detalle_factura_cliente', columnsDetalleFacturaCliente);
+            cargarTabla('asignacionMaterialCabecera', '#tabla_asignacion_material_cabecera', columnsAsignacionMaterialCabecera);
+            cargarTabla('asignacionMaterialDetalle', '#tabla_asignacion_material_detalle', columnsAsignacionMaterialDetalle);
+        }
+
+        function ocultarTodosLosContenedores() {
+            document.getElementById('usuariosContainer').style.display = "none";
+            document.getElementById('clientesContainer').style.display = "none";
+            document.getElementById('materialesContainer').style.display = "none";
+            document.getElementById('proveedoresContainer').style.display = "none";
+            document.getElementById('facturasProveedoresContainer').style.display = "none";
+            document.getElementById('detalleFacturaProveedorContainer').style.display = "none";
+            document.getElementById('movimientoMaterialCabeceraContainer').style.display = "none";
+            document.getElementById('movimientoMaterialDetalleContainer').style.display = "none";
+            document.getElementById('obrasContainer').style.display = "none";
+            document.getElementById('facturasClientesContainer').style.display = "none";
+            document.getElementById('detalleFacturaClienteContainer').style.display = "none";
+            document.getElementById('asignacionMaterialCabeceraContainer').style.display = "none";
+            document.getElementById('asignacionMaterialDetalleContainer').style.display = "none";
+        }
+
+        document.getElementById('btnUsuarios').addEventListener('click', function () {
+            ocultarTodosLosContenedores();
+            document.getElementById('usuariosContainer').style.display = "block";
+        });
+
+        document.getElementById('btnClientes').addEventListener('click', function () {
+            ocultarTodosLosContenedores();
+            document.getElementById('clientesContainer').style.display = "block";
+        });
+
+        document.getElementById('btnMateriales').addEventListener('click', function () {
+            ocultarTodosLosContenedores();
+            document.getElementById('materialesContainer').style.display = "block";
+        });
+
+        document.getElementById('btnProveedores').addEventListener('click', function () {
+            ocultarTodosLosContenedores();
+            document.getElementById('proveedoresContainer').style.display = "block";
+        });
+
+        document.getElementById('btnFacturasProveedores').addEventListener('click', function () {
+            ocultarTodosLosContenedores();
+            document.getElementById('facturasProveedoresContainer').style.display = "block";
+        });
+
+        document.getElementById('btnDetalleFacturaProveedor').addEventListener('click', function () {
+            ocultarTodosLosContenedores();
+            document.getElementById('detalleFacturaProveedorContainer').style.display = "block";
+        });
+
+        document.getElementById('btnMovimientoMaterialCabecera').addEventListener('click', function () {
+            ocultarTodosLosContenedores();
+            document.getElementById('movimientoMaterialCabeceraContainer').style.display = "block";
+        });
+
+        document.getElementById('btnMovimientoMaterialDetalle').addEventListener('click', function () {
+            ocultarTodosLosContenedores();
+            document.getElementById('movimientoMaterialDetalleContainer').style.display = "block";
+        });
+
+        document.getElementById('btnObras').addEventListener('click', function () {
+            ocultarTodosLosContenedores();
+            document.getElementById('obrasContainer').style.display = "block";
+        });
+
+        document.getElementById('btnFacturasClientes').addEventListener('click', function () {
+            ocultarTodosLosContenedores();
+            document.getElementById('facturasClientesContainer').style.display = "block";
+        });
+
+        document.getElementById('btnDetalleFacturaCliente').addEventListener('click', function () {
+            ocultarTodosLosContenedores();
+            document.getElementById('detalleFacturaClienteContainer').style.display = "block";
+        });
+
+        document.getElementById('btnAsignacionMaterialCabecera').addEventListener('click', function () {
+            ocultarTodosLosContenedores();
+            document.getElementById('asignacionMaterialCabeceraContainer').style.display = "block";
+        });
+
+        document.getElementById('btnAsignacionMaterialDetalle').addEventListener('click', function () {
+            ocultarTodosLosContenedores();
+            document.getElementById('asignacionMaterialDetalleContainer').style.display = "block";
+        });
+
+        const columnsUsuarios = [
+            { data: 'idusuario', title: 'Id Usuario' },
+            { data: 'cedula', title: 'N° Cédula' },
+            { data: 'nombre', title: 'Nombre' },
+            { data: 'apellido', title: 'Apellido' },
+            { data: 'celular', title: 'Celular' },
+            { data: 'rol', title: 'Rol' },
+            { data: 'usuario', title: 'Usuario' },
+            { data: 'contrasena', title: 'Contraseña' }
+        ];
+
+        const columnsClientes = [
+            { data: 'idCliente', title: 'Id Cliente' },
+            { data: 'rucCi', title: 'RUC / CI' },
+            { data: 'razonSocial', title: 'Razon Social' },
+            { data: 'direccion', title: 'Direccion' },
+            { data: 'telefono', title: 'telefono' },
+            { data: 'celular', title: 'Celular' },
+            { data: 'email', title: 'E-mail' },
+            { data: 'ciudad', title: 'Ciudad' }
+        ];
+
+        const columnsProveedores = [
+            { data: 'idProveedor', title: 'Id Proveedor' },
+            { data: 'ruc', title: 'RUC' },
+            { data: 'razonsocial', title: 'Razon Social' },
+            { data: 'direccion', title: 'Dirección' },
+            { data: 'telefono', title: 'Telefono' },
+            { data: 'correo_electronico', title: 'E-mail' },
+            { data: 'ciudad', title: 'Ciudad' }
+        ];
+
+        const columnsMateriales = [
+            { data: 'idMaterial', title: 'Id Material' },
+            { data: 'codbarra', title: 'Código de Barra' },
+            { data: 'descripcion', title: 'Descripción del Material' },
+            { data: 'precio', title: 'Precio' },
+            { data: 'stock', title: 'Stock' },
+            { data: 'unidad', title: 'Unidad' },
+            { data: 'categoria', title: 'Categoría' },
+            { data: 'observaciones', title: 'Observaciones' },
+            { data: 'stockMinimo', title: 'Stock Mínimo' }
+        ];
+
+        // Columnas para la cabecera de facturas de proveedores
+        const columnsFacturasProveedores = [
+            { data: 'idcompra', title: 'ID Factura' },
+            { data: 'feccompra', title: 'Fecha' },
+            { data: 'idproveedor', title: 'ID Proveedor' },
+            { data: 'razonsocial', title: 'Proveedor' },
+            { data: 'condicion', title: 'Condición' },
+            { data: 'totcompra', title: 'Total' },
+            { data: 'saldo', title: 'Saldo' },
+            { data: 'anulado', title: 'Anulado' }
+        ];
+
+        // Columnas para el detalle de factura de proveedores
+        const columnsDetalleFacturaProveedor = [
+            { data: 'idcompradet', title: 'ID Detalle' },
+            { data: 'idcompra', title: 'ID Factura' },
+            { data: 'item', title: 'Ítem' },
+            { data: 'idmaterial', title: 'ID Material' },
+            { data: 'cantidad', title: 'Cantidad' },
+            { data: 'preuni', title: 'Precio Unitario' },
+            { data: 'tiva', title: 'IVA (%)' },
+            { data: 'subtotal', title: 'Subtotal' }
+        ];
+
+        // Columnas para la cabecera de facturas de clientes
+        const columnsFacturasClientes = [
+            { data: 'idfactura', title: 'ID Factura' },
+            { data: 'numfactura', title: 'Número' },
+            { data: 'fecha', title: 'Fecha' },
+            { data: 'idCliente', title: 'ID Cliente' },
+            { data: 'razonSocial', title: 'Cliente' },
+            { data: 'condicion', title: 'Condición' },
+            {
+                data: 'total',
+                title: 'Total',
+                render: function (data) {
+                    return '₲ ' + new Intl.NumberFormat('es-PY').format(data);
+                }
+            },
+            {
+                data: 'saldo',
+                title: 'Saldo',
+                render: function (data) {
+                    return '₲ ' + new Intl.NumberFormat('es-PY').format(data);
+                }
+            },
+            { data: 'anulado', title: 'Anulado' }
+        ];
+
+        // Columnas para el detalle de factura de clientes
+        const columnsDetalleFacturaCliente = [
+            { data: 'idfacturadet', title: 'ID Detalle' },
+            { data: 'idfactura', title: 'ID Factura' },
+            { data: 'item', title: 'Ítem' },
+            { data: 'idMaterial', title: 'ID Material' },
+            { data: 'cantidad', title: 'Cantidad' },
+            {
+                data: 'preuni',
+                title: 'Precio Unitario',
+                render: function (data) {
+                    return '₲ ' + new Intl.NumberFormat('es-PY').format(data);
+                }
+            },
+            { data: 'tiva', title: 'IVA (%)' },
+            {
+                data: 'subtotal',
+                title: 'Subtotal',
+                render: function (data) {
+                    return '₲ ' + new Intl.NumberFormat('es-PY').format(data);
+                }
+            }
+        ];
+
+        // Columnas para asignación de materiales cabecera
+        const columnsAsignacionMaterialCabecera = [
+            { data: 'idAsignacion', title: 'ID Asignación' },
+            { data: 'idObra', title: 'ID Obra' },
+            { data: 'fechaAsignacion', title: 'Fecha Asignación' },
+            { data: 'totalPresupuesto', title: 'Total Presupuesto' },
+            { data: 'usuario', title: 'Usuario' },
+            { data: 'observaciones', title: 'Observaciones' }
+        ];
+
+        // Columnas para asignación de materiales detalle
+        const columnsAsignacionMaterialDetalle = [
+            { data: 'idDetalle', title: 'ID Detalle' },
+            { data: 'idAsignacion', title: 'ID Asignación' },
+            { data: 'idMaterial', title: 'ID Material' },
+            { data: 'cantidad', title: 'Cantidad' },
+            { data: 'subtotal', title: 'Subtotal' }
+        ];
+
+        const columnsMovimientoMaterialCabecera = [
+            { data: 'idMovimiento', title: 'ID Movimiento' },
+            { data: 'fecha', title: 'Fecha' },
+            { data: 'tipoMovimiento', title: 'Tipo' },
+            { data: 'origenObraId', title: 'Obra Origen' },
+            { data: 'destinoObraId', title: 'Obra Destino' },
+            { data: 'observaciones', title: 'Observaciones' },
+            { data: 'usuario', title: 'Usuario' }
+        ];
+
+        const columnsMovimientoMaterialDetalle = [
+            { data: 'idDetalle', title: 'ID Detalle' },
+            { data: 'idMovimiento', title: 'ID Movimiento' },
+            { data: 'idMaterial', title: 'ID Material' },
+            { data: 'cantidad', title: 'Cantidad' }
+        ];
+
+        const columnsObras = [
+            { data: 'idObra', title: 'ID Obra' },
+            { data: 'nombre', title: 'Nombre' },
+            { data: 'direccion', title: 'Dirección' },
+            { data: 'dimensiones', title: 'Dimensiones' },
+            { data: 'fechaInicio', title: 'Fecha Inicio' },
+            { data: 'fechaFin', title: 'Fecha Fin' },
+            { data: 'observaciones', title: 'Observaciones' }
+        ];
+
+        function cargarTabla(entityName, tableId, columns) {
+            let entity = JSON.parse(localStorage.getItem(entityName)) || [];
+
+            // Si es la tabla de facturas de clientes, agrega el nombre del cliente
+            if (entityName === 'facturasclientes') {
+                const clientes = JSON.parse(localStorage.getItem('clientes')) || [];
+                entity = entity.map(factura => {
+                    const cliente = clientes.find(c => String(c.idCliente) === String(factura.idCliente));
+                    return {
+                        ...factura,
+                        razonSocial: cliente ? cliente.razonSocial : 'Desconocido'
+                    };
+                });
+            }
+
+            if (entityName === 'comprascabecera') {
+                const proveedores = JSON.parse(localStorage.getItem('proveedores')) || [];
+                entity = entity.map(factura => {
+                    const proveedor = proveedores.find(p => p.idProveedor === factura.idproveedor);
+                    return {
+                        ...factura,
+                        razonsocial: proveedor ? proveedor.razonsocial : 'Desconocido'
+                    };
+                });
+            }
+
+            if ($.fn.DataTable.isDataTable(tableId)) {
+                $(tableId).DataTable().clear().destroy();
+            }
+
+            table = new DataTable(tableId, {
+                data: entity,
+                columns: columns,
+                language: spanish,
+                searching: false,
+                lengthChange: false,
+                pageLength: 5,
+                createdRow: function (row, data, dataIndex) {
+                    $(row).css('text-align', 'left');
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
